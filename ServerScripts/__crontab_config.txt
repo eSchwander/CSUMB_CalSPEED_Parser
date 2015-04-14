@@ -1,0 +1,77 @@
+#!/bin/bash
+
+#=====================================================
+# +----------------- min (0 - 59)
+# |  +-------------- hour (0 - 23)
+# |  |  +----------- day of month (1 - 31)
+# |  |  |  +-------- month (1 - 12)
+# |  |  |  |  +----- day of week (0 - 6) (Sunday=0)
+# |  |  |  |  |      ( *  means all values in field)
+# |  |  |  |  |
+# -  -  -  -  - COMMAND_TO_BE_EXECUTED
+#=====================================================
+
+#Setting the default paths and shell that cron will use.
+#By default, these paths are not set, and the default shell is /bin/sh
+PATH=/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin:/opt/aws/bin
+SHELL=/bin/bash
+
+CROWDHOME=/home/crowduser/commands/
+CROWDDEV=/home/crowduser/dev/commands/
+
+FIELDHOME=/home/WirelessBBDTester/commands/
+FIELDDEV=/home/WirelessBBDTester/dev_peter/commands/
+
+
+
+# ------ CROWD SOURCE SCRIPT CALLS ------
+  #This does the parsing and initial organizing
+  #Runs	every hour at xx:10
+#10 * * * * python3 $CROWDDEV/sort_and_extract.py 'crowdsource'
+10 * * * * python3 $CROWDHOME/sort_and_extract.py 'crowdsource'
+
+  #This finds the daily CSV that needs to be emailed at the end of the day
+  #Runs every day at 11:20pm
+#20 23 * * * python3 $CROWDDEV/email_daily.py 'crowdsource'
+20 23 * * * python3 $CROWDHOME/email_daily.py 'crowdsource'
+
+  #This creates the weekly CSV that needs to be emailed at the end of the day
+  # on Sundays. Runs every day at 11:20pm
+#22 23 * * 0 python3 $CROWDDEV/email_weekly.py 'crowdsource'
+22 23 * * 0 python3 $CROWDHOME/email_weekly.py 'crowdsource'
+
+  #This compresses any data that has not been fully archived yet
+  #Runs	every Sunday at	11:59pm
+#59 23 * * 0 python3 $CROWDDEV/archive.py 'crowdsource'
+59 23 * * 0 python3 $CROWDHOME/archive.py 'crowdsource'
+
+  #This is so that Dr. Byun's original scripts runs on schedule
+  #Runs	every hour at xx:07
+07 * * * * bash /home/crowduser/Byun_Parsing/commands/auto_csv.sh
+
+
+
+# ------ FIELD TEST SCRIPT CALLS ------
+  #This does the parsing and initial organizing
+  #Runs	every hour at xx:10
+10 * * * * python3 $FIELDDEV/sort_and_extract.py 'fieldtest'
+#* * * * * python3 $FIELDHOME/sort_and_extract.py 'fieldtest'
+
+  #This finds the daily CSV that needs to be emailed at the end of the day
+  #Runs every day at 11:20pm
+20 23 * * * python3 $FIELDDEV/email_daily.py 'fieldtest'
+#20 23 * * * python3 $FIELDHOME/email_daily.py 'fieldtest'
+
+  #This creates the weekly CSV that needs to be emailed at the end of the day
+  # on Sundays. Runs every day at 11:20pm
+22 23 * * 0 python3 $FIELDDEV/email_weekly.py 'fieldtest'
+#22 23 * * 0 python3 $FIELDHOME/email_weekly.py 'fieldtest'
+
+  #This compresses any data that has not been fully archived yet
+  #Runs	every Sunday at	11:59pm
+59 23 * * 0 python3 $FIELDDEV/archive.py 'fieldtest'
+#59 23 * * 0 python3 $FIELDHOME/archive.py 'fieldtest'
+
+  #This is so that Dr. Byun's original scripts runs on schedule
+  #Runs	every hour at xx:07
+#07 * * * * bash /home/WirelessBBDTester/Byun_Parsing/commands/auto_csv.sh
