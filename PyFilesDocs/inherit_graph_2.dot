@@ -1,0 +1,11 @@
+digraph "Graphical Class Hierarchy"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="File",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="FileParser.CrowdSource\l_File.CrowdSource_File",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_file_parser_1_1_crowd_source___file_1_1_crowd_source___file.html"];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="FileParser.FieldTest\l_File.FieldTest_File",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_file_parser_1_1_field_test___file_1_1_field_test___file.html"];
+}

@@ -1,0 +1,21 @@
+digraph "Graphical Class Hierarchy"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="object",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="csvGeneration.csvDataExtractor.csv\lDataExtractor",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classcsv_generation_1_1csv_data_extractor_1_1csv_data_extractor.html"];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="csvGeneration.csvGenerator.csv\lGenerator",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classcsv_generation_1_1csv_generator_1_1csv_generator.html"];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="FileParser.__Base.ErrorHandling",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_file_parser_1_1_____base_1_1_error_handling.html"];
+  Node1 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="FileParser.__Base.Formatting",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_file_parser_1_1_____base_1_1_formatting.html"];
+  Node1 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="moduleWrappers.EmailClient.\lEmailClient",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmodule_wrappers_1_1_email_client_1_1_email_client.html"];
+  Node1 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="moduleWrappers.FTPConn.FTPConnection",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmodule_wrappers_1_1_f_t_p_conn_1_1_f_t_p_connection.html"];
+  Node1 -> Node8 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="moduleWrappers.scpInterface.\lSCPInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmodule_wrappers_1_1scp_interface_1_1_s_c_p_interface.html"];
+}
