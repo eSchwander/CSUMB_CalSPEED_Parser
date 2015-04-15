@@ -6,6 +6,7 @@ SECTIONS:
 	Parser Setup
 	CSV Generation Setup (and other extraneous classes)
 	Server Script Setup
+	Server File System Setup
 
 
 
@@ -46,7 +47,7 @@ PROJECT REPO SETUP:
 SIMPLE USAGE:
 	  The file parser can be used by importing either the FieldTest_File class
 	from FieldTest_File.py, or the CrowdSource_File class.
-	ex.  from FieldTestFile import FieldTest_File
+	ex.  from FieldTest_File import FieldTest_File
 	  The reason for the funny repetition is that the first "FieldTest_File" is
 	the name of the file, and the second "FieldTest_File" is the name of the
 	class.
@@ -86,14 +87,62 @@ SIMPLE USAGE:
 
 
 PARSER SETUP:
-	  .
+	  As described above, the general usage of the files in the FileParser
+	directory is to import FieldTest_File or CrowdSource_File. However, there
+	are a number of other files in the directory, which support this class.
+	  Each _File object (and by _File, I'm referring to FieldTest_File and
+	CrowdSource_File) is going to be made up of _Test objects. These _Test
+	objects can be TCP_Tests, UDP_Tests, etc.
+	  If you look at a raw data file, you will notice that each file contains
+	a number of tests, and each test contains a number of threads, and each
+	thread a number of measurements. The object architecture is much the same,
+	with each object holding a list of other, smaller entities.
+
+	  Also in the FileParser directory are a number of files that start with
+	'_'. These are the base classes. '_Test' is the base class for 'UDP_Test'
+	and 'TCP_Test' and others. The '_' files are not meant to be used in code,
+	as they are just an abstract version of the others.
+	  Also, every class, in some way, inherits from '__Base'. This class holds
+	some formatting information (in the Formatting class), and Error info (in
+	the ErrorHandling class). Be careful with those classes.
 
 
 
 CSV GENERATOR SETUP (and other extraneous classes):
-	  .
+	  Initially, the FileParser classes had internal functions that returned
+	values one would require for a CSV. However, this meant that scripts that
+	would create CSVs also needed to know those functions, and then put the
+	values in the order they required.
+	  Now, there is a CSV Generator class, which specializes in putting values
+	for a CSV in the correct order. It uses the CSV Data Extractor class to get
+	values from _File and _Test objects. If you need to get new value, you need
+	to modify the 'csvDataExtractor' class.
+	  Also, be aware that the column headers for CSVs are stored in the
+	'_csvHeaders_' file. Any changes here can affect the function of the
+	generator.
+
+	  This class (and the dependent subclasses) are quite complicated. I have
+	not yet found a better way to do this, as well as implement error checking.
+	For instance, in the CSV Data Extractor class, there is a POST-condition
+	function that checks the number of values extracted against the number of
+	columns associated with those values. If they do not match up, then an error
+	is raised. Maybe there is a better way to do this, but I haven't thought of
+	it yet.
 
 
 
 SERVER SCRIPT SETUP:
-	  .
+	  Much like everything else in this project, underscore mean 'semi-private'.
+	Files that start with an underscore are generally not run directly, but are
+	used by the other scripts in this system.
+	  The main scripts you will want to pay attention to are 'sort_and_extract',
+	'email_daily', 'email_weekly', and 'archive'.
+	  'sort_and_extract' is run every hour (at xx:10), 'email_daily' is run
+	every day at 11:20pm, 'email_weekly' is run every Sunday at 11:22pm, and
+	'archive' is run every Sunday at 11:59pm.
+
+
+
+SERVER FILE SYSTEM SETUP:
+	  Here I'll talk about how the folders are all set up on the server, what
+	each one holds, and other such things.
