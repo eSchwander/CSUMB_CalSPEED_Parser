@@ -14,4 +14,11 @@ The full username should be set as a string in EMAIL_USER, and EMAIL_PASS should
 
 
 SCPINFO.py - - - - - - - - - - - - - - - - - - 
-This file should include this information in the specified format…
+This file should include this information in the specified format...
+
+SVR_ADDR = “addres.of.host”
+SVR_USER = “username”
+SVR_PASS = “username’s password”
+
+SVR_localLoc = “/base/directory/on/loca/“
+SVR_hostLoc = “/base/directory/on/external“
