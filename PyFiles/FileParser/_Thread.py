@@ -21,33 +21,28 @@ from _Measurement import Final_Measurement as FMsmt
 
 class Thread(Formatting):
 
-    """An abstract Thread class that takes care of most parsing"""
+    """
+    An abstract Thread class that takes care of most parsing
 
-    '''
-    # ------------------------------
-    # ---- CLASS ATTRIBUTES ----
-    ThreadNumber    = 0
-    DataDirection   = ""
-
-    LocalIP         = ""
-    LocalPort       = 0
-    ServerIP        = ""
-    ServerPort      = 0
-
-    Measurements    = []
-    FinalMsmt       = None
-    # ------------------------------
-    '''
+    ATTRIBUTES
+        ThreadNumber    Integer, the number identifier associated with this thread
+        DataDirection   String, the direction of data travel ('UP' or 'DOWN')
+        LocalIP         String, the IP address of the device conducting the test
+        LocalPort       Integer, the port this test is using
+        ServerIP        String, the IP address of the server this device is connected to
+        ServerPort      Integer, the port this device is sending information to
+        Measurements    List of Measurement objects
+        FinalMsmt       Measurement object, the final summation measurement
+    """
 
     def __init__(self, dataArr=None, threadNum=0, direction="UP", units=("KBytes", "Kbits/sec")):
         """
         Used to initialize an object of this class
         ARGS:
-            self:   reference to the object calling this method (i.e. Java's THIS)
-            dataArr:    List of Strings, each String is a measurement that will be parsed and stored in this object
-            ThreadNum:  Integer, the number that this thread is (generally between 3 and 6)
-            direction:  String, the direction of the data in this thread (UP or DOWN)
-            units:      Tuple of two Strings, the units being used by the measurements
+            dataArr     List of Strings, each String is a measurement that will be parsed and stored in this object
+            ThreadNum   Integer, the number that this thread is (generally between 3 and 6)
+            direction   String, the direction of the data in this thread (UP or DOWN)
+            units       Tuple of two Strings, the units being used by the measurements
         """
         #Setting up the whitespace padding that this class will need
         Formatting.__init__(self)
@@ -107,10 +102,9 @@ class Thread(Formatting):
     def arrayOfMsmts(self, attribute="Speed"):
         """
         Will return an array of the Measurements in self.Measurements as an array
-        of Numbers. Can be given the attribute of the measurement that needs to be arraytized
+         of Numbers. Can be given the attribute of the measurement that needs to be arraytized
         ARGS:
-            self:       reference to the object calling this method (i.e. Java's THIS)
-            attribute:  String, can be "speed" or "size" (attribute of Measurment)
+            attribute   String, can be "speed" or "size" (attribute of Measurment)
         RETURNS:
             list, containing all of the values in the Measurement object of myMeasurements
         """

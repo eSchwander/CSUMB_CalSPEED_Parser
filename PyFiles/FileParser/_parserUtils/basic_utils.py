@@ -89,13 +89,12 @@ def calcArray_OutliersRemoved(array, stepsAway):
         return (None, None, [])
     average = mean(array)
     stdev = pstdev(array)
-    return ([val for val in array
-             if (val>(average-(stepsAway*stdev))
-                 and val<(average+(stepsAway*stdev))
-                 )
-             ],
-            average, stdev
-            )
+    outliers_removed = [val for val in array
+                        if (val>(average-(stepsAway*stdev))
+                            and val<(average+(stepsAway*stdev))
+                            )
+                        ]
+    return (outliers_removed, average, stdev)
 #END DEF
 
 

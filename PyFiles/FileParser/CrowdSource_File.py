@@ -36,65 +36,58 @@ class CrowdSource_File(File):
 
     """
     The starting point for a user's interaction with the parser. This is the
-    class that they import and initialize with a text file, containing the
-    output of a Crowd Source test.
+     class that they import and initialize with a text file, containing the
+     output of a Crowd Source test.
+
+    INHERITED ATTRIBUTES
+        FilePath            String, the path to the file being parsed
+        Filename            String, the name of the file (cut from the FilePath)
+        Date                String, the Date when the test was conducted
+        Time                String, the Time the test was conducted
+        EastWestSrvrIPs     Tuple of Strings, the IP addresses of the East and
+                             West server the files were connecting to
+        Tests               Dictionary, each test in the file, where each index
+                             is the type of test (TCP, UDP, PING, TCRT)
+        TestsByNum          Dictionary, each test in the file, where each index
+                             is the number of the test (ie. the order run)
+
+    ATTRIBUTES
+        Devicetype          String, the type of device (Desktop or Phone)
+        AppVersion          String, the version of app being used
+        OSName              String, the name of the device's operating system
+        OSArchitecture      String, the architecture version of the OS
+        OSVersion           String, the version of the OS
+        JavaVersion         String, the version of Java being used
+        JavaVendor          String, the vender of Java being used
+        Server              String, the name of the server connected to
+        Host                String, the host being used
+        NetworkProvider     String, the cellular provider of the connection
+        NetworkOperator     String, the name of the network operator (generally same as Provider)
+        NetworkType         String, legacy attribute that (on older app versions) held device type
+        ConnectionType      String, technology used in connection
+        ConnectionName      String, name of connection tech being used
+        Roaming             Boolean, whether the device was roaming or not
+        Environment         String, the outside environment (ie. Outdoor or Indoor)
+        PhoneModel          String, the model name of the phone being used
+        PhoneManufac        String, the manufacturer of the phone being used
+        PhoneAPIVer         String, the API version of the phone
+        PhoneSDKVer         String, the SDK version of the phone
+        WiFiBSSID           String, the Wifi binary SSID (MAC address) if device was connected to wifi
+        WiFiSSID            String, the Wifi SSID (wifi name)
+        LocationSource      String, the source of location data (GPS or Network)
+        Latitude            Float, Latitude of device during testing
+        Longitude           Float, Longitude of device during testing
+        DistanceMoved       Float, total distance moved during test
+      #For Phone AppVersion v1.0 ONLY
+        AllCoordPairs       List of Tuples
+      #For Phone AppVersion v1.1+
+        AllGPSCoordPairs    List of Tuples
+        GPSLastKnownCoord   Tuple of Floats,
+        AllNetworkCoordPairs    List of Tuples
+        NetworkLastKnownCoord   Tuple of Floats,
     """
 
     '''
-    # ------------------------------
-    # ---- INHERITED ATTRIBUTES ----
-    FilePath    = ""
-    Filename    = ""
-    Date        = ""
-    Time        = ""
-    EastWestSrvr = (East IP, West IP)
-    Tests       = {TCP, UDP, PING, NUM}
-    TestsByNum  = {}
-    _fileContentsByTest = None
-
-    # ---- CLASS ATTRIBUTES ----
-    Devicetype      = ""
-    AppVersion      = ""
-
-    OSName          = ""
-    OSArchitecture  = ""
-    OSVersion       = ""
-    JavaVersion     = ""
-    JavaVendor      = ""
-
-    Server          = ""
-    Host            = ""
-    NetworkProvider = ""
-    NetworkOperator = ""
-    NetworkType     = ""
-    ConnectionType  = ""
-    ConnectionName  = ""
-
-    Roaming         = False
-    Environment     = ""
-
-    PhoneModel      = ""
-    PhoneManufac    = ""
-    PhoneAPIVer     = ""
-    PhoneSDKVer     = ""
-
-    WiFiBSSID       = ""
-    WiFiSSID        = ""
-
-    LocationSource  = ""
-    Latitude        = 0
-    Longitude       = 0
-    DistanceMoved   = 0
-
-    #For Phone AppVersion v1.0 ONLY
-    AllCoordPairs = None
-
-    #For Phone AppVersion v1.1+
-    AllGPSCoordPairs = None
-    GPSLastKnownCoord = None
-    AllNetworkCoordPairs = None
-    NetworkLastKnownCoord = None
-
     #If Devicetype is "Desktop", these attributes are used for information
     # Devicetype
     # AppVersion
@@ -109,16 +102,14 @@ class CrowdSource_File(File):
     # ConnectionType    (is a List)
     # Latitude
     # Longitude
-    # ------------------------------
     '''
-
 
 
     def __new__(cls, *args, **kwargs):
         """
         Before creating an instance of the given file as a parsed object, we want to check
-        that the file is indeed a test file. This will see if the necessary text
-        is in the first few lines. If not, then we return None, and the object is not created
+         that the file is indeed a test file. This will see if the necessary text
+         is in the first few lines. If not, then we return None, and the object is not created
         """
         if 'empty' in kwargs and kwargs['empty']:
             return File.__new__(cls)
@@ -159,8 +150,7 @@ class CrowdSource_File(File):
         """
         Initializes the object by parsing the data in the given file path. Calls parent's __init__
         ARGS:
-            self:       reference to the object calling this method (i.e. Java's THIS)
-            filePath:   String, containing absolute path to raw data file
+            filePath    String, containing absolute path to raw data file
         """
         if 'empty' in kwargs and kwargs['empty']:
             return
@@ -196,7 +186,13 @@ class CrowdSource_File(File):
 # INITIALIZATION FUNCTIONS -----------------------------------------------------
 
     def loadCrowdSourceInfo(self):
-        """Initializes the object by parsing the data in the given file path from __init__."""
+        """
+        Initializes the object by parsing the data in the given file path from __init__.
+        ARGS:
+            None
+        RETURNS:
+            None
+        """
         #This opens the file, and stores the file stream into the variabe fs
         with open(self.FilePath,'r') as fs:
             #We are going to first get the line that contains some of the basic

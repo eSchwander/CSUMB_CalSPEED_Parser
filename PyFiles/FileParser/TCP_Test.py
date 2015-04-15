@@ -22,38 +22,20 @@ from _Test import Test
 
 class TCP_Test(Test):
 
-    """A TCP test, which is 4 Upload and 4 Download threads connected to a server"""
+    """
+    A TCP test, which is 4 Upload and 4 Download threads connected to a server
 
-    '''
-    # ------------------------------
-    # ---- INHERITED ATTRIBUTES ----
-    ConnectionType  = ""
-    ConnectionLoc   = ""
-    Threads         = None
-    TestNumber      = 0
-    ReceiverIP      = ""
-    Port            = 0000
-    TestInterval    = 0
-    MeasuringFmt    = None  #[kmKM] (Kbits, Mbits, KBytes, MBytes)
-    _mform_short    = None
-    _text           = ""
-    iPerfCommand    = ""
-    StartingLine    = ""
-
-    # ---- CLASS ATTRIBUTES ----
-    ThreadsByNum    = None
-    WindowSize      = 0
-    ThreadNumbers   = None
-    # ------------------------------
-    '''
-
-
+    CLASS SPECIFIC ATTRIBUTES
+        ThreadsByNum    List, thread objects (UP and DOWN) organized by number
+        WindowSize      Integer, the size of TCP window
+        ThreadNumbers   List of Integers, the possible thread numbers
+    """
 
     def __new__(cls, *args, **kwargs):
         """
         Before creating an instance of the given file as a parsed object, we want to check
-        that the file is indeed a test file. This will see if the necessary text
-        is in the first few lines. If not, then we return None, and the object is not created
+         that the file is indeed a test file. This will see if the necessary text
+         is in the first few lines. If not, then we return None, and the object is not created
         """
         #Getting the Data String passed to this constructor that was passed in to the constructor
         if "dataString" in kwargs:
@@ -76,9 +58,8 @@ class TCP_Test(Test):
         """
         Used to initialize an object of this class
         ARGS:
-            self:       reference to the object calling this method (i.e. Java's THIS)
-            dataString: String, the raw text that will be parsed
-            eastWestIP: Tuple of two Strings, first String is the IP address of the East server, second the West
+            dataString  String, the raw text that will be parsed
+            eastWestIP  Tuple of two Strings, first String is the IP address of the East server, second the West
         """
         #If we are at this point, then the dataString contained "TCP", and we can
         # set the ConnectionType to "TCP"
@@ -115,7 +96,13 @@ class TCP_Test(Test):
 # INITIALIZATION FUNCTIONS -----------------------------------------------------
 
     def parseThreads(self):
-        """Given the data stored in self._text, parses the Iperf output into individual TCP_Threads"""
+        """
+        Given the data stored in self._text, parses the Iperf output into individual TCP_Threads
+        ARGS:
+            None
+        RETURNS:
+            None
+        """
         #We first call the sorting method, which will return a boolean and the strings
         # in self._text sorted by thread number. If the boolean is true, the threads are sorted
         (sorted_, tempThreads) = self.__sortThreadsByNum()
@@ -305,11 +292,10 @@ class TCP_Test(Test):
         """
         Creating an array of the sum of each 1 second interval of all 4 thread's speed or size
         ARGS:
-            self:           reference to the object calling this method (i.e. Java's THIS)
-            direction:      String, threads of specified direction (Up or Down) that will be summed
-            attribute:      String, the attribute of the measurement we wish to sum up (speed or size)
+            direction       String, threads of specified direction (Up or Down) that will be summed
+            attribute       String, the attribute of the measurement we wish to sum up (speed or size)
         RETURNS:
-            threads_summed: an array containing values representing the sum of each 4 threads' speed
+            threads_summed  List, containing values representing the sum of each 4 threads' speed
         """
         #Just in case what was passed is not a possible option, we will chose the defaults
         if attribute not in ["Speed", "Size"]:
@@ -344,11 +330,10 @@ class TCP_Test(Test):
         """
         Creating an array of array of speed for each 1 second interval for each thread in the test
         ARGS:
-            self:           reference to the object calling this method (i.e. Java's THIS)
-            direction:      String, threads of specified direction (Up or Down) that will be summed
-            attribute:      String, the attribute of the measurement we wish to sum up (speed or size)
+            direction       String, threads of specified direction (Up or Down) that will be summed
+            attribute       String, the attribute of the measurement we wish to sum up (speed or size)
         RETURNS:
-            threads_summed: an array containing values representing the sum of each 4 threads' speed
+            threads_summed  List, containing values representing the sum of each 4 threads' speed
         """
         #Just in case what was passed is not a possible option, we will chose the defaults
         if attribute not in ["Speed", "Size"]:

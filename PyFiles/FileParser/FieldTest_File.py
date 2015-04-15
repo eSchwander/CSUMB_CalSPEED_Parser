@@ -38,53 +38,48 @@ class FieldTest_File(File):
 
     """
     The starting point for a user's interaction with the parser. This is the
-    class that they import and initialize with a text file, containing the
-    output of a Field Test test.
+     class that they import and initialize with a text file, containing the
+     output of a Field Test test.
+
+    INHERITED ATTRIBUTES
+        FilePath            String, the path to the file being parsed
+        Filename            String, the name of the file (cut from the FilePath)
+        Date                String, the Date when the test was conducted
+        Time                String, the Time the test was conducted
+        EastWestSrvrIPs     Tuple of Strings, the IP addresses of the East and
+                             West server the files were connecting to
+        Tests               Dictionary, each test in the file, where each index
+                             is the type of test (TCP, UDP, PING, TCRT)
+        TestsByNum          Dictionary, each test in the file, where each index
+                             is the number of the test (ie. the order run)
+
+     ATTRIBUTES
+        Devicetype          String, the type of device (Netbook or Phone)
+        DeviceID            String, the ID of the device being used
+        AppVersion          String, the version of app being used
+        OSName              String, the name of the device's operating system
+        OSArchitecture      String, the architecture version of the OS
+        OSVersion           String, the version of the OS
+        JavaVersion         String, the version of Java being used
+        JavaVendor          String, the vender of Java being used
+        Tester              The ID of the Tester using this device
+        Server              String, the name of the server connected to
+        Host                String, the host being used
+        NetworkProvider     String, the cellular provider of the connection
+        NetworkOperator     String, the name of the network operator (generally same as Provider)
+        NetworkCarrier      String, the normalized name of the carrier used during this test
+        ConnectionType      String, technology used in connection
+        LocationID      String, the source of location data (GPS or Network)
+        Latitude            Float, Latitude of device during testing
+        Longitude           Float, Longitude of device during testing
+        AllCoordPairs       List of Tuples
     """
-
-    '''
-    # ------------------------------
-    # ---- INHERITED ATTRIBUTES ----
-    FilePath    = ""
-    Filename    = ""
-    Date        = ""
-    Time        = ""
-    EastWestSrvr = (East IP, West IP)
-    Tests       = {TCP, UDP, PING, TCRT}
-    TestsByNum  = {}
-    _fileContentsByTest = None
-
-    # ---- CLASS ATTRIBUTES ----
-    OSName          = ""
-    OSArchitecture  = ""
-    OSVersion       = ""
-    JavaVersion     = ""
-    JavaVendor      = ""
-
-    Tester          = ""
-    Server          = ""
-    Host            = ""
-    NetworkProvider = ""
-    NetworkOperator = ""
-    NetworkCarrier  = ""
-    DeviceID        = ""
-    DeviceType      = ""
-    ConnectionType  = ""
-
-    LocationID      = ""
-    Latitude        = 0
-    Longitude       = 0
-    AllCoordPairs   = 0
-    # ------------------------------
-    '''
-
-
 
     def __new__(cls, *args, **kwargs):
         """
         Before creating an instance of the given file as a parsed object, we want to check
-        that the file is indeed a test file. This will see if the necessary text
-        is in the first few lines. If not, then we return None, and the object is not created
+         that the file is indeed a test file. This will see if the necessary text
+         is in the first few lines. If not, then we return None, and the object is not created
         """
         if 'empty' in kwargs and kwargs['empty']:
             return File.__new__(cls)
@@ -120,8 +115,7 @@ class FieldTest_File(File):
         """
         Initializes the object by parsing the data in the given file path. Calls parent's __init__
         ARGS:
-            self:       reference to the object calling this method (i.e. Java's THIS)
-            filePath:   String, containing absolute path to raw data file
+            filePath    String, containing absolute path to raw data file
         """
         if 'empty' in kwargs and kwargs['empty']:
             return
@@ -159,7 +153,14 @@ class FieldTest_File(File):
 # INITIALIZATION FUNCTIONS -----------------------------------------------------
 
     def loadFieldTestInfo(self):
-        """Parses data and info in given file (location is filePath) and stores it in the object's attributes"""
+        """
+        Parses data and info in given file (location is filePath) and stores
+         it in the object's attributes
+        ARGS:
+            None
+        RETURNS:
+            None
+        """
         #This opens the file, and stores the file stream into the variabe fs
         with open(self.FilePath,'r') as fs:
             #Read in Operating System Header Information

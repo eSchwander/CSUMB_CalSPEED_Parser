@@ -22,38 +22,20 @@ from _Test import Test
 
 class UDP_Test(Test):
 
-    """A UDP Test, which is a single upload thread, sending datagrams"""
+    """
+    A UDP Test, which is a single upload thread, sending datagrams
 
-    '''
-    # ------------------------------
-    # ---- INHERITED ATTRIBUTES ----
-    ConnectionType  = ""
-    ConnectionLoc   = ""
-    Threads         = None
-    TestNumber      = 0
-    ReceiverIP      = ""
-    Port            = 0000
-    TestInterval    = 0
-    MeasuringFmt    = None  #[kmKM] (Kbits, Mbits, KBytes, MBytes)
-    _mform_short    = None
-    _text           = ""
-    iPerfCommand    = ""
-    StartingLine    = ""
-
-    # ---- CLASS ATTRIBUTES ----
-    DatagramSize    = 0
-    SubTestNumber   = 0
-    TargetBandwidth = None  #n[KM]
-    # ------------------------------
-    '''
-
-
+    CLASS SPECIFIC ATTRIBUTES
+        DatagramSize        Integer, the size of datagram sent
+        SubTestNumber       Integer, this test's sub-test number (if a three part test)
+        TargetBandwidth     Integer
+    """
 
     def __new__(cls, *args, **kwargs):
         """
         Before creating an instance of the given file as a parsed object, we want to check
-        that the file is indeed a test file. This will see if the necessary text
-        is in the first few lines. If not, then we return None, and the object is not created
+         that the file is indeed a test file. This will see if the necessary text
+         is in the first few lines. If not, then we return None, and the object is not created
         """
         #Getting the Data String passed to this constructor that was passed in to the constructor
         if "dataString" in kwargs:
@@ -76,9 +58,8 @@ class UDP_Test(Test):
         """
         Used to initialize an object of this class
         ARGS:
-            self:       reference to the object calling this method (i.e. Java's THIS)
-            dataString: String, the raw text that will be parsed
-            eastWestIP: Tuple of two Strings, first String is the IP address of the East server, second the West
+            dataString  String, the raw text that will be parsed
+            eastWestIP  Tuple of two Strings, first String is the IP address of the East server, second the West
         """
         #If we are at this point, then the dataString contained "TCP", and we can
         # set the ConnectionType to "TCP"
@@ -178,35 +159,21 @@ from _Measurement import UDP_ServerReport as ServerReport
 
 class UDP_Thread(Thread):
 
-    """A Thread in a UDP test."""
-
-    '''
-    # ---- INHERITED ATTRIBUTES ----
-    ThreadNumber    = 0
-    DataDirection   = ""
-    LocalIP         = ""
-    LocalPort       = 0000
-    ServerIP        = ""
-    ServerPort      = 0000
-    Measurements    = []
-    FinalMsmt       = None
-
-    # ---- CLASS ATTRIBUTES ----
-    DatagramzSent = 0
-    ServerReport = None
-    # ----------------------------------
-    '''
-
+    """
+    A Thread in a UDP test.
+    CLASS SPECIFIC ATTRIBUTES
+        DatagramzSent   Integer, number of datagrams sent
+        ServerReport    UDP_ServerReport object
+    """
 
     def __init__(self, dataArr=None, threadNum=0, direction="UP", units=("KBytes", "Kbits/sec")):
         """
         Used to initialize an object of this class
         ARGS:
-            self:   reference to the object calling this method (i.e. Java's THIS)
-            dataArr:    List of Strings, each String is a measurement that will be parsed and stored in this object
-            ThreadNum:  Integer, the number that this thread is (generally between 3 and 6)
-            direction:  String, the direction of the data in this thread (UP or DOWN)
-            units:      Tuple of two Strings, the units being used by the measurements
+            dataArr     List of Strings, each String is a measurement that will be parsed and stored in this object
+            ThreadNum   Integer, the number that this thread is (generally between 3 and 6)
+            direction   String, the direction of the data in this thread (UP or DOWN)
+            units       Tuple of two Strings, the units being used by the measurements
         """
         #Call the parent class' __init__
         Thread.__init__(self, dataArr=dataArr, threadNum=threadNum, direction=direction, units=units)

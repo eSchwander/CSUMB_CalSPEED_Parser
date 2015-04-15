@@ -35,23 +35,19 @@ class File(Formatting, ErrorHandling):
     An abstract class that is the basis of the objects returned to a user
      asking for a file to be parsed.
     Inheritted by FieldTest_File and CrowdSource_File
+
+    ATTRIBUTES
+        FilePath            String, the path to the file being parsed
+        Filename            String, the name of the file (cut from the FilePath)
+        Date                String, the Date when the test was conducted
+        Time                String, the Time the test was conducted
+        EastWestSrvrIPs     Tuple of Strings, the IP addresses of the East and
+                             West server the files were connecting to
+        Tests               Dictionary, each test in the file, where each index
+                             is the type of test (TCP, UDP, PING, TCRT)
+        TestsByNum          Dictionary, each test in the file, where each index
+                             is the number of the test (ie. the order run)
     """
-
-    '''
-    # ------------------------------
-    # ---- CLASS ATTRIBUTES ----
-    FilePath        = ""
-    Filename        = ""
-    Date            = ""
-    Time            = ""
-    EastWestSrvrIPs = None
-    Tests           = None
-    TestsByNum      = None
-    _fileContentsByTest = None
-    # ------------------------------
-    '''
-
-
 
     def __init__(self, filePath="", eastWestIP=("0.0.0.0", "0.0.0.0")):
         """
@@ -60,6 +56,8 @@ class File(Formatting, ErrorHandling):
             self:       reference to the object calling this method (i.e. Java's THIS)
             filePath:   String, containing absolute path to raw data file
             eastWest:   Tuple of Strings, the IP addresses of the East and West server
+        RETURNS:
+            None
         """
         #Calling Formatting and ErrorHandling's initialization
         Formatting.__init__(self)
@@ -84,7 +82,13 @@ class File(Formatting, ErrorHandling):
 # INITIALIZATION FUNCTIONS ---------------------------------------------------------------------
 
     def loadHeaderInfo(self):
-        """Initializes the object by parsing the data in the given file path."""
+        """
+        Initializes the object by parsing the data in the given file path.
+        ARGS:
+            None
+        RETURNS:
+            None
+        """
         #This opens the file, and stores the file stream into the variabe fs
         with open(self.FilePath) as fs:
             #Reading in the Date and Time of the test
@@ -192,9 +196,9 @@ class File(Formatting, ErrorHandling):
     def parseLineAndSetAttr(self, fileStream, delimiter, attribute, hasParts=False):
         """
         Takes a file stream, and parses a specific line, gets the necessary values
-        from the line, and sets them in the object. If the object does not have the specified
-        variable (i.e. attribute is not specified in the class or __init__), then the function
-        will create the variable.
+         from the line, and sets them in the object. If the object does not have the specified
+         variable (i.e. attribute is not specified in the class or __init__), then the function
+         will create the variable.
         ARGS:
             fileStream      The file stream object to read from
             delimiter       String, what to look for in the file object
@@ -203,7 +207,7 @@ class File(Formatting, ErrorHandling):
         """
         #First, try to read from the file, to check if it is an actual file stream
         try:
-            __ = fileStream.read(1)
+            _ = fileStream.read(1)
             fileStream.seek(0)
         except:
             raise ValueError("You have not passed through an open file stream")
@@ -287,6 +291,10 @@ class File(Formatting, ErrorHandling):
          (to included any error messages in the tests) using the readAllTestsFromFile function,
          and the creates the specified Test objects. Assumes that self._fileContentsByTest
          contains all of the tests.
+        ARGS:
+            type_   String, the type of tests we are looking for
+        RETURNS:
+            None
         """
         #First we run the readAllTestsFromFile function, to make sure that self._fileContentsByTest
         # is set, and contains all of the test output
@@ -339,9 +347,9 @@ class File(Formatting, ErrorHandling):
     def readAllTestsFromFile(self):
         """
         Reads all of the content from self.FilePath, splits it by "Starting Test", and
-        stores the resulting tests in self._fileContentsByTest. If the length of
-        self._fileContentsByTest is 1, then there was a problem connecting, and we
-        set self._contains_Errors to True.
+         stores the resulting tests in self._fileContentsByTest. If the length of
+         self._fileContentsByTest is 1, then there was a problem connecting, and we
+         set self._contains_Errors to True.
         """
         #This is a check to see if the function has already run and found an
         # error in the output. This way, we don't unnecessarily run the function again
@@ -372,11 +380,12 @@ class File(Formatting, ErrorHandling):
     def getTest(self, type_, **kwargs):
         """
         Gets the object that meets the specified values. Type of test (PING, TCP, or UDP) must
-        be given, but all other attributes must be given through keyword arguments
+         be given, but all other attributes must be given through keyword arguments
         ARGS:
-            self:       reference to the object calling this method (i.e. Java's THIS)
             type_:      String, the type of test that will be searched for
-            kwargs:     Strings, the attributes that the test must have.
+            kwargs:     Strings, the attributes that the test must have. As keyword
+                         arguments, the argument name should be the attribute of the object
+                         we are using as criteria. The argument value is the expected value
         RETURNS:
             List of type _Test objects that meet the specified attributes in kwargs
         """
@@ -483,7 +492,7 @@ class File(Formatting, ErrorHandling):
     def __lt__(self, object):
         """
         This will use the datetime module to create a datetime object from the
-        Date and Time variables. The datetime object will be used in comparisons
+         Date and Time variables. The datetime object will be used in comparisons
         """
         return self._datetime_ < object._datetime_
     @__sameType

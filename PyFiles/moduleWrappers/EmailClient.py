@@ -33,7 +33,7 @@ class EmailClient(object):
 
     """
     A class that tracks email user settings, message values, and does some
-    error checking of new recipients. Main function to-be-used is send()
+     error checking of new recipients. Main function to-be-used is send()
     """
 
     def __init__(self, **kwargs):
@@ -143,7 +143,7 @@ class EmailClient(object):
     def addRecipient(self, *args, **kwargs):
         """
         Takes the given name/address pairs in args, and adds them to the correct
-        recipients field.
+         recipients field.
         ARGS:
             'args' will become a list of inputs, which should be Tuples of two Strings, the
              name and email address of the intended recipients.
@@ -198,7 +198,11 @@ class EmailClient(object):
     #END DEF
 
     def addAttachment(self, *args):
-        """Takes a number of files in 'args', and creates all of the attachment objects"""
+        """
+        Takes a number of files in 'args', and creates all of the attachment objects
+        ARGS:
+            unknown number of file paths (no keywords)
+        """
         for item in args:
             if isinstance(item, str) and os.path.isfile(item):
                 self.ATTACHMENTS.append(self.__makeAttachment(item))

@@ -6,10 +6,10 @@ _MEASUREMENT.PY
 AUTHOR(S):    Peter Walker    pwalker@csumb.edu
 
 PURPOSE:    Holds a single measurement of data transfer speed in a single test
-            (i.e. This object represent one line of text in a speed test)
-            This file include the base Measurement class, as well as the slightly
-            modified Final_Measurement class, and the more specialized
-            UDP_ServerReport class.
+             (i.e. This object represent one line of text in a speed test)
+             This file include the base Measurement class, as well as the slightly
+             modified Final_Measurement class, and the more specialized
+             UDP_ServerReport class.
 CLASSES:
     Measurement
     Final_Measurement
@@ -33,26 +33,24 @@ MEASUREMENT Class
 AUTHOR(S):    Peter Walker    pwalker@csumb.edu
 
 PURPOSE:    Holds a single measurement of data transfer speed in a single test
-            (i.e. This object represent one line of text in a speed test)
+             (i.e. This object represent one line of text in a speed test)
 -----------------------------------------------------------------------
 """
 
 
 class Measurement(Formatting):
 
-    """A generic Measurement object. Hold the start time, end time, speed, and size"""
+    """
+    A generic Measurement object. Hold the start time, end time, speed, and size
 
-    '''
-    # ------------------------------
-    # ---- CLASS ATTRIBUTES ----
-    TimeStart       = 0.0
-    TimeEnd         = 0.0
-    Size            = 0.0
-    size_units      = ""
-    Speed           = 0.0
-    speed_units     = ""
-    # ------------------------------
-    '''
+    ATTRIBUTES
+        TimeStart       Float, the time at which the measurement started
+        TimeEnd         Float, the time at which the measurement started
+        Size            Float, the size of data sent
+        Speed           Float, the speed at which the data was transmitted
+        size_units      String, the units of the size of data sent
+        speed_units     String, the units of the speed of data transmission
+    """
 
     def __init__(self, data, units=("KBytes","Kbits/sec")):
         """
@@ -112,7 +110,7 @@ FINAL_MEASUREMENT Class
 AUTHOR(S):    Peter Walker    pwalker@csumb.edu
 
 PURPOSE:    Holds a single measurement of data transfer speed in a single test
-            (i.e. This object represent one line of text in a speed test)
+             (i.e. This object represent one line of text in a speed test)
 -----------------------------------------------------------------------
 """
 
@@ -120,23 +118,6 @@ PURPOSE:    Holds a single measurement of data transfer speed in a single test
 class Final_Measurement(Measurement):
 
     """The same as a Measurment class, only with a modified __str__ statment"""
-
-    '''
-    # ------------------------------
-    # ---- INHERITED ATTRIBUTES ----
-    TimeStart       = 0.0
-    TimeEnd         = 0.0
-
-    Size            = 0.0
-    size_string     = ""
-    size_units      = ""
-    #_size_pad = ""
-
-    Speed           = 0.0
-    speed_string    = ""
-    speed_units     = ""
-    #_speed_pad = ""
-    '''
 
     def __init__(self, data, units=("KBytes","Kbits/sec")):
         """Call parent's __init__"""
@@ -167,32 +148,16 @@ PURPOSE:    Holds a single UDP Server Report
 
 class UDP_ServerReport(Measurement):
 
-    """Inherits Measurment, but adds a number of other attributes"""
+    """
+    Inherits Measurment, but adds a number of other attributes.
 
-    '''
-    # ------------------------------
-    # ---- INHERITED ATTRIBUTES ----
-    TimeStart       = 0.0
-    TimeEnd         = 0.0
-
-    Size            = 0.0
-    size_string     = ""
-    size_units      = ""
-    #_size_pad = ""
-
-    Speed           = 0.0
-    speed_string    = ""
-    speed_units     = ""
-    #_speed_pad = ""
-
-    # ---- CLASS ATTRIBUTES ----
-    Jitter          = 0
-    Dtgrams_Lost    = 0
-    Dtgrams_Sent    = 0
-    Dtgrams_Perc    = 0
-    Dtgrams_OoO     = 0
-    # ------------------------------
-    '''
+    ATTRIBUTES
+        Jitter          Float, the Jitter of the UDP connection
+        Dtgrams_Lost    Integer, number of datagrams lost
+        Dtgrams_Sent    Integer, number of datagrams sent
+        Dtgrams_Perc    Float, percent of datagrams lost
+        Dtgrams_OoO     Integer, number of datagrams received out of order
+    """
 
     def __init__(self, data, units=("KBytes","Kbits/sec")):
         """

@@ -1,7 +1,7 @@
 CSUMB's CPUC Project - Raw Text File Parser
 ============================================
 
-This project consists of a parser object, located in PyObjects.
+This project consists of a parser object, located in PyFiles/FileParser.
 Based on the type of raw data that one needs to parse, import FieldTest_File or
 CrowdSource_File.
 
@@ -16,9 +16,5 @@ parsedFile = FieldTest_File("/path/to/raw/file")
 
 
 --------------------------------------------
-This code was "forked" from my previous project at
-https://github.com/pwalker91/CPUC--iPerfParser_with_DB_Storage. This was forked
-after the November 1st, 2014 Commit.
-
 Please refer to Github Pages webpage for more information.
-http://pwalker91.github.io/CSUMB_CPUC-Test-Parser/
+http://pwalker91.github.io/CSUMB_CalSPEED_Parser/

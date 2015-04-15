@@ -20,37 +20,27 @@ from __Base import (Formatting, ErrorHandling)
 
 class Test(Formatting, ErrorHandling):
 
-    """An abstract Test class, which does some inital parsing and error checking"""
+    """
+    An abstract Test class, which does some inital parsing and error checking
 
-    '''
-    # ------------------------------
-    # ---- CLASS ATTRIBUTES ----
-    #e.g. TCP, UDP
-    ConnectionType  = ""
-    #e.g. West, East
-    ConnectionLoc   = ""
-
-    Threads         = None
-    TestNumber      = 0
-    ReceiverIP      = ""
-    Port            = 0000
-
-    TestInterval    = 0
-    MeasuringFmt    = None  #[kmKM] (Kbits, Mbits, KBytes, MBytes)
-    _mform_short    = None
-    _text           = ""
-    iPerfCommand    = ""
-    StartingLine    = ""
-    # ------------------------------
-    '''
-
-
+    ATTRIBUTES
+        ConnectionType  String, the type of connection this test was
+        ConnectionLoc   String, the location (East or West) of the server that
+                         this test connected to
+        Threads         Dictionary, indeces are 'UP' and 'DOWN', and hold the
+                         Thread objects of the test
+        TestNumber      Integer, the order number of this test
+        ReceiverIP      String, the IP address that this test was connected to
+        Port            Integer, the Port that this test was connected to
+        TestInterval    Integer, the length of time this test was running
+        MeasuringFmt    Tuple of String, [kmKM] evaluates to (Kbits, Mbits, KBytes, MBytes)
+    """
 
     def __new__(cls, *args, **kwargs):
         """
         Before creating an instance of the given file as a parsed object, we want to check
-        that the file is indeed a test file. This will see if the necessary text
-        is in the first few lines. If not, then we return None, and the object is not created
+         that the file is indeed a test file. This will see if the necessary text
+         is in the first few lines. If not, then we return None, and the object is not created
         """
         #Getting the Data String passed to this constructor that was passed in to the constructor
         if "dataString" in kwargs:
@@ -73,7 +63,6 @@ class Test(Formatting, ErrorHandling):
         """
         Used to initialize an object of this class
         ARGS:
-            self:       reference to the object calling this method (i.e. Java's THIS)
             dataString: String, the raw text that will be parsed
             eastWest:   Tuple of two Strings, first String is IP address of  East server, second is West
         """
@@ -135,9 +124,9 @@ class Test(Formatting, ErrorHandling):
 
         #Setting the ReceiverIP based on which IP address was found in the string
         if self.ConnectionLoc == "West":
-            __, self.ReceiverIP = EastWestIP
+            _, self.ReceiverIP = EastWestIP
         elif self.ConnectionLoc == "East":
-            self.ReceiverIP, __ = EastWestIP
+            self.ReceiverIP, _ = EastWestIP
         #END IF/ELIF
         self.Port = "5001"
     #END DEF

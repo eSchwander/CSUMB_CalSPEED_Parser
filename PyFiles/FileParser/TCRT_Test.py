@@ -33,26 +33,22 @@ PURPOSE-  This class will hold an individual hop within the traceroute. This obj
 
 class Hop(Formatting):
 
-    """A single traceroute 'hop', which is the router IP, name, and RTT"""
+    """
+    A single traceroute 'hop', which is the router IP, name, and RTT
 
-    '''
-    # ------------------------------
-    # ---- CLASS ATTRIBUTES ----
-    HopNum      = 0
-    RTT         = 0.0
-    RouterName  = ""
-    RouterIP    = ""
-    _Timeout    = False
-    # ------------------------------
-    '''
-
+    ATTRIBUTES
+        HopNum      Integer, the sequence number of this hop
+        RTT         Float, this hop's RTT
+        RouterName  String, the name of this hop's router
+        RouterIP    String, the IP address of the hop's router
+        _Timeout    Boolean, whether this hop timed out or not
+    """
 
     def __init__(self, dataString):
         """
         Used to initialize an object of this class
         ARGS:
-            self:       reference to the object calling this method (i.e. Java's THIS)
-            dataString: String, the raw text that will be parsed
+            dataString  String, the raw text that will be parsed
         """
         #Inheritting our formatting and error handling
         Formatting.__init__(self)
@@ -171,32 +167,18 @@ class TCRT_Test(Test):
     """
     A Traceroute Test, which are the RTTs from the device running the test
      to all routers along a network path to a specified destination
+
+    CLASS SPECIFIC ATTRIBUTES
+        Hops        List of Hop objects
+        MaxHops     Integer, the max number of Hops in this traceroute test
+        PacketSize  Integer, the size of packet sent
     """
-
-    '''
-    # ------------------------------
-    # ---- INHERITED ATTRIBUTES ----
-    ConnectionType  = ""
-    ConnectionLoc   = ""
-    TestNumber      = 0
-    ReceiverIP      = ""
-    StartingLine    = ""
-    _text           = ""
-
-    # ---- CLASS ATTRIBUTES ----
-    Hops        = None
-    MaxHops     = 0
-    PacketSize  = 0
-    # ------------------------
-    '''
-
-
 
     def __new__(cls, *args, **kwargs):
         """
         Before creating an instance of the given file as a parsed object, we want to check
-        that the file is indeed a test file. This will see if the necessary text
-        is in the first few lines. If not, then we return None, and the object is not created
+         that the file is indeed a test file. This will see if the necessary text
+         is in the first few lines. If not, then we return None, and the object is not created
         """
         #Getting the Data String passed to this constructor that was passed in to the constructor
         if "dataString" in kwargs:
@@ -219,9 +201,8 @@ class TCRT_Test(Test):
         """
         Used to initialize an object of this class
         ARGS:
-            self:       reference to the object calling this method (i.e. Java's THIS)
-            dataString: String, the text that is going to be parsed
-            eastWestIP: Tuple of two Strings, first String is the IP address of the East server, second the West
+            dataString  String, the text that is going to be parsed
+            eastWestIP  Tuple of two Strings, first String is the IP address of the East server, second the West
         """
         #If we are at this point, then the dataString contained "traceroute", and we can
         # set the ConnectionType to "TCRT"
@@ -266,7 +247,7 @@ class TCRT_Test(Test):
     def parseHops(self):
         """
         Parses out all of the Ping test information (individual ping RTTs and total RTT stats)
-        from the text stored in self._text
+         from the text stored in self._text
         """
         #We are going to loop through each line in self._text. If the line is a Hop line
         # (where it contains either 'ms' or '*'), then we pass it to our Hop class, and
@@ -286,7 +267,7 @@ class TCRT_Test(Test):
         """
         Returns a list of the Hop's RTT values, for more simple use by other scripts
         ARGS:
-            self:   reference to the object calling this method (i.e. Java's THIS)
+            None
         RETURNS:
             List, the values in the objects in self.Hops in sequence
         """
@@ -298,7 +279,7 @@ class TCRT_Test(Test):
         """
         Returns a List of the default CSV values needed for the creation of a CSV
         ARGS:
-            self:   reference to the object calling this method (i.e. Java's THIS)
+            None
         RETURNS:
             List, the values necessary for the creation of the CSV file
         """

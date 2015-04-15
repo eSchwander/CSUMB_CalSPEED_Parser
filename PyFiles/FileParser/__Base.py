@@ -33,7 +33,15 @@ PURPOSE:    Provides a base class for inheritting variables that pertain
 
 class Formatting(object):
 
-    """A Class for common string formatting across objects"""
+    """
+    A Class for common string formatting across objects
+
+    ATTRIBUTES:
+        StringPadding       A String of spaces, used in different classes
+                             __str__ functions.
+        ConfirmedCarriers   A list of Strings, the possible cellular carriers
+                             that we will find in the files that will be parsed
+    """
 
     def __init__(self):
         """Object initialization"""
@@ -59,7 +67,16 @@ PURPOSE:    Provides a base class for inheritting variables that pertain
 
 class ErrorHandling(object):
 
-    """A simple class containing error types and codes"""
+    """
+    A simple class containing error types and codes
+
+    ATTRIBUTES:
+        ContainsErrors  Boolean, will be set to True if the object, while
+                         parsing a bit of text, finds an error
+        ErrorCode       Integer, the Error Code (used to get Error Type and Message)
+        ErrorType       String, the type of error encountered
+        ErrorMessage    String, a more descriptive message of the error encountered
+    """
 
     #Some Static class variables
     __ErrorTypes = {

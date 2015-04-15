@@ -23,15 +23,13 @@ from __Base import Formatting
 
 class PING_Packet(Formatting):
 
-    """A simple class for holding the information from a single PING packet"""
+    """
+    A simple class for holding the information from a single PING packet
 
-    '''
-    # ------------------------------
-    # ---- CLASS VARIABLES ----
-    RTT = -1
-    TTL = 0
-    # ------------------------------
-    '''
+    ATTRIBUTES
+        RTT     Float, the Round Trip Time of the Ping packet
+        TTL     Float, the Time To Live of the Ping packet
+    """
 
     def __init__(self, dataString, _outputType1=True):
         """Object initialization"""
@@ -78,32 +76,24 @@ class PING_Packet(Formatting):
 
 class PING_Test(Test):
 
-    """A PING test, containing parsed information about ping packets sent"""
+    """
+    A PING test, containing parsed information about ping packets sent
 
-    '''
-    # ------------------------------
-    # ---- INHERITED ATTRIBUTES ----
-    ConnectionType  = ""
-    ConnectionLoc   = ""
-    TestNumber      = 0
-    ReceiverIP      = ""
-    StartingLine    = ""
-    _text           = ""
+    INHERITED ATTRIBUTES
+        ConnectionType
+        ConnectionLoc
+        TestNumber
+        ReceiverIP
 
-    # ---- CLASS ATTRIBUTES ----
-    Times           = None
-    PacketsSent     = 10
-    PacketsReceived = 0
-    PacketsLost     = 10
-
-    RTTMin          = -1
-    RTTMax          = -1
-    RTTAverage      = -1
-    is_outputType1  = True
-    # ------------------------------
-    '''
-
-
+    CLASS ATTRIBUTES
+        Times           List of Ping Packets
+        PacketsSent     Integer, number of packets sent
+        PacketsReceived Integer, number of packets received
+        PacketsLost     Integer, number of packets lost
+        RTTMin          Float, the minimum RTT value
+        RTTMax          Float, the max RTT value
+        RTTAverage      Float, the average RTT value
+    """
 
     def __new__(cls, *args, **kwargs):
         """
@@ -132,9 +122,8 @@ class PING_Test(Test):
         """
         Used to initialize an object of this class
         ARGS:
-            self:       reference to the object calling this method (i.e. Java's THIS)
-            dataString: String, the text that is going to be parsed
-            eastWestIP: Tuple of two Strings, first String is the IP address of the East server, second the West
+            dataString  String, the text that is going to be parsed
+            eastWestIP  Tuple of two Strings, first String is the IP address of the East server, second the West
         """
         #If we are at this point, then the dataString contained "ping", and we can
         # set the ConnectionType to "PING"
@@ -175,7 +164,13 @@ class PING_Test(Test):
 # INITIALIZATION FUNCTIONS -----------------------------------------------------
 
     def parsePings(self, dataString):
-        """ Parses out all of the Ping test information (individual ping RTTs and total RTT stats)"""
+        """
+        Parses out all of the Ping test information (individual ping RTTs and total RTT stats)
+        ARGS:
+            None
+        RETURNS:
+            None
+        """
         #We start our function be splitting the data string into individual chunks,
         # which we will then parse individually
         dataChunks = [elem.strip() for elem in dataString.split("\n\n") if elem]
@@ -261,7 +256,7 @@ class PING_Test(Test):
         Calculates the R-Value and MOS score for this connection based on the RTT
          values recorded in the test.
         ARGS:
-            delayThreshold  Integer, the threshold millisecond value of the PING RTT
+            delayThreshold      Integer, the threshold millisecond value of the PING RTT
         RETURNS:
             List of two Integers, the R-Value and MOS score of the PING test
         """
