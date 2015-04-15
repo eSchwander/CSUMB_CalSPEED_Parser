@@ -35,6 +35,7 @@ def csvExport(a_2D_Array, fileNameToSave):
         raise ValueError("You need to pass in a legitimate file path through the argument \"fileNameToSave\"")
     if (splitext(fileNameToSave)[-1].lower() != ".csv"):
         fileNameToSave = fileNameToSave+".csv"
+
     #Open the file into a file write stream
     with open(abspath(fileNameToSave),"w", encoding="utf-8") as fs:
         #For each row of our 2D array, we are going to write the contents of
@@ -66,6 +67,7 @@ def csvImport(fileNameToImport):
     fileNameToImport = abspath(fileNameToImport)
     if not isfile(fileNameToImport) and (splitext(fileNameToImport)[-1].lower() != ".csv"):
         raise RuntimeError("The argument \"fileNameToImport\" must contain a legitimate CSV file")
+
     #Initialize an empty array, which will hold the parsed CSV file, and
     # also open the file in a file read stream
     a_2D_Array = []

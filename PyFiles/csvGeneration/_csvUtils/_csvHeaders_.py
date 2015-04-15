@@ -6,7 +6,7 @@ _CSV HEADERS.PY
 AUTHOR(S):     Peter Walker    pwalker@csumb.edu
 
 PURPOSE-  This file holds a number of variables that will be used
-        by other scripts within this project
+            by the csvDataExtractor ad csvGenerator
 ------------------------------------------------------------------------
 """
 if __name__=="__main__":
@@ -14,19 +14,19 @@ if __name__=="__main__":
 
 '''
 Headers for the CSV file creation
-  0  csv Default Headers    The basic file information always included in the csv
-  1  csv Extra Headers      Other extra information not usually calculated
-  2  csv PING Headers       PING test statistics at end of test
-  3  csv RvMos Headers      R-value and MOS score based on PING test values
-  4  csv UDP Headers        Jitter and Loss from server report, Time is test interval time
-  5  csv TCP Headers        Sum of final measurement's speed from all threads
-  6  csv Stat Headers       StDev and Median information from TCP tests
-  7  csv Stat-C Headers      StDev and Median information from
-                             TCP tests combined into one dataset
-  8  csv Stat-O Headers     The average, standard deviation and (mean - 1 pstdev) for all
-                             TCP tests combined, separated by data direction
-  9  csv Qual Headers       TCP Quality. PR is average total download time. Pct is a value from
-                             0-1 representing number of measurements that had non-zero values
+ 1  csv Default Headers     The basic file information always included in the csv
+ 2  csv Extra Headers       Other extra information not usually calculated
+ 3  csv PING Headers        PING test statistics at end of test
+ 4  csv RvMos Headers       R-value and MOS score based on PING test values
+ 5  csv UDP Headers         Jitter and Loss from server report, Time is test interval time
+ 6  csv TCP Headers         Sum of final measurement's speed from all threads
+ 7  csv Stat Headers        StDev and Median information from TCP tests
+ 8  csv Stat-C Headers      StDev and Median information from
+                              TCP tests combined into one dataset
+ 9  csv Stat-A Headers      The average, standard deviation and (mean - 1 pstdev) for all
+                              TCP tests combined, separated by data direction
+10  csv Qual Headers        TCP Quality. PR is average total download time. Pct is a value from
+                              0-1 representing number of measurements that had non-zero values
 '''
 FTcsvHeadersOrder = ["csv Default Headers",
                      "csv Extra Headers",
@@ -57,9 +57,9 @@ In this file, add a new list element to FTcsvHeadersOrder or CScsvHeadersOrder. 
 
 In the csvDataExtractor.py file, add a new function to the csvDataExtractor class,
   using the algorithm you wish to generate and return the necessary values.
-In the csvGenerator.py file, add the function created in csvDataExtractor to the class
-  dictionary OPTS, giving it the appropriate index number. The order of functions should
-  match the above.
+In the csvGenerator.py file, add the name of the function created in csvDataExtractor
+  to the dictionary OPTS, giving it the appropriate index number. The order of functions should
+  match the numbers in the docstring at the beginning of this file.
 
 CURRENT FUNCTIONS:
     extractDefaultVals
@@ -137,6 +137,11 @@ FieldTestHeaders["csv Qual Headers"] = \
 
 '''
 #-------------- The Better Column Order --------------#
+#This column order is currently not being used. As we are using the older column
+# order, the csvDataExtractor functions need to shuffle the order of values to
+# reflect the column header order above. If the new column order below is used,
+# then those hacks can be removed.
+
 FieldTestHeaders = {}
 FieldTestHeaders["csv Default Headers"] = \
         ["Tester", "LocationID", "Date", "Time", "Provider", "Operator",
@@ -163,19 +168,11 @@ FieldTestHeaders["csv Stat Headers"] = \
          "eUpStdDev1", "eUpMedian1", "eDnStdDev1", "eDnMedian1",
          "eUpStdDev2", "eUpMedian2", "eDnStdDev2", "eDnMedian2" ]
 FieldTestHeaders["csv Stat-S Headers"] = \
-        ["sUpMean", "sUpStdDev", "sUpMean_1",
-         "sDnMean", "sDnStdDev", "sDnMean_1" ]
+        ["cUpMean", "cUpStdDev", "cUpMean_1",
+         "cDnMean", "cDnStdDev", "cDnMean_1" ]
 FieldTestHeaders["csv Stat-A Headers"] = \
         ["aUpMean", "aUpStdDev", "aUpMean_1",
          "aDnMean", "aDnStdDev", "aDnMean_1" ]
-
-# This overrides the headers in Stat-S, as we are going to, in general, use the
-# algorithm specified in the corresponding function in csvDataExtractor
-FieldTestHeaders["csv Stat-S Headers"] = \
-        ["cUpMean", "cUpStdDev", "cUpMean_1",
-         "cDnMean", "cDnStdDev", "cDnMean_1" ]
-#
-
 FieldTestHeaders["csv Qual Headers"] = \
         ["wTCPUpPR1", "wTCPUpPct1", "wTCPDnPR1", "wTCPDnPct1",
          "wTCPUpPR2", "wTCPUpPct2", "wTCPDnPR2", "wTCPDnPct2",
@@ -218,14 +215,6 @@ CrowdSourceHeaders["csv Stat-S Headers"] = \
 CrowdSourceHeaders["csv Stat-A Headers"] = \
         ["aUpMean", "aUpStdDev", "aUpMean_1",
          "aDnMean", "aDnStdDev", "aDnMean_1" ]
-
-# This overrides the headers in Stat-S, as we are going to, in general, use the
-# algorithm specified in the corresponding function in csvDataExtractor
-CrowdSourceHeaders["csv Stat-S Headers"] = \
-        ["cUpMean", "cUpStdDev", "cUpMean_1",
-         "cDnMean", "cDnStdDev", "cDnMean_1" ]
-#
-
 CrowdSourceHeaders["csv Qual Headers"] = \
         ["wTCPUpPR", "wTCPUpPct", "wTCPDnPR", "wTCPDnPct",
          "eTCPUpPR", "eTCPUpPct", "eTCPDnPR", "eTCPDnPct" ]
