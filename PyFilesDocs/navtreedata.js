@@ -1,9 +1,9 @@
 var NAVTREE =
 [
   [ "CalSPEED Parser", "index.html", [
-    [ "Packages", null, [
-      [ "Packages", "namespaces.html", "namespaces" ],
-      [ "Package Functions", "namespacemembers.html", [
+    [ "Namespaces", null, [
+      [ "Namespace List", "namespaces.html", "namespaces" ],
+      [ "Namespace Members", "namespacemembers.html", [
         [ "All", "namespacemembers.html", null ],
         [ "Functions", "namespacemembers_func.html", null ],
         [ "Variables", "namespacemembers_vars.html", null ]
@@ -28,7 +28,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_____base_8py.html",
-"classcsv_generation_1_1csv_generator_1_1csv_generator.html#a0cb556b61bd434ecb383350df10608b6"
+"classcsv_generation_1_1csv_generator_1_1csv_generator.html#a217ea35cde41831d7325d299f57831ff"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
