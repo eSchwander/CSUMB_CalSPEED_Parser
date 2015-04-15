@@ -71,12 +71,11 @@ def main(**kwargs):
     #Sending the emails, and getting the return boolean
     wasSent = emailClient.send()
 
-    #This IF/ELIF block is to remove the CSVs created after they have been emailed.
-    #We are assuming that the emailing worked, and that the files now need to be
-    # removed if they exist.
+    #This IF block checks that the email was sent. If so, then we can archive the
+    # daily results CSV
     if wasSent:
-        print("Removing daily CSV...")
-        os.remove(dailyCSV)
+        print("Archiving daily CSV...")
+        shutil.move(dailyCSV, CSA_DIR)
     #END IF
 
     print("Operations completed. Now exitting...")

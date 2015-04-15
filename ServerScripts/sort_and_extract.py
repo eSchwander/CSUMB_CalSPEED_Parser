@@ -163,7 +163,7 @@ def main(**kwargs):
         if numPar > 0:
             CSV_GEN.setOpts("1 2 3 4 5 6 7 8 10")
             _makeBaseCSVs(CSV_DIR, CSV_GEN)
-            _makeDateCSVs(CSV_DIR, CSV_GEN)
+            #_makeDateCSVs(CSV_DIR, CSV_GEN)
             shutil.rmtree(TMP_DIR)
         else:
             print("No files could be processed.")
