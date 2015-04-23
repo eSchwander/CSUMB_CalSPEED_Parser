@@ -141,8 +141,78 @@ SERVER SCRIPT SETUP:
 	every day at 11:20pm, 'email_weekly' is run every Sunday at 11:22pm, and
 	'archive' is run every Sunday at 11:59pm.
 
+	  'sort_and_extract' looks for new raw data files in the UploadData
+	directory. If new files are found, they are parsed, and the necessary
+	values extracted and added to the correct CSV.
+	  'email_*' sends an email with the most recent CSV changes to specified
+	recipients. Some of the emails are for error checking only, while others
+	are more official emails. Functionality that is common to both 'email_daily'
+	and 'email_weekly' is stored in 'email_base'.
+	  'archive' will move any files in ProcessedData and csvResults to the
+	correct folders in ARCHIVE at 11:59pm on Sunday. If there are copies of a
+	CSV file in CSVs_Archive and csvResults, then a duplicate of one is made,
+	and both are maintained.
+
 
 
 SERVER FILE SYSTEM SETUP:
 	  Here I'll talk about how the folders are all set up on the server, what
 	each one holds, and other such things.
+	  This is a broad overview of the server setup, starting from the home
+	folder of the user we have access to.
+
+	USER
+		crontab_config.txt
+		ARCHIVE
+			CSVs_Archive
+			DATA_Archive
+		BACKUPS
+		commands
+			sort_and_extract.py
+			archive.py
+			...
+			_sensitiveInfo				(1)
+			PyFiles
+				FileParser
+					FieldTest_File.py
+					TCP_Test.py
+					...
+					_sensitiveInfo		(2)
+				csvGeneration
+				moduleWrappers
+		csvResults
+		dev
+		ExceptionFiles
+		ProcessedData
+		UploadData
+
+
+	- crontab_config: This holds the cron job commands that should be used. To
+			add them to your user's crontab,
+			execute 'crontab crontab-config.txt'
+	- ARCHIVE: This folder will hold an archive of all of the 'daily results'
+			CSVs, as well as the processed data
+	- BACKUPS: This folder will hold yearly backups of the data uploaded, which
+			have been zipped into a smaller file format
+	- commands: This folder holds all of the script and class files to be used
+		- *.py: Python scripts that will be used during cronjob execution
+		- PyFiles: This folder holds all of the Python class files, necessary
+				for parsing raw text files, and performing special functions,
+				like generating a CSV
+			- FileParser: This is the folder that holds all of the Python class
+					files for the main work of the server, parsing raw data
+					files. Inside of this directory, there are a number of
+					Python files, as well as a "sensitive info" folder. The
+					sensitive info folder holds a Python file (that is not on
+					Github) which contains the IP addresses of the East and
+					West server
+	- csvResults: This folder holds the daily CSVs, as well as the
+			'all_test_results' CSV. Once the CSVs are no longer going to be
+			appended to (i.e. end of the day), they are moved to
+			ARCHIVE/CSVs_Archive
+	- dev: This folder will contain Python files that I am testing
+	- ExceptionFiles: This folder will hold raw data files that caused an error
+			during parsing, and should be examined later
+	- ProcessedData: This folder will hold all raw data files that have been
+			successfully parsed, and their values added to the necessary CSVs
+	- UploadData: This folder is where new raw data files are uploaded
