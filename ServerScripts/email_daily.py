@@ -83,6 +83,7 @@ def main(**kwargs):
         location = "/home/gicdata1/DailyUpdate"
         try:
             shutil.copy2(dailyCSV, location)
+            print("Copying Daily CSV Results to gicdata1 folder...")
         except:
             print("Unable to copy daily CSV to location.\n"+
                   "File: {}\n".format(dailyCSV)+
