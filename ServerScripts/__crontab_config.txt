@@ -33,7 +33,7 @@ FIELDDEV=/home/WirelessBBDTester/dev_peter/commands/
   #This finds the daily CSV that needs to be emailed at the end of the day
   #Runs every day at 11:20pm
 #20 23 * * * python3 $CROWDDEV/email_daily.py 'crowdsource'
-20 23 * * * python3 $CROWDHOME/email_daily.py 'crowdsource'
+20 23 * * * python3 $CROWDHOME/email_daily.py 'crowdsource' -gic-cp
 
   #This creates the weekly CSV that needs to be emailed at the end of the day
   # on Sundays. Runs every day at 11:20pm
