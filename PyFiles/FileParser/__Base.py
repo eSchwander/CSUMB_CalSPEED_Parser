@@ -120,9 +120,9 @@ class ErrorHandling(object):
 
     def __setErrorCode(self, code, *args):
         """Sets this objects Error Code to the given code, and ContainsErrors to True"""
-        assert (code in self.__ErrorTypes,
-                "Error code must be one of these types.\n"+
-                "{}".format(self.ErrorTypes.keys()))
+        assert (code in self.__ErrorTypes
+                ), ("Error code must be one of these types.\n"+
+                    "{}".format(self.__ErrorTypes.keys()))
         self.ErrorCode = code
         self.ContainsErrors = True
         self.ErrorType = self.__ErrorTypes[code]

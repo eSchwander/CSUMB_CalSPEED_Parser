@@ -407,8 +407,9 @@ class CrowdSource_File(File):
         A function used by loadCrowdSourceInfo to parse for multiple location coordinates
         in the file based on type (everything, GPS, or Network)
         """
-        assert (type_ in ["", "GPS", "Network"],
-                "Your type of Location values were not one of the options:"+str(["", "GPS", "Network"]))
+        assert (type_ in ["", "GPS", "Network"]
+                ),("Your type of Location values were not one of "+
+                   "the options:"+str(["", "GPS", "Network"]))
         #Now we will look for the specified types of Location information
         latitudes = getLinesWith(fileStream, type_+"Latitude:")
         longitudes = getLinesWith(fileStream, type_+"Longitude:")

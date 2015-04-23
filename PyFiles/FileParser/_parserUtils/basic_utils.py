@@ -33,8 +33,9 @@ def getLinesWith(fileStream, delimiter):
     RETURNS:
         occurences:     List of Strings, containing the fully read line that contained the delimiter
     """
-    assert (hasattr(fileStream, 'readable') and hasattr(fileStream, 'writable'),
-            "You must pass in a file object to read from.")
+    assert (hasattr(fileStream, 'readable') and
+            hasattr(fileStream, 'writable')
+            ), ("You must pass in a file object to read from.")
     #Saving the current cursor location of the file stream
     startingPlace = fileStream.tell()
     occurences = []

@@ -239,10 +239,10 @@ class File(Formatting, ErrorHandling):
     def __parseLineAndSetMultAttrs(self, fileStream, delimiter, attribute):
         #We need to check that the necessary argument types have been passed through
         # the function if hasParts was set to True
-        assert (isinstance(attribute, list),
-                "You need to pass in a LIST of attributes to set in the 'attribute' arg.")
-        assert (len(delimiter) == len(attribute),
-                "'delimiter' and 'attribute' must have the same number of values")
+        assert (isinstance(attribute, list)
+                ),("You need to pass in a LIST of attributes to set in the 'attribute' arg.")
+        assert (len(delimiter) == len(attribute)
+                ),("'delimiter' and 'attribute' must have the same number of values")
         #END ASSERTs
         #Now we are going to loop through each sub-delimiter, splitting the string on it. We also
         # keep track of what it's index is. The value parsed is then put into the variable
@@ -268,8 +268,8 @@ class File(Formatting, ErrorHandling):
         ARGS:
             attributes  List of Strings, the object attributes to set to "N/A"
         """
-        assert(isinstance(attributes, list),
-               "The attributes argument must be a List of attributes in the class.")
+        assert(isinstance(attributes, list)
+               ),("The attributes argument must be a List of attributes in the class.")
         for elem in attributes:
             try:
                 self.__dict__[elem] = "NA" if not self.__dict__[elem] else self.__dict__[elem]
@@ -390,8 +390,8 @@ class File(Formatting, ErrorHandling):
             List of type _Test objects that meet the specified attributes in kwargs
         """
         #Checking that the type is one of the possible types
-        assert (type_ in self.Tests,
-                "The \"type_\" was not of the possible types. "+str(self.Tests.keys()))
+        assert (type_ in self.Tests
+                ),("The \"type_\" was not of the possible types. "+str(self.Tests.keys()))
         #If no other attributes were passed in through kwargs, then we just return all
         # of the test of that type
         if len(kwargs) == 0:
@@ -481,9 +481,9 @@ class File(Formatting, ErrorHandling):
 
     def __sameType(func):
         def wrapper(*args, **kwargs):
-            assert (isinstance(args[1], args[0].__class__),
-                    "You must compare the same type of object.\n"+
-                    "Was given: "+str(type(args[0]))+" & "+str(type(args[1])))
+            assert (isinstance(args[1], args[0].__class__)
+                    ),("You must compare the same type of object.\n"+
+                       "Was given: "+str(type(args[0]))+" & "+str(type(args[1])))
             return func(*args, **kwargs)
         return wrapper
     #END DEF

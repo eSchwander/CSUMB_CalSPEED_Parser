@@ -53,8 +53,8 @@ class Hop(Formatting):
         #Inheritting our formatting and error handling
         Formatting.__init__(self)
         self.StringPadding = self.StringPadding * 3
-        assert (isinstance(dataString, str),
-                "Argument 'dataString' must be a string")
+        assert (isinstance(dataString, str)
+                ),("Argument 'dataString' must be a string")
         #END IF
         self.Pings = []
         #Now we do the real parsing
