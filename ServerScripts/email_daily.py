@@ -78,6 +78,17 @@ def main(**kwargs):
         shutil.move(dailyCSV, CSA_DIR)
     #END IF
 
+    #This bit is a little hardcoded, and is meant only to be run on the Crowd Source server
+    if "-gic-cp" in sys.argv:
+        location = "/home/gicdata1/DailyUpdate"
+        try:
+            shutil.copy2(dailyCSV, location)
+        except:
+            print("Unable to copy daily CSV to location.\n"+
+                  "File: {}\n".format(dailyCSV)+
+                  "Folder: {}\n".format(location),file=sys.stderr)
+    #END IF
+
     print("Operations completed. Now exitting...")
 #END MAIN
 

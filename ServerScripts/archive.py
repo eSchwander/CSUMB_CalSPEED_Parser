@@ -42,12 +42,12 @@ def __moveNO(file, directory, copy=False):
     """
     file = os.path.abspath(file)
     directory = os.path.abspath(directory)
-    if not os.path.isfile(file):
-        raise RuntimeError("The given file must be a legitimate file. "+
-                           "Was given '{}'.".format(file))
-    if not os.path.isdir(directory):
-        raise RuntimeError("The given directory must be a legitimate directory. "+
-                           "Was given '{}'.".format(directory))
+    assert (os.path.isfile(file),
+            "The given file must be a legitimate file. "+
+            "Was given '{}'.".format(file))
+    assert (os.path.isdir(directory),
+            "The given directory must be a legitimate directory. "+
+            "Was given '{}'.".format(directory))
     copyCount = 1
     newName = os.path.basename(file)
     listFiles = os.listdir(directory)
@@ -186,8 +186,8 @@ def main(**kwargs):
 
     #Making sure that each folder above is created, and creating it if it is not
     for path in [PAR_DIR, CSV_DIR, ARC_DIR, DAT_DIR, CSA_DIR, BKP_DIR]:
-        if not os.path.isdir(path):
-            raise ValueError("The path '{}' must exist for this script to run.".format(path))
+        assert (os.path.isdir(path),
+                "The path '{}' must exist for this script to run.".format(path))
     #END FOR
 
     #Setting some paths to CSVs that are common to all files

@@ -128,11 +128,12 @@ def __debug(logFileLoc, emailAddress, fullDebug=False, funcName=""):
 def __checkSysArg(func):
     """Wrapper function for checking that 'field' or 'crowd' was passed in"""
     def checkSysArgWrapper(*args, **kwargs):
-        if len(sys.argv)<2:
-            raise RuntimeError("You must pass in another system argument for this script to run.")
+        assert (len(sys.argv)<2, "Too few system arguements. "+
+                                 "You must pass in another system argument for this script to run.")
         sys.argv[1] = sys.argv[1].lower()
-        if sys.argv[1] != "fieldtest" and sys.argv[1] != "crowdsource":
-            raise RuntimeError("You must pass in what kind of file will be parsed. 'FieldTest' or 'CrowdSource'")
+        assert (sys.argv[1] in ['fieldtest', 'crowdsource'],
+                "You must pass in what kind of file will be parsed, 'FieldTest' or 'CrowdSource'.\n"+
+                "Was given '{}'".format(sys.argv[1]))
 
         #This set some variables that we will be using later, depending on whether we are
         # parsing Field Test files, or Crowd Source files

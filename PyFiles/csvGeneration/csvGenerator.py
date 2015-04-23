@@ -161,9 +161,9 @@ class csvGenerator(object):
         RETURNS:
             Boolean, whether options were set or not
         """
-        if not isinstance(opts, str):
-            raise ValueError("The options chosen must be passed in as a string. "+
-                             "Was given a {}".format(type(opts)))
+        assert (isinstance(opts, str),
+                "The options chosen must be passed in as a string. "+
+                "Was given a {}".format(type(opts)))
         #END IF
         if opts=='':
             print("These are your possible CSV options. Please input multiple with spaces...")
