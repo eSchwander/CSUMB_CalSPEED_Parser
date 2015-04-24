@@ -64,10 +64,12 @@ class csvDataExtractor(object):
         A wrapper that takes the index of an item in the dictionary 'headers', which
          will likely be a reference to the headers imported at the beginning of this file
         """
-        assert (isinstance(headers, dict),
+        assert (isinstance(headers, dict)
+                ),(
                 "You must pass in a dictionary of header strings. "+
                 "Was given a {}".format(type(headers)))
-        assert (headerIndex in headers,
+        assert (headerIndex in headers
+                ),(
                 "The header index given must exist in the 'headers' dictionary. "+
                 "'{}' is not in this dictionary".format(headerIndex))
         #Now that our error checks are done, we can actually call our wrapper

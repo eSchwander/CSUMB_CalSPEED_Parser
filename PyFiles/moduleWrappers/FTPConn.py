@@ -71,10 +71,12 @@ class FTPConnection(object):
         RAISES:
             None. Prints error message if email was not sent
         """
-        assert ("username" in self.cfg and "host" in self.cfg,
+        assert ("username" in self.cfg and "host" in self.cfg
+                ),(
                 "The necessary configuration information has not been set.\n"+
                 "'host' and 'username' must be set.")
-        assert ("password" in self.cfg or "keyfile" in self.cfg,
+        assert ("password" in self.cfg or "keyfile" in self.cfg
+                ),(
                 "The necessary configuration information has not been set.\n"+
                 "'password' or 'keyfile' must be set.")
         #END IF

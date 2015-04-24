@@ -161,7 +161,8 @@ class csvGenerator(object):
         RETURNS:
             Boolean, whether options were set or not
         """
-        assert (isinstance(opts, str),
+        assert (isinstance(opts, str)
+                ),(
                 "The options chosen must be passed in as a string. "+
                 "Was given a {}".format(type(opts)))
         #END IF
