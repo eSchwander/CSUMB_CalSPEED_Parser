@@ -305,7 +305,6 @@ class csvGenerator(object):
             return (True,"")
         else:
             self.errorCount += 1
-            traceback.print_exception(*sys.exc_info(), file=sys.stderr)
             print("Errored File: {}\n".format(filePath), file=sys.stderr)
             #If we have been given an Error Directory, and the directory exists, then
             # we will make a copy of the file that gave us an error, and move it to
