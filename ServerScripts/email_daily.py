@@ -71,13 +71,6 @@ def main(**kwargs):
     #Sending the emails, and getting the return boolean
     wasSent = emailClient.send()
 
-    #This IF block checks that the email was sent. If so, then we can archive the
-    # daily results CSV
-    if wasSent:
-        print("Archiving daily CSV...")
-        shutil.move(dailyCSV, CSA_DIR)
-    #END IF
-
     #This bit is a little hardcoded, and is meant only to be run on the Crowd Source server
     if "-gic-cp" in sys.argv:
         location = "/home/gicdata1/DailyUpdate"
@@ -88,6 +81,13 @@ def main(**kwargs):
             print("Unable to copy daily CSV to location.\n"+
                   "File: {}\n".format(dailyCSV)+
                   "Folder: {}\n".format(location),file=sys.stderr)
+    #END IF
+
+    #This IF block checks that the email was sent. If so, then we can archive the
+    # daily results CSV
+    if wasSent:
+        print("Archiving daily CSV...")
+        shutil.move(dailyCSV, CSA_DIR)
     #END IF
 
     print("Operations completed. Now exitting...")
