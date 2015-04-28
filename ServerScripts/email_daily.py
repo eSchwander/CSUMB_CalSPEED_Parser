@@ -37,6 +37,25 @@ if major<3:
 #END CHECKING
 
 
+def _putInGIC(dialyCSV):
+    location = "/home/gicdata1/DailyUpdate"
+    if os.path.isfile(dailyCSV):
+        try:
+            shutil.copy2(dailyCSV, location)
+            print("Copying Daily CSV Results to gicdata1 folder...")
+        except:
+            print("Unable to copy daily CSV to location.\n"+
+                  "File: {}\n".format(dailyCSV)+
+                  "Folder: {}\n".format(location),file=sys.stderr)
+            return False
+        #END TRY/EXCEPT
+    else:
+        print("No Daily CSV found.")
+        return True
+    return True
+#END DEF
+
+
 
 @__debug(logFileLOCATION, ADMIN, funcName="Daily Email")
 @__checkSysArg
@@ -73,14 +92,7 @@ def main(**kwargs):
 
     #This bit is a little hardcoded, and is meant only to be run on the Crowd Source server
     if "-gic-cp" in sys.argv:
-        location = "/home/gicdata1/DailyUpdate"
-        try:
-            shutil.copy2(dailyCSV, location)
-            print("Copying Daily CSV Results to gicdata1 folder...")
-        except:
-            print("Unable to copy daily CSV to location.\n"+
-                  "File: {}\n".format(dailyCSV)+
-                  "Folder: {}\n".format(location),file=sys.stderr)
+        _putInGIC(dailyCSV)
     #END IF
 
     #This IF block checks that the email was sent. If so, then we can archive the
