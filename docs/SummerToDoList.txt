@@ -1,0 +1,80 @@
+
+
+IMPROVEMENTS TO PARSER OBJECT:
+
+	'_Test' Object:
+		  This object should have the basic comparison functions implemented
+		for improved sorting. See https://wiki.python.org/moin/HowTo/Sorting for
+		more information on sorting using RICH COMPARATORS.
+		The implementation of rich comparators should be similar to the
+		implementation in the '_File' object.
+
+		  Something that caught my interest was Factories, which is basically an
+		object that takes parameters, and returns a slightly specialized
+		object. Where this could be useful is improving the process by which
+		individual tests are created within the '_File' object.
+		  Currently, the text must be searched for a key term, and the correct
+		constructor called with the text. With a Factory, the text would simply
+		be passed to the Factor object, which would return the correct '_Test'
+		object based on the input. We could assume that the "_Test_Factory"
+		class constructor would return a 'UDP_Test' when given text with a UDP
+		Iperf test in it, but would return a 'TCP_Test' when the given text
+		contains a TCP Iperf Test.
+		  This would simplify the code in '_File' to simply passing chunks of
+		text pertaining to a Test to the "_Test_Factory" constructor, regardless
+		of the content, and so would look much cleaner.
+		  Explore this link for more info.
+		http://python-3-patterns-idioms-test.readthedocs.org/en/latest/Factory.html
+
+	'_Thread' Objects:
+		  This object should have the basic comparison functions implemented
+		for improved sorting. See https://wiki.python.org/moin/HowTo/Sorting for
+		more information on sorting using RICH COMPARATORS.
+		The implementation of rich comparators should be similar to the
+		implementation in the '_File' object.
+
+	'_Measurement' Objects:
+		  This object should have the basic comparison functions implemented
+		for improved sorting. See https://wiki.python.org/moin/HowTo/Sorting for
+		more information on sorting using RICH COMPARATORS.
+		The implementation of rich comparators should be similar to the
+		implementation in the '_File' object.
+
+
+	  NOTE: My reason for wanting to implement the rich comparator in the many
+	classes of the parser is for simpler sorting. Currently, most classes need
+	to manually sort the text before creating objects, and printing in order
+	requires some hack-y finagling. Implementing rich comparators would
+	conform much better to the Object Oriented Architecture, and make debugging,
+	improvement, and error tracking much easier.
+
+
+
+
+
+OTHER CLASSES TO MAKE:
+
+	  Currently, a large script titled "_calcGraphValues.py" calculates values
+	for Dr. Seetharam concerning network performance. It's a very long script
+	with numerous if/else block, try/excepts, and is very messy overall.
+	  The functionality provided by this script should be re-implmeneted as a
+	class similar to the CSV GENERATOR CLASS.
+
+
+
+
+
+IMPROVEMENTS TO SERVER SCRIPTS:
+
+	  The process of copying code to the live Field Test and Crowd Source
+	servers is currently being done manually. This is stupid.
+	  To solve this problem, GIT should be installed on the servers. Contact
+	Kenneth Lontoc through Dr. Byun regarding this installation.
+
+	  Once git has been installed, a simply bash script can be created on the
+	crowduser (for Crowd Source) and WirelessBBDTester (Field Test) profiles
+	that will run a git clone command (which will grab the most current files
+	from Github), and then copy the necessary Python scripts to the correct
+	folders.
+	  This bash script could even be added to the user's cronjobs, and executed
+	every night to update the 'commands' folder with the most current files.
