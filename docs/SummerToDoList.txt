@@ -1,6 +1,26 @@
 
 
+FIRST PRIORITY:
+
+	  A documented must be drafted that describes the methods used to calculate
+	the values included in the CSV that is generated. The document should not
+	contain a much, if any, code.
+	  This document will be drafted for the CPUC, so write the document with
+	the audience in mind.
+
+
+
+
+
+
+
 IMPROVEMENTS TO PARSER OBJECT:
+
+	'_File' Object:
+		  Once the tasks for '_Test' have been completed, you should
+		re-implement the functions that use '_Test' objects in order by their
+		Test Number.
+
 
 	'_Test' Object:
 		  This object should have the basic comparison functions implemented
@@ -26,12 +46,27 @@ IMPROVEMENTS TO PARSER OBJECT:
 		  Explore this link for more info.
 		http://python-3-patterns-idioms-test.readthedocs.org/en/latest/Factory.html
 
+		  Once the rich comparators are implemented, you should be able to
+		remove the 'TestByNum' attribute from the "_File" object, and
+		re-implement the functions that print out '_Test' objects in order by
+		their number.
+
+		  Once the rich comparators for '_Thread' have been implemented, you
+		should re-implement the functions that use '_Thread' objects in order
+		by their Test Number.
+
+
 	'_Thread' Objects:
 		  This object should have the basic comparison functions implemented
 		for improved sorting. See https://wiki.python.org/moin/HowTo/Sorting for
 		more information on sorting using RICH COMPARATORS.
 		The implementation of rich comparators should be similar to the
 		implementation in the '_File' object.
+
+		  Once the rich comparators for '_Measurement' have been implemented,
+		you should re-implement the functions that use '_Measurement' objects in
+		order by their Test Number.
+
 
 	'_Measurement' Objects:
 		  This object should have the basic comparison functions implemented
@@ -52,13 +87,17 @@ IMPROVEMENTS TO PARSER OBJECT:
 
 
 
+
+
 OTHER CLASSES TO MAKE:
 
 	  Currently, a large script titled "_calcGraphValues.py" calculates values
 	for Dr. Seetharam concerning network performance. It's a very long script
 	with numerous if/else block, try/excepts, and is very messy overall.
-	  The functionality provided by this script should be re-implmeneted as a
+	  The functionality provided by this script should be re-implemented as a
 	class similar to the CSV GENERATOR CLASS.
+
+
 
 
 
@@ -71,6 +110,7 @@ IMPROVEMENTS TO SERVER SCRIPTS:
 	  To solve this problem, GIT should be installed on the servers. Contact
 	Kenneth Lontoc through Dr. Byun regarding this installation.
 
+
 	  Once git has been installed, a simply bash script can be created on the
 	crowduser (for Crowd Source) and WirelessBBDTester (Field Test) profiles
 	that will run a git clone command (which will grab the most current files
@@ -78,3 +118,19 @@ IMPROVEMENTS TO SERVER SCRIPTS:
 	folders.
 	  This bash script could even be added to the user's cronjobs, and executed
 	every night to update the 'commands' folder with the most current files.
+
+
+	  On the Crowd Source server, the daily CSV is currently copied at the end
+	of the day to another folder on the server. However, if there is no data
+	uploaded to the server, no daily CSV is created.
+	  If such is the case, an "empty" CSV should be created that contains only
+	the column headers. The CSV should have the correct naming convention. Once
+	the "empty" CSV is created, this should be copied to the receiving folder.
+
+
+
+
+
+
+
+#END
