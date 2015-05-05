@@ -127,7 +127,7 @@ def __debug(logFileLoc, emailAddress, fullDebug=False, funcName=""):
 def __checkSysArg(func):
     """Wrapper function for checking that 'field' or 'crowd' was passed in"""
     def checkSysArgWrapper(*args, **kwargs):
-        assert (len(sys.argv)<2
+        assert (len(sys.argv)>1
                 ),("Too few system arguements. "+
                    "You must pass in another system argument for this script to run.")
         sys.argv[1] = sys.argv[1].lower()
