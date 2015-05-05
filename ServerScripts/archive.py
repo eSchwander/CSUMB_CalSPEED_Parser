@@ -22,8 +22,8 @@ import os
 import sys
 import shutil
 import datetime
-from _decorators import (__debug, __checkSysArg,
-                         logFileLOCATION, ADMIN)
+from _decorators import (__debug, __checkSysArg, logFileLOCATION)
+from _sensitiveInfo.emailLogin import ADMIN
 #END IMPORTS
 
 #Checking that this script is being run by at least Python 3

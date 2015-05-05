@@ -26,11 +26,13 @@ import os
 import sys
 import shutil
 import datetime
-from _decorators import (__debug, __checkSysArg,
-                         logFileLOCATION, ADMIN)
+from _decorators import (__debug, __checkSysArg, logFileLOCATION)
+from _sensitiveInfo.emailLogin import ADMIN
+
 projectPath = os.path.join(os.getcwd(),os.path.dirname(__file__))
 if projectPath not in sys.path:
     sys.path.append(projectPath)
+
 from PyFiles.csvGeneration.csvGenerator import csvGenerator
 from PyFiles.FileParser.FieldTest_File import FieldTest_File
 from PyFiles.FileParser.CrowdSource_File import CrowdSource_File

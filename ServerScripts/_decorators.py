@@ -29,7 +29,6 @@ from _sensitiveInfo.emailLogin import (EMAIL_USER, EMAIL_PASS)
 #END IMPORTS
 
 logFileLOCATION = os.path.dirname(os.path.abspath(os.path.join(os.getcwd(),__file__)))
-ADMIN = ("Peter Walker", "pwalker@csumb.edu")
 
 _sendEmail = True
 if "NO EMAILS" in sys.argv:
@@ -48,7 +47,7 @@ def __debug(logFileLoc, emailAddress, fullDebug=False, funcName=""):
 
     #Instantiating the object that will send the debug email
     ec = EmailClient(username=EMAIL_USER, password=EMAIL_PASS, name="CPUC Server")
-    ec.addRecipient(ADMIN)
+    ec.addRecipient(emailAddress)
 
     def debug_pre_wrap(func):
         """Base function for wrapping"""
@@ -77,8 +76,8 @@ def __debug(logFileLoc, emailAddress, fullDebug=False, funcName=""):
                 sys.stdout = sys.__stdout__
                 sys.stderr = sys.__stderr__
                 fs.close()
-                #We then email the log file to ADMIN, for debugging, but only if
-                # the variable _sendEmail is True
+                #We then email the log file to the address in 'emailAddress',
+                # for debugging, but only if the variable _sendEmail is True
                 if _sendEmail:
                     print("Sending {} ERROR file...".format(funcName))
                     timeOfError = datetime.datetime.now().isoformat(' ')
@@ -104,7 +103,7 @@ def __debug(logFileLoc, emailAddress, fullDebug=False, funcName=""):
                 if newOut != oldOut \
                         and "No files found to process." not in newOut \
                         and fullDebug:
-                    #We then email the log file to ADMIN, for debugging
+                    #We then email the log file to 'emailAddress', for debugging
                     if _sendEmail:
                         print("Sending {} DEBUG file...".format(funcName))
                         timeOfError = datetime.datetime.now().isoformat(' ')

@@ -17,14 +17,16 @@ import os
 import sys
 import shutil
 import datetime
-from _decorators import (__debug, __checkSysArg,
-                         logFileLOCATION, ADMIN)
+from _decorators import (__debug, __checkSysArg, logFileLOCATION)
+
 projectPath = os.path.join(os.getcwd(),os.path.dirname(__file__))
 if projectPath not in sys.path:
     sys.path.append(projectPath)
+
 from PyFiles.moduleWrappers.EmailClient import EmailClient
 from _sensitiveInfo.emailLogin import (EMAIL_USER, EMAIL_PASS)
-from _sensitiveInfo.emailLogin import (CPUC1, CPUC2,
+from _sensitiveInfo.emailLogin import (ADMIN,
+                                       CPUC1, CPUC2,
                                        CHICO1, CHICO2, CHICO3,
                                        BYUN, ANAND)
 from _email_base import (setFieldDailyOpts, setCrowdDailyOpts, setTestingOpts)
