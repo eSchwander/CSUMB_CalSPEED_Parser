@@ -17,11 +17,11 @@ import os
 import sys
 import shutil
 import datetime
-from _decorators import ADMIN
 projectPath = os.path.join(os.getcwd(),os.path.dirname(__file__))
 if projectPath not in sys.path:
     sys.path.append(projectPath)
-from _sensitiveInfo.emailLogin import (CPUC1, CPUC2,
+from _sensitiveInfo.emailLogin import (ADMIN,
+                                       CPUC1, CPUC2,
                                        CHICO1, CHICO2, CHICO3,
                                        BYUN, ANAND)
 #END IMPORTS
