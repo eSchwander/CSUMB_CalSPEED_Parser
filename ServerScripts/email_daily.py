@@ -39,7 +39,7 @@ if major<3:
 #END CHECKING
 
 
-def _putInGIC(dialyCSV):
+def _putInGIC(dailyCSV):
     location = "/home/gicdata1/DailyUpdate"
     if os.path.isfile(dailyCSV):
         try:
