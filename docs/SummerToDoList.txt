@@ -128,6 +128,12 @@ IMPROVEMENTS TO SERVER SCRIPTS:
 	the "empty" CSV is created, this should be copied to the receiving folder.
 
 
+          Also, another improvement would be to change the logging system.
+        Currently, the log file is overwritten each time a script executes. This
+        should probably change to where the log file is continually appended to,
+        and simply reset at the end of each day. The log file can then be emailed
+        to ADMIN in one go, which ADMIN would review at the end of the day.
+
 
 
 
