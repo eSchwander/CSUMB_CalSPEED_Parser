@@ -4,6 +4,7 @@
 __CSV DATA EXTRACTOR.PY
 
 AUTHOR(S):     Peter Walker    pwalker@csumb.edu
+               Evan Schwander  eschwander@csumb.edu
 
 PURPOSE-  The file contains a number of functions that will take a given
             parsed file, and return an array of values that can be
@@ -224,7 +225,7 @@ class csvDataExtractor(object):
 
     def __extractPINGVals(self, OBJECT):
         """Getting the West, then East, RTT Min, Max, Average, and loss percent as an array"""
-        #This arrat will hold all of the Ping values that will be in the csv
+        #This array will hold all of the Ping values that will be in the csv
         pingVals = []
         #Get the RTT Min, Max, Average, and calculate the percent loss of packets in the PING test
         for connLoc in ["West", "East"]:
@@ -796,6 +797,25 @@ class csvDataExtractor(object):
         else:
             return []
     #END DEF
+
+
+# TCRT Values ----------------------------------------------------------
+    def getTCRTValues(self, OBJECT):
+        tcrtVals = {}
+        locations = ["California","East","Oregon"]
+        tcrtTest = OBJECT.getTest("TCRT")
+        for test in tcrtTest:
+            destination = test.ConnectionLoc
+            for loc in locations:
+                if destination == loc:
+                    locations.remove(loc)
+                    tcrtVals[destination] = str(test)
+        combinedCSV = tcrtVals["California"] + tcrtVals["East"] + tcrtVals["Oregon"]
+        combinedCSV = combinedCSV[0:-1]
+                    
+
+            
+
 
 
 #END CLASS

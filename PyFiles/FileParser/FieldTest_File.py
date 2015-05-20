@@ -213,10 +213,18 @@ class FieldTest_File(File):
 
             #Setting the Device Type based on the Date/Time line, and the file name
             if getLinesWith(fs,"Testing started at") and "WBBD" not in self.Filename:
-                if "tablet" in getLinesWith(fs,"CPUC Tester")[0].lower():
-                    self.DeviceType = "Tablet"
-                else:
-                    self.DeviceType = "Phone"
+                #This Try/Except needs to be changed at some point
+                #It exists because the old code doesn't work for new tests
+                try:
+                    if "tablet" in getLinesWith(fs,"CPUC Tester")[0].lower():
+                        self.DeviceType = "Tablet"
+                    else:
+                        self.DeviceType = "Phone"
+                except:
+                    if "tablet" in getLinesWith(fs, "CPUC")[0].lower():
+                        self.DeviceType = "Tablet"
+                    else:
+                        self.DeviceType = "Phone"
             else:
                 self.DeviceType = "Netbook"
             #END IF
