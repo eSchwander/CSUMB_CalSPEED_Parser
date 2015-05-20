@@ -129,8 +129,8 @@ FieldTestHeaders["csv Qual Headers"] = \
          "wTCPUpPR2", "wTCPUpPct2", "wTCPDnPR2", "wTCPDnPct2",
          "eTCPUpPR2", "eTCPUpPct2", "eTCPDnPR2", "eTCPDnPct2" ]
 
-# California traceroute csv headers
-FieldTestHeaders["csv cwTr Headers"] = \
+# Traceroute headers. Includes California, Oregon, and East Coast tests.
+FieldTestHeaders["csv TCRT Headers"] = \
         ["cwTr_hops",
          "cwTrH1Nm", "cwTrH1IP", "cwTrH1D",
          "cwTrH2Nm", "cwTrH2IP", "cwTrH2D",
@@ -170,11 +170,8 @@ FieldTestHeaders["csv cwTr Headers"] = \
          "cwTrH36Nm", "cwTrH36IP", "cwTrH36D", 
          "cwTrH37Nm", "cwTrH37IP", "cwTrH37D",
          "cwTrH38Nm", "cwTrH38IP", "cwTrH38D",
-         "cwTrH39Nm", "cwTrH39IP", "cwTrH39D"]
-
-# Eastcoast traceroute csv headers
-FieldTestHeaders["csv eTr Headers"] = \
-        ["eTr_hops",
+         "cwTrH39Nm", "cwTrH39IP", "cwTrH39D",
+         "eTr_hops",
          "eTrH1Nm", "eTrH1IP", "eTrH1D",
          "eTrH2Nm", "eTrH2IP", "eTrH2D",
          "eTrH3Nm", "eTrH3IP", "eTrH3D",
@@ -213,11 +210,8 @@ FieldTestHeaders["csv eTr Headers"] = \
          "eTrH36Nm", "eTrH36IP", "eTrH36D", 
          "eTrH37Nm", "eTrH37IP", "eTrH37D",
          "eTrH38Nm", "eTrH38IP", "eTrH38D",
-         "eTrH39Nm", "eTrH39IP", "eTrH39D"]
-
-# Oregon traceroute csv headers
-FieldTestHeaders["csv owTr Headers"] = \
-        ["owTr_hops",
+         "eTrH39Nm", "eTrH39IP", "eTrH39D",
+         "owTr_hops",
          "owTrH1Nm", "owTrH1IP", "owTrH1D",
          "owTrH2Nm", "owTrH2IP", "owTrH2D",
          "owTrH3Nm", "owTrH3IP", "owTrH3D",

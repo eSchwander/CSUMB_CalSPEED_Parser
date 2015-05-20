@@ -163,7 +163,7 @@ def main(**kwargs):
                                                         ArchiveDirectory=PAR_DIR,
                                                         ErrorDirectory=ERR_DIR)
         if numPar > 0:
-            CSV_GEN.setOpts("1 2 3 4 5 6 7 8 10")
+            CSV_GEN.setOpts("1 2 3 4 5 6 7 8 10 11")
             _makeBaseCSVs(CSV_DIR, CSV_GEN)
             #_makeDateCSVs(CSV_DIR, CSV_GEN)
             shutil.rmtree(TMP_DIR)
