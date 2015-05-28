@@ -13,20 +13,14 @@ VALUES TO CARE ABOUT (For the CSV):
             
 ------------------------------------------------------------------------
 """
-if __name__=="__main__":
-    raise SystemExit
 
 # IMPORTS
 import sys
-from _parserUtils.basic_utils import calc_rVal_MOS
-from _Test import Test
-from __Base import Formatting
-from _sensitiveInfo.tcrtIPs import *
+from PyFiles.FileParser._sensitiveInfo.tcrtIPs import * 
 #END IMPORTS
 
 
-
-class Hop(Formatting):
+class Hop:
 
     """A simple class for holding the information from a single hop"""
 
@@ -41,21 +35,35 @@ class Hop(Formatting):
     '''
     
     def __init__(self, dataString):
-        dataString = dataString.split(" ")
-        temp = [x for x in dataString if x]
+        tempDataString = dataString.split(" ")
+        temp = [x for x in tempDataString if x]
         self.Number = temp.pop(0)
-        self.Name = temp.pop(0)
-        self.IP = temp.pop(0)[1:-1]
-        self.Speed = temp.pop(0)
+
+        # Checking if test timed out or was otherwise ended early
+        try:
+            #if Number can be converted into an int, everything is swell
+            self.Number = int(self.Number)
+            self.Name = temp.pop(0)
+            self.IP = temp.pop(0)[1:-1]
+            self.Speed = temp.pop(0)    
+        except:
+            #if Number cannot be convereted to an int the test ended early
+            self.Number = self.Number
+            self.Name = dataString
+            self.IP = "NA"
+            self.Speed = "NA"
+                
+        # Converts "*" to NA for csv purposes
         if self.IP == "":
             self.IP = "*"
-        if self.Name == "*":
+        '''
+		if self.Name == "*":
             self.Name = "NA" 
         if self.IP == "*":
             self.IP = "NA" 
         if self.Speed == "*":
             self.Speed = "NA" 
-
+		'''
 
     
     def __str__(self):
@@ -63,45 +71,25 @@ class Hop(Formatting):
     #END DEF
 
 
-class TCRT_Test(Test):
+class TCRT_Test:
     
     """A TRCRT test, containing parsed information about TCRT hops"""
-
     '''
-    # ------------------------------
-    # ---- INHERITED ATTRIBUTES ----
-    ConnectionType  = ""
-    ConnectionLoc   = ""
-    TestNumber      = 0
-    ReceiverIP      = ""
-    StartingLine    = ""
-    _text           = ""
-
     # ---- CLASS ATTRIBUTES ----
     Hops = []
     HopCount = 0
     HopMin = -1
     HopMax = -1
-    HopAvg = -1
-    is_outputType1  = True
     # ------------------------------
     '''
 
-    def __init__(self, dataString="", eastWestIP=("0.0.0.0", "0.0.0.0")):
+    def __init__(self, dataString=""):
         '''
         Used to initialize an object of this class
         ARGS:
-            self:       reference to the object calling this method (i.e. Java's THIS)
             dataString: String, the text that is going to be parsed
-            eastWestIP: Tuple of two Strings, first String is the IP address of the East server, second the West
         '''
-        # If we are at this point, then the dataString contained "traceroute", and we can
-        # set the ConnectionType to "TCRT"
-        self.ConnectionType = "TCRT"
-        
-        # Call the parent class' __init__
-        Test.__init__(self, dataString=dataString, eastWestIP=eastWestIP)
-        
+
         # Some variable initialization
         self.Hops = []
         self.Destination = ''
@@ -114,21 +102,14 @@ class TCRT_Test(Test):
 
     def __parseHops(self, dataString):
         """ 
-        Parses all the hops in a test and prepares them to be parsed individually 
+        Seperates first line from the hops and then passes off hops to be parsed.
         """
         # We start our function be splitting the data string into individual chunks,
         # which we will then parse individually
-        dataChunks = [elem.strip() for elem in dataString.split("\n\n") if elem]
-        for chunk in dataChunks:
-            if "traceroute" in chunk:
-                chunk = chunk.splitlines()
-                # We pop off the frist line of the chunk as it has some special properties
-                firstLine = chunk.pop(0)
-                # Parse the first line to find HopMax and Destination
-                self.__parseFirstLine(firstLine)
-                # We finally parse the hops
-                self.__parseIndividualHops(chunk)
-        #END FOR
+        data = dataString.splitlines()
+        self.__parseFirstLine(data.pop(0))
+        self.__parseIndividualHops(data)
+        
     #END DEF
 
     def __parseIndividualHops(self, dataString):
@@ -181,5 +162,7 @@ class TCRT_Test(Test):
             csv += hop.Name + ","
             csv += hop.IP + ","
             csv += hop.Speed + ","
+        if self.ConnectionLoc == "Oregon":
+            return csv[0:-1]
         return(csv)
 
