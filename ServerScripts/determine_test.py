@@ -14,6 +14,12 @@ import os
 import shutil
 import glob
 
+# The following directories need to be created if they don't already exist
+if not os.path.exists("./UploadData/other"):
+    os.makedirs("./UploadData/other")
+if not os.path.exists("./UploadData/tcrt"):
+    os.makedirs("./UploadData/tcrt")
+
 # All txt files in UploadData get put into either tcrt or other
 for file in glob.glob(os.path.join("./UploadData", '*.txt')):
     fs = open(file, 'r')
