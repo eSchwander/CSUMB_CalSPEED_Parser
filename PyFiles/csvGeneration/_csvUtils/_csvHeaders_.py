@@ -171,6 +171,7 @@ FieldTestHeaders["csv TCRT Headers"] = \
          "cwTrH37Nm", "cwTrH37IP", "cwTrH37D",
          "cwTrH38Nm", "cwTrH38IP", "cwTrH38D",
          "cwTrH39Nm", "cwTrH39IP", "cwTrH39D",
+         "cwTrH40Nm", "cwTrH40IP", "cwTrH40D",
          "eTr_hops",
          "eTrH1Nm", "eTrH1IP", "eTrH1D",
          "eTrH2Nm", "eTrH2IP", "eTrH2D",
@@ -211,6 +212,7 @@ FieldTestHeaders["csv TCRT Headers"] = \
          "eTrH37Nm", "eTrH37IP", "eTrH37D",
          "eTrH38Nm", "eTrH38IP", "eTrH38D",
          "eTrH39Nm", "eTrH39IP", "eTrH39D",
+         "eTrH40Nm", "eTrH40IP", "eTrH40D",
          "owTr_hops",
          "owTrH1Nm", "owTrH1IP", "owTrH1D",
          "owTrH2Nm", "owTrH2IP", "owTrH2D",
@@ -250,7 +252,8 @@ FieldTestHeaders["csv TCRT Headers"] = \
          "owTrH36Nm", "owTrH36IP", "owTrH36D", 
          "owTrH37Nm", "owTrH37IP", "owTrH37D",
          "owTrH38Nm", "owTrH38IP", "owTrH38D",
-         "owTrH39Nm", "owTrH39IP", "owTrH39D"]
+         "owTrH39Nm", "owTrH39IP", "owTrH39D",
+         "owTrH40Nm", "owTrH40IP", "owTrH40D"]
 
 
 
