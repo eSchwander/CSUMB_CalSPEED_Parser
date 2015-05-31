@@ -1,3 +1,23 @@
+Hi, this is Evan. 
+If you are searching for Peter's documentation, scroll down a little.
+
+HOW TO USE:
+	  After downloading, put some files you want parsed in the /UploadData
+	folder. Next run determine_test.py from the terminal. The parser then parses
+	all the files in UploadData and puts a csv in /csvGeneration. It probably 
+	will not work on your first try because there are some files you will need 
+	to put in the _sensitiveInfo files scattered through this project. This is a
+	problem that I will attempt to address. If this works on the first try, 
+	chances are I have fixed it and have not updated this.
+	  Something to keep in mind. The trace route and speed test portions of this
+	projects were handled by two different people. What determine_test.py 
+	actually does is run parse_all_tcrts.py on trace route files and
+	sort_and_extract.py on all speed test files. sort_and_extract.py likes to 
+	send out emails so if you want to just want to test out the speed test 
+	portion of this project you can run test_parser.py in this folder.
+
+(The following is Peter's documentation)
+--------------------------------------------------------------------------------
 Hello, and welcome to the docs folder!
 SECTIONS:
 	My Setup
