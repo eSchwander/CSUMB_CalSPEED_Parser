@@ -16,6 +16,9 @@ HOW TO USE:
 	send out emails so if you want to just want to test out the speed test 
 	portion of this project you can run test_parser.py in this folder.
 	
+HOW THE SERVER USES THIS:
+	  A crontab runs the script at chosen intervals.
+	
   If you are looking for some good documentation of what the speed test parser
 take a look over here: 
 http://pwalker91.github.io/CSUMB_CalSPEED_Parser/ProjectDocumentation.html
