@@ -15,6 +15,10 @@ HOW TO USE:
 	sort_and_extract.py on all speed test files. sort_and_extract.py likes to 
 	send out emails so if you want to just want to test out the speed test 
 	portion of this project you can run test_parser.py in this folder.
+	
+  If you are looking for some good documentation of what the speed test parser
+take a look over here: 
+http://pwalker91.github.io/CSUMB_CalSPEED_Parser/ProjectDocumentation.html
 
 (The following is Peter's documentation)
 --------------------------------------------------------------------------------
