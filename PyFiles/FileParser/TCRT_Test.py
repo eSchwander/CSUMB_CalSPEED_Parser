@@ -100,12 +100,14 @@ class TCRT_Test:
         
         #Check Hops for any errors and deal with them accordingly
         error = False
-        if "Cancelled" in self.Hops:
-            self.HopCount = "error:network unreachable"
-            error = True
-        elif "Timed" in self.Hops:
-            self.HopCount = "error:timed out"
-            error = True
+        for x in self.Hops:
+            if "Cancelled" in x.Name:
+                self.HopCount = "error:network unreachable"
+                error = True
+            elif "Timed" in x.Name:
+                self.HopCount = "error:timed out"
+                error = True
+
         if error:
             self.__parseIndividualHops("")
 
@@ -137,7 +139,8 @@ class TCRT_Test:
         while(dataString):
             self.Hops.append(Hop(dataString.pop(0)))
         #Here we determine the number of hops before completion
-        self.HopCount = len(self.Hops)
+        if dataString != "":
+            self.HopCount = len(self.Hops)
         # This loop fills the Hops array with fake Hop objects up to HopMax
         while(len(self.Hops) < self.HopMax):
             emptyHop = str(len(self.Hops)) + " NA (NA) NA"
