@@ -21,13 +21,15 @@ import os
 
 def _generateFieldTestPaths():
     ## BASEDIR = "/home/WirelessBBDTester/"
-    BASEDIR = "/home/WirelessBBDTester/dev_peter/"
+    #BASEDIR = "/home/WirelessBBDTester/dev_peter/"
+    BASEDIR = os.getcwd()
     return __actualGenerate(BASEDIR)
 
 
 def _generateCrowdSourcePaths():
-    BASEDIR = "/home/crowduser/"
+    #BASEDIR = "/home/crowduser/"
     ## BASEDIR = "/home/crowduser/dev/"
+    BASEDIR = os.getcwd()
     return __actualGenerate(BASEDIR)
 
 
@@ -37,7 +39,7 @@ def _generateTestingPaths(BASEDIR):
 
 
 def __actualGenerate(BASEDIR):
-    UPL_DIR = os.path.abspath(os.path.join(BASEDIR, "UploadData/others"))
+    UPL_DIR = os.path.abspath(os.path.join(BASEDIR, "UploadData/other"))
     PAR_DIR = os.path.abspath(os.path.join(BASEDIR, "ProcessedData"))
     TMP_DIR = os.path.abspath(os.path.join(BASEDIR, "TempFiles"))
     ERR_DIR = os.path.abspath(os.path.join(BASEDIR, "ExceptionFiles"))

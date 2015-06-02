@@ -30,7 +30,7 @@ from _parserUtils.device_tester_table import table
 from _File import File
 from UDP_Test import UDP_Test
 #Importing the senstive information
-from _sensitiveInfo.serverIPs import FieldTest_EastWest
+from PyFiles.FileParser._sensitiveInfo.serverIPs import FieldTest_EastWest
 #END IMPORTS
 
 

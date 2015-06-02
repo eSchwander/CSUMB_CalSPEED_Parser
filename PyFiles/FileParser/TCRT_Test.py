@@ -94,8 +94,22 @@ class TCRT_Test:
         self.Hops = []
         self.Destination = ''
         self.HopMax = 40
-        #Construct Hops array
+
+        #Construct Hops list
         self.Hops.append(self.__parseHops(dataString))
+        
+        #Check Hops for any errors and deal with them accordingly
+        error = False
+        if "Cancelled" in self.Hops:
+            self.HopCount = "error:network unreachable"
+            error = True
+        elif "Timed" in self.Hops:
+            self.HopCount = "error:timed out"
+            error = True
+        if error:
+            self.__parseIndividualHops("")
+
+
     #END DEF
 
 # INITIALIZATION FUNCTIONS -----------------------------------------------------

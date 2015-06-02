@@ -28,7 +28,7 @@ from _parserUtils.basic_utils import getLinesWith
 #Importing the necessary base class
 from _File import File
 #Importing the senstive information
-from _sensitiveInfo.serverIPs import CrowdSource_EastWest
+from PyFiles.FileParser._sensitiveInfo.serverIPs import CrowdSource_EastWest
 #END IMPORTS
 
 
