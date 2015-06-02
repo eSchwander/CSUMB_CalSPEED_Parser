@@ -798,26 +798,4 @@ class csvDataExtractor(object):
             return []
     #END DEF
 
-
-# TCRT Values ----------------------------------------------------------
-    def getTCRTValues(self, OBJECT):
-        ''' Returns a list of all traceroute values '''
-        tcrtVals = {}
-        locations = ["California","East","Oregon"]
-        tcrtTest = OBJECT.getTest("TCRT")
-        for test in tcrtTest:
-            destination = test.ConnectionLoc
-            for loc in locations:
-                if destination == loc:
-                    locations.remove(loc)
-                    tcrtVals[destination] = str(test)
-        combinedCSV = tcrtVals["California"] + tcrtVals["East"] + tcrtVals["Oregon"]
-        combinedCSV = combinedCSV[0:-1]
-        return combinedCSV.split(',')
-
-    @__POST_returnChecker(FieldTestHeaders, "csv TCRT Headers")
-    def extractFT_TCRTValues(self, OBJECT):
-        return getTCRTValues(OBJECT)
-                    
-
 #END CLASS

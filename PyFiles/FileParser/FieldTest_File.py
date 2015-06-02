@@ -132,7 +132,7 @@ class FieldTest_File(File):
         self.findAndParseTCPTests()
         self.findAndParsePINGTests()
         self.findAndParseUDPTests()
-        self.findAndParseTCRTTests()
+        #self.findAndParseTCRTTests()
         #This is one final check, to make sure that we have all 14 tests. If not, then
         # there was an unknown test of some kind, and we set our _contains_Errors to True
         #The 14 Tests are:

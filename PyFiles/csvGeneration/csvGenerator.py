@@ -57,8 +57,7 @@ class csvGenerator(object):
             7: "extractTCPStatVals",
             8: "extractTCPStatSVals",
             9: "extractTCPStatAVals",
-            10:"extractTCPQualVals",
-            11:"extractTCRTVals"}
+            10:"extractTCPQualVals"}
     TOTAL_OPTS = len(OPTS)
     FILETYPES = ['fieldtest','crowdsource']
 
