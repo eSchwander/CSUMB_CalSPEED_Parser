@@ -56,12 +56,16 @@ def main():
 
         #Here we build the "finalString" to write to the csv
         finalString = str(tocsv)
+        # If there were no traceroutes, the network was unreachable
         if tcrtTests == []:
             finalString += "error: network unreachable"
-            #This range is based off of the remaining spots in csv
+            #The following range is based off of the remaining spots in csv,
             #which is 362 = 40(max hops) *3(info in hops) *3(numberof tests) +3-1(hop count in each test minus 1)
             for i in range(0,362):
-                finalString += ",NA"
+                if i == 120 or i == 241: # 120 and 241 are where the error messages should go
+                    finalString += ",error: network unreachable"
+                else:
+                    finalString += ",NA"
         else:
             for x in tcrtTests:
                 finalString += str(x)
@@ -152,7 +156,7 @@ class Test:
             if id in str(pair):
                 flag = True
             elif flag:
-                self.Tester = pair
+                self.Tester = "Tester " + str(pair)
                 break
 
     def __str__(self):

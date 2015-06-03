@@ -102,14 +102,33 @@ class TCRT_Test:
         error = False
         for x in self.Hops:
             if "Cancelled" in x.Name:
-                self.HopCount = "error:network unreachable"
+                self.HopCount = "error: Cancelled by user"
                 error = True
             elif "Timed" in x.Name:
-                self.HopCount = "error:timed out"
+                self.HopCount = "error: Timed out"
                 error = True
-
+            elif "failed" in x.Name:
+                self.HopCount = "error: Traceroute command failed"
+                error = True
+            elif "not complete" in x.Name:
+                self.HopCount = "error: Traceroute did not complete"
+                error = True
         if error:
             self.__parseIndividualHops("")
+
+        #Checking for incomplete tcrts
+        if not error:
+            # if the final hop's IP is not the destination IP, the trace route was incomplete
+            if self.Hops[self.HopCount - 1].IP != self.Destination:
+                if self.HopCount < 40:
+                    self.Hops[self.HopCount].IP = "INCOMPLETE"
+                    self.Hops[self.HopCount].Name = "INCOMPLETE"
+                    self.Hops[self.HopCount].Speed = "INCOMPLETE"
+                elif self.HopCount == 40:
+                    self.Hops[self.HopCount-1].IP = "INCOMPLETE"
+                    self.Hops[self.HopCount-1].Name = "INCOMPLETE"
+                    self.Hops[self.HopCount-1].Speed = "INCOMPLETE"
+
 
 
     #END DEF
