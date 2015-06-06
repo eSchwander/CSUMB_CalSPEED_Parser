@@ -121,13 +121,13 @@ class TCRT_Test:
             # if the final hop's IP is not the destination IP, the trace route was incomplete
             if self.Hops[self.HopCount - 1].IP != self.Destination:
                 if self.HopCount < 40:
-                    self.Hops[self.HopCount].IP = "INCOMPLETE"
-                    self.Hops[self.HopCount].Name = "INCOMPLETE"
-                    self.Hops[self.HopCount].Speed = "INCOMPLETE"
+                    self.Hops[self.HopCount].IP = "error: Traceroute did not complete"
+                    self.Hops[self.HopCount].Name = "error: Traceroute did not complete"
+                    self.Hops[self.HopCount].Speed = "error: Traceroute did not complete"
                 elif self.HopCount == 40:
-                    self.Hops[self.HopCount-1].IP = "INCOMPLETE"
-                    self.Hops[self.HopCount-1].Name = "INCOMPLETE"
-                    self.Hops[self.HopCount-1].Speed = "INCOMPLETE"
+                    self.Hops[self.HopCount-1].IP = "error: Traceroute did not complete"
+                    self.Hops[self.HopCount-1].Name = "error: Traceroute did not complete"
+                    self.Hops[self.HopCount-1].Speed = "error: Traceroute did not complete"
 
 
 
