@@ -51,7 +51,7 @@ def _find(BASEDIR, UPL_DIR, TMP_DIR, nowTime):
     print("Finding new files to process...")
     #Creating a datetime object that is set to 45 minutes ago
     filesToParse = []
-    nowTimeLess = nowTime - datetime.timedelta(minutes=45)
+    nowTimeLess = nowTime - datetime.timedelta(minutes=0)
     for file in os.listdir(UPL_DIR):
         truePath = os.path.abspath(os.path.join(UPL_DIR, file))
         #This will get the modification time of the file at 'truePath'. The value returned

@@ -220,7 +220,11 @@ class PING_Test(Test):
                 RTTNums = RTTLine.split("=")[1].strip().split("/")
                 self.RTTMin = float(RTTNums[0])
                 self.RTTAverage = float(RTTNums[1])
-                self.RTTMax = float(RTTNums[2])
+                #Added a try/except block in case there was no mdev given -EMS
+                try:
+                    self.RTTMax = float(RTTNums[2])
+                except:
+                    self.RTTMax = float(RTTNums[2].split(" ")[0])
             except:
                 self.RTTMin     = -1
                 self.RTTMax     = -1
