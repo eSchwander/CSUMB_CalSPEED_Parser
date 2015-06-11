@@ -309,8 +309,12 @@ class File(Formatting, ErrorHandling):
                 if type_ == "UDP":
                     parsedTest = UDP_Test(dataString=chunk, eastWestIP=self.EastWestSrvrIPs)
                 if type_ == "PING":
-                    if ("XP" in self.PhoneAPIVer or "Vista" in self.PhoneAPIVer) and "Ping" in chunk:
-                        chunk = self.formatPingChunk(chunk)
+                    #This try is used to format ping tests in XP or Vista crowdsource files
+                    try:
+                        if ("XP" in self.PhoneAPIVer or "Vista" in self.PhoneAPIVer) and "Ping" in chunk:
+                            chunk = self.formatPingChunk(chunk)
+                    except:
+                        pass
                     parsedTest = PING_Test(dataString=chunk, eastWestIP=self.EastWestSrvrIPs)
                 if type_ == "TCRT":
                     parsedTest = TCRT_Test(dataString=chunk, eastWestIP=self.EastWestSrvrIPs)
