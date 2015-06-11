@@ -3,6 +3,7 @@
 _FILE.PY
 
 AUTHOR(S):    Peter Walker    pwalker@csumb.edu
+                Evan Schwander    eschwander@csumb.edu
 
 PURPOSE-  This object will hold a raw data file's header information (see list of variables)
             and then parses individual tests from the remaining text, storing them as a series of
@@ -308,6 +309,8 @@ class File(Formatting, ErrorHandling):
                 if type_ == "UDP":
                     parsedTest = UDP_Test(dataString=chunk, eastWestIP=self.EastWestSrvrIPs)
                 if type_ == "PING":
+                    if ("XP" in self.PhoneAPIVer or "Vista" in self.PhoneAPIVer) and "Ping" in chunk:
+                        chunk = self.formatPingChunk(chunk)
                     parsedTest = PING_Test(dataString=chunk, eastWestIP=self.EastWestSrvrIPs)
                 if type_ == "TCRT":
                     parsedTest = TCRT_Test(dataString=chunk, eastWestIP=self.EastWestSrvrIPs)
@@ -372,6 +375,32 @@ class File(Formatting, ErrorHandling):
             self._fileContentsByTest = [("Starting Test" + chunk) for chunk in self._fileContentsByTest[1:]]
         #END IF
     #END DEF
+
+    def formatPingChunk(self, chunk):
+        """
+        XP and Vista ping results are formatted in such a way that causes problems for this 
+         parser. This function fixes the formatting.
+        """
+        chunk = chunk.split("\n")
+        i = 0
+        while i < len(chunk):
+            if len(chunk[i]) == 0:
+                chunk.remove(chunk[i])
+                i-=1
+            i+=1
+        i = 0
+        while i < len(chunk):
+            if "-n" in chunk[i]:
+                chunk.insert(i+1, "")
+            elif "statistics" in chunk[i]:
+                chunk.insert(i,"")
+                break
+            i+=1
+        chunk.append("")
+        newChunk = ""
+        for line in chunk:
+            newChunk += line + "\n"
+        return newChunk
 
 
 
