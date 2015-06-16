@@ -40,14 +40,25 @@ def main():
         recording = False
         hops = ''
         tcrtTests = []
+        destination = ''
         #The following loop records once it finds a certain delimiter
         #It then creates a TCRT_Test object once it reaches a different delimiter
         while "Saving" not in allLines[0]:
-            if "traceroute to" in allLines[0]: #delimiter 1
+            if ": Traceroute" in allLines[0]: #delimiter 1
+                #begin recording and set the destination
                 recording = True
+                firstLine = allLines[0]
+                if "Oregon" in firstLine:
+                    destination = "oregon"
+                elif "West" in firstLine:
+                    destination = "california"
+                elif "East" in firstLine:
+                    destination = "east"
+                allLines.pop(0)
+                allLines.pop(0)
             elif allLines[0] == "\n" and recording == True: #delimiter 2
                 recording = False
-                tcrtTests.append(TCRT_Test(hops))
+                tcrtTests.append(TCRT_Test(hops), destination)
                 hops = ''
             if recording:
                 hops += allLines.pop(0)

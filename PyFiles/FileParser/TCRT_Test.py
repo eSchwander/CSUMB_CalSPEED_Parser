@@ -34,7 +34,7 @@ class Hop:
     # ------------------------------
     '''
     
-    def __init__(self, dataString):
+    def __init__(self, dataString, destination = "Unknown"):
         tempDataString = dataString.split(" ")
         temp = [x for x in tempDataString if x]
         self.Number = temp.pop(0)
@@ -94,6 +94,9 @@ class TCRT_Test:
         self.Hops = []
         self.Destination = ''
         self.HopMax = 40
+
+        # Setting destination IP based on passed in value
+        self.setDestination(destination)
 
         #Construct Hops list
         self.Hops.append(self.__parseHops(dataString))
@@ -166,10 +169,28 @@ class TCRT_Test:
             self.Hops.append(Hop(emptyHop))
     #END DEF
 
+    def setDestination(self, destination):
+        if destination == "west":
+            self.ConnectionLoc = "California"
+            self.Destination = CaliforniaIP
+        elif destination == "oregon":
+            self.ConnectionLoc = "Oregon"
+            self.Destination = OregonIP
+        elif destination == "east":
+            self.ConnectionLoc = "East"
+            self.Destination = EastCoastIP
+    #END DEF
+            
     def __parseFirstLine(self, dataString):
         """ 
         Finds destination IP and HopMax 
         """
+
+        #Sometimes this special first line will not exist
+        # This if statement is for when it does not
+        if "traceroute" not in dataString:
+            return
+
         dataString = dataString.split(" ") 
         
         # The following loop finds the hop max and destination IP in the first line
@@ -188,7 +209,6 @@ class TCRT_Test:
             self.ConnectionLoc = "Oregon"
         elif(self.Destination == EastCoastIP):
             self.ConnectionLoc = "East"
-
     #END DEF
 
     def __str__(self):
