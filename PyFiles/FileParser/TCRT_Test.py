@@ -34,7 +34,7 @@ class Hop:
     # ------------------------------
     '''
     
-    def __init__(self, dataString, destination = "Unknown"):
+    def __init__(self, dataString):
         tempDataString = dataString.split(" ")
         temp = [x for x in tempDataString if x]
         self.Number = temp.pop(0)
@@ -83,7 +83,7 @@ class TCRT_Test:
     # ------------------------------
     '''
 
-    def __init__(self, dataString=""):
+    def __init__(self, dataString="", destination = "unknown"):
         '''
         Used to initialize an object of this class
         ARGS:
@@ -145,7 +145,8 @@ class TCRT_Test:
         # We start our function be splitting the data string into individual chunks,
         # which we will then parse individually
         data = dataString.splitlines()
-        self.__parseFirstLine(data.pop(0))
+        if self.__parseFirstLine(data[0]):
+            data.pop(0)
         self.__parseIndividualHops(data)
         
     #END DEF
@@ -170,7 +171,7 @@ class TCRT_Test:
     #END DEF
 
     def setDestination(self, destination):
-        if destination == "west":
+        if destination == "california":
             self.ConnectionLoc = "California"
             self.Destination = CaliforniaIP
         elif destination == "oregon":
@@ -189,7 +190,7 @@ class TCRT_Test:
         #Sometimes this special first line will not exist
         # This if statement is for when it does not
         if "traceroute" not in dataString:
-            return
+            return False
 
         dataString = dataString.split(" ") 
         
@@ -209,6 +210,8 @@ class TCRT_Test:
             self.ConnectionLoc = "Oregon"
         elif(self.Destination == EastCoastIP):
             self.ConnectionLoc = "East"
+
+        return True
     #END DEF
 
     def __str__(self):

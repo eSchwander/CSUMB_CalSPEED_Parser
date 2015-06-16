@@ -47,18 +47,18 @@ def main():
             if ": Traceroute" in allLines[0]: #delimiter 1
                 #begin recording and set the destination
                 recording = True
-                firstLine = allLines[0]
-                if "Oregon" in firstLine:
+                destinationLine = allLines[0]
+                if "Oregon" in destinationLine:
                     destination = "oregon"
-                elif "West" in firstLine:
+                elif "West" in destinationLine:
                     destination = "california"
-                elif "East" in firstLine:
+                elif "East" in destinationLine:
                     destination = "east"
                 allLines.pop(0)
                 allLines.pop(0)
             elif allLines[0] == "\n" and recording == True: #delimiter 2
                 recording = False
-                tcrtTests.append(TCRT_Test(hops), destination)
+                tcrtTests.append(TCRT_Test(hops, destination))
                 hops = ''
             if recording:
                 hops += allLines.pop(0)
