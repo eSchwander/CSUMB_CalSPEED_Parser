@@ -216,6 +216,8 @@ class PING_Test(Test):
             self.PacketsReceived = int(packetsLine[1].strip().split(" ")[0])
             self.PacketsLost = int(self.PacketsSent - self.PacketsReceived)
             self.LossPercent = int(float(packetsLine[2].split("%")[0]))
+            if self.LossPercent == 100:
+                self._ErrorHandling__setErrorCode(101)
             #This try/except block is needed, as sometimes the min/avg/max numbers
             # are not printed out by iPerf. This happens in the case of 100% packet loss
             try:

@@ -168,8 +168,6 @@ class Test(Formatting, ErrorHandling):
                 self._ErrorHandling__setErrorCode(101)
             elif self.ConnectionType is "UDP" and "Server Report:\n\n" in dataString:
                 self._ErrorHandling__setErrorCode(404)
-            #elif self.ConnectionType is "TCP" and "SUM" not in dataString.splitlines()[len(dataString)-4]:
-            #    self._ErrorHandling__setErrorCode(121)
         #END IF
         if self.ConnectionType == "PING":
             if "Network is unreachable" in dataString:
