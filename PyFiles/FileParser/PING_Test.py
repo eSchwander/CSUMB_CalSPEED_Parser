@@ -3,7 +3,7 @@
 PING_TEST.PY
 
 AUTHOR(S):    Peter Walker    pwalker@csumb.edu
-
+                Evan Schwander  eschwander@csumb.edu
 PURPOSE-  This class will hold an individual Ping test. This class keeps track of the RTT values for each
             ping, and the final ping statistics.
 ------------------------------------------------------------------------
@@ -93,6 +93,7 @@ class PING_Test(Test):
         RTTMin          Float, the minimum RTT value
         RTTMax          Float, the max RTT value
         RTTAverage      Float, the average RTT value
+        LossPercent     Integer, percentage of packets lost
     """
 
     def __new__(cls, *args, **kwargs):
@@ -155,6 +156,7 @@ class PING_Test(Test):
             self.RTTMin          = -1
             self.RTTMax          = -1
             self.RTTAverage      = -1
+            self.LossPercent     = 100
         #END IF/ELSE
         if len(self.Times) != self.PacketsSent:
             self.PacketsSent = len(self.Times)
@@ -213,6 +215,7 @@ class PING_Test(Test):
             self.PacketsSent = int(packetsLine[0].split(" ")[0])
             self.PacketsReceived = int(packetsLine[1].strip().split(" ")[0])
             self.PacketsLost = int(self.PacketsSent - self.PacketsReceived)
+            self.LossPercent = int(float(packetsLine[2].split("%")[0]))
             #This try/except block is needed, as sometimes the min/avg/max numbers
             # are not printed out by iPerf. This happens in the case of 100% packet loss
             try:

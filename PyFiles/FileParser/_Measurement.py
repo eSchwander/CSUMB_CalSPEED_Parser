@@ -4,6 +4,7 @@
 _MEASUREMENT.PY
 
 AUTHOR(S):    Peter Walker    pwalker@csumb.edu
+            Evan Schwander  eschwander@csumb.edu
 
 PURPOSE:    Holds a single measurement of data transfer speed in a single test
              (i.e. This object represent one line of text in a speed test)
@@ -169,6 +170,7 @@ class UDP_ServerReport(Measurement):
         """
         #Call the parent class' __init__
         Measurement.__init__(self, data=data[0], units=units)
+
 
         #Parsing out the remaining bits from the Server Report
         self.Jitter = float(data[0].split("/sec")[1].split("ms")[0].strip())

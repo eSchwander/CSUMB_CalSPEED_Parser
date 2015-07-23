@@ -21,9 +21,24 @@ import datetime
 
 def main():
 
+    #open csvs
+    #file creation/opening happens here
+    #daily file
+    currentDate = currDate()
+    dailyFile = open("./csvResults/" + currentDate + "_daily_tcrt_results.csv", 'a')
+    if os.path.getsize("./csvResults/" + currentDate + "_daily_tcrt_results.csv") == 0:
+        headers = str(getHeaders()).replace("'","").replace(" ","")[1:-1]
+        dailyFile.write(headers + "\n")
+    #all file
+    allFile = open("./csvResults/all_tcrt_test_results.csv", 'a')
+    if os.path.getsize("./csvResults/all_tcrt_test_results.csv") == 0:
+        headers = str(getHeaders()).replace("'","").replace(" ","")[1:-1]
+        allFile.write(headers + "\n")
+
+    #parsing all tcrts
     for file in glob.glob(os.path.join("./UploadData/tcrt", '*.txt')):
         tocsv = Test()
-        fs = open(file, 'r')
+        fs = open(file, 'rt')
         allLines = fs.readlines()
         fs.close()
         #shutil.move(file, "./ProcessedData")
@@ -69,18 +84,37 @@ def main():
         finalString = str(tocsv)
         # If there were no traceroutes, the network was unreachable
         if tcrtTests == []:
-            finalString += "error: network unreachable"
+            finalString += "error: Network unreachable"
             #The following range is based off of the remaining spots in csv,
             #which is 362 = 40(max hops) *3(info in hops) *3(numberof tests) +3-1(hop count in each test minus 1)
             for i in range(0,362):
                 if i == 120 or i == 241: # 120 and 241 are where the error messages should go
-                    finalString += ",error: network unreachable"
+                    finalString += ",error: Network unreachable"
                 else:
                     finalString += ",NA"
         else:
+            #If for some reason there are less than 3 trace routes,
+            # display the error that appeared in the last test
+            if len(tcrtTests) < 3:
+                for i in range(len(tcrtTests), 3):
+                    tcrtTests.append(TCRT_Test("\nQuitting\n"))
             for x in tcrtTests:
                 finalString += str(x)
-        
+            
+        print(finalString)
+    
+        #write to appropriate csvs
+        dailyFile.write(finalString + "\n")
+        allFile.write(finalString + "\n")
+
+        #move file to ProcessedData
+        shutil.move(file, "./ProcessedData")
+
+    #close csvs
+    dailyFile.close()
+    allFile.close()
+
+def currDate():
         #Everything is finally written to a daily csv and an all tcrt results csv
         #But first we need to get the current date in the proper format
         currentDate = str(datetime.date.today())
@@ -92,25 +126,7 @@ def main():
         currentDate = ''
         for x in convertDate:
             currentDate += x
-        #file creation and writing happens here
-        #daily file
-        dailyFile = open("./csvResults/" + currentDate + "_daily_tcrt_results.csv", 'a')
-        if os.path.getsize("./csvResults/" + currentDate + "_daily_tcrt_results.csv") == 0:
-            headers = str(getHeaders()).replace("'","").replace(" ","")[1:-1]
-            dailyFile.write(headers + "\n")
-        dailyFile.write(finalString + "\n")
-        dailyFile.close()
-        #all tcrts file
-        allFile = open("./csvResults/all_tcrt_test_results.csv", 'a')
-        if os.path.getsize("./csvResults/all_tcrt_test_results.csv") == 0:
-            headers = str(getHeaders()).replace("'","").replace(" ","")[1:-1]
-            allFile.write(headers + "\n")
-        allFile.write(finalString + "\n")
-        allFile.close()
-
-        #move file to ProcessedData
-        shutil.move(file, "./ProcessedData")
-
+        return currentDate
 
 class Test:
     
@@ -176,7 +192,8 @@ class Test:
         csv += self.Tester + "," + self.LocationID + "," + self.Date + "," + self.Time + "," + self.Provider + "," 
         csv += self.Operator + "," + self.Network + "," + self.Latitude + "," + self.Longitude + ","
         csv += self.DeviceID + "," + self.DeviceType + ","
-        return csv.replace('\n','')
+        csv = csv.replace('\n','')
+        return csv
 
 
 

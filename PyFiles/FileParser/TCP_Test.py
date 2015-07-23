@@ -63,6 +63,7 @@ class TCP_Test(Test):
         """
         #If we are at this point, then the dataString contained "TCP", and we can
         # set the ConnectionType to "TCP"
+        test = dataString.splitlines()[len(dataString)-4]
         self.ConnectionType = "TCP"
         #Call the parent class' __init__
         Test.__init__(self, dataString=dataString, eastWestIP=eastWestIP)

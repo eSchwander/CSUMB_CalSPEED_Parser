@@ -374,6 +374,8 @@ class File(Formatting, ErrorHandling):
             if len(self._fileContentsByTest) == 1:
                 self._ErrorHandling__setErrorCode(310)
                 return
+            if "Quitting" in allText:
+                self._ErrorHandling__setErrorCode(201)
             #END IF
             #Re-appending "Starting Test" to all of the chunks of text output
             self._fileContentsByTest = [("Starting Test" + chunk) for chunk in self._fileContentsByTest[1:]]

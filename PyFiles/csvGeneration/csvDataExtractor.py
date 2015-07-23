@@ -216,8 +216,7 @@ class csvDataExtractor(object):
             csvVals.append(pingTest.RTTMin)
             csvVals.append(pingTest.RTTMax)
             csvVals.append(pingTest.RTTAverage)
-            LossPercent = int(float(pingTest.PacketsLost)*100/pingTest.PacketsSent)
-            csvVals.append(LossPercent)
+            csvVals.append(pingTest.LossPercent)
         else:
             csvVals = [pingTest.ErrorType]*4
         return csvVals
@@ -577,18 +576,22 @@ class csvDataExtractor(object):
         if UP:
             upMean = mean(UP)
             upStDev = pstdev(UP)
+            upMean_1 = upMean-upStDev
         else:
-            upMean = -1
-            upStDev = -1
+            upMean = "bad_output"
+            upStDev = "bad_output"
+            upMean_1 = "bad_output"
         if DN:
             dnMean = mean(DN)
             dnStDev = pstdev(DN)
+            dnMean_1 = dnMean-dnStDev
         else:
-            dnMean = -1
-            dnStDev = -1
+            dnMean = "bad_output"
+            dnStDev = "bad_output"
+            dnMean_1 = "bad_output"
         #END IF/ELSEs
-        return [upMean, upStDev, (upMean-upStDev),
-                dnMean, dnStDev, (dnMean-dnStDev)]
+        return [upMean, upStDev, upMean_1,
+                dnMean, dnStDev, dnMean_1]
     #END DEF
 
     def __extract_TCPStatSVals(self, OBJECT):

@@ -39,7 +39,7 @@ def _generateTestingPaths(BASEDIR):
 
 
 def __actualGenerate(BASEDIR):
-    UPL_DIR = os.path.abspath(os.path.join(BASEDIR, "UploadData/other"))
+    UPL_DIR = os.path.abspath(os.path.join(BASEDIR, "UploadData/SpeedTests"))
     PAR_DIR = os.path.abspath(os.path.join(BASEDIR, "ProcessedData"))
     TMP_DIR = os.path.abspath(os.path.join(BASEDIR, "TempFiles"))
     ERR_DIR = os.path.abspath(os.path.join(BASEDIR, "ExceptionFiles"))

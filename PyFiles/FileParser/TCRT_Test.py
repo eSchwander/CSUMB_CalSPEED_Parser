@@ -37,7 +37,10 @@ class Hop:
     def __init__(self, dataString):
         tempDataString = dataString.split(" ")
         temp = [x for x in tempDataString if x]
-        self.Number = temp.pop(0)
+        try:
+            self.Number = temp.pop(0)
+        except:
+            self.Number = dataString
 
         # Checking if test timed out or was otherwise ended early
         try:
@@ -116,6 +119,9 @@ class TCRT_Test:
             elif "not complete" in x.Name:
                 self.HopCount = "error: Traceroute did not complete"
                 error = True
+            elif "Quitting" in x.Name:
+                self.HopCount = "error: Cancelled by user"
+                error = True
         if error:
             self.__parseIndividualHops("")
 
@@ -180,6 +186,9 @@ class TCRT_Test:
         elif destination == "east":
             self.ConnectionLoc = "East"
             self.Destination = EastCoastIP
+        else:
+            self.ConnectionLoc = "Unknown"
+            self.Destination = "Unknown"
     #END DEF
             
     def __parseFirstLine(self, dataString):

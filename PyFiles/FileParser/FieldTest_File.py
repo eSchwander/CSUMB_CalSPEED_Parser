@@ -131,6 +131,10 @@ class FieldTest_File(File):
         #Actually parsing the tests in the file
         self.findAndParseTCPTests()
         self.findAndParsePINGTests()
+        ''' Used for debugging
+        with open("testfile.txt", 'wt') as f:
+            f.writelines(self.Filename + '\n')
+        '''
         self.findAndParseUDPTests()
         #self.findAndParseTCRTTests()
         #This is one final check, to make sure that we have all 14 tests. If not, then

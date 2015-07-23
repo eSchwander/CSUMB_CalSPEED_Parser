@@ -4,6 +4,7 @@
 BASIC_UTILS.PY
 
 AUTHOR(S):    Peter Walker    pwalker@csumb.edu
+            Evan Schwander  eschwander@csumb.edu
 
 PURPOSE:    Provide a few functions that will be used in multiple modules
 
@@ -20,6 +21,8 @@ FUNCTIONS:
 """
 if __name__=="__main__":
     raise SystemExit
+
+import math
 
 
 # COMMON PARSER FUNCTIONS ------------------------------------------------------
@@ -170,6 +173,7 @@ def calc_rVal_MOS(pktSum, pktCount, pktExpected, pktLost, pktFd):
     P_b = (1 - P_n) * (1 - pktFd)
     #Equipment Impairment Factor
     I_eEff = 5 + (90 * (P_n+P_b) / (P_n+P_b+10) )
+        
     #Calculating H(x). This is either 0 or 1
     H_of_X = 0 if ((pktAverage-177.3) < 0) else 1
     #Calculating Delay Impairment Factor

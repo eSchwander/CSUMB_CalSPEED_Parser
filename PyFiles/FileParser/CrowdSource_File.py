@@ -367,6 +367,12 @@ class CrowdSource_File(File):
 
         #Setting Location Source. On Desktops, it's always from an IP address
         self.LocationSource = "IP Address"
+        self.parseLineAndSetAttr(fileStream=fs, delimiter="UserSettingAddress:", attribute="LocationSource")
+        if self.LocationSource == "NA":
+            self.LocationSource = "IP Address"
+        elif self.LocationSource != "IP Address":
+            self.LocationSource = "User Setting Address"
+
 
         #Get Network Provider
         self.parseLineAndSetAttr(fileStream=fs, delimiter="Network ISP:", attribute="NetworkProvider")
