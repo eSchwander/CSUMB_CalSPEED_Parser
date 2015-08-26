@@ -198,23 +198,6 @@ class FieldTest_File(File):
                 self.NetworkCarrier = "NA"
             #END IF/ELIF/ELSE
 
-            #This is for the rare case when the Device ID was not recorded in the test for some reason
-            if not self.DeviceID:
-                self.DeviceID = "NA"
-
-            #Determining which Tester used the device that conducted this test
-            self.Tester = "NA"
-            if self.DeviceID != "NA":
-                #This converts the multiline string into a 2-D list, where the first
-                # element is the device ID, and the second is the tester number
-                dttable = [elem.split(",") for elem in table.strip().split("\n")]
-                for pair in dttable:
-                    if self.DeviceID in pair[0]:
-                        self.Tester = pair[1].strip()
-                        break
-                #END FOR
-            #END IF
-
             #Setting the Device Type based on the Date/Time line, and the file name
             if getLinesWith(fs,"Testing started at") and "WBBD" not in self.Filename:
                 if "tablet" in getLinesWith(fs,"CPUC Tester")[0].lower():
@@ -226,6 +209,28 @@ class FieldTest_File(File):
                         self.DeviceType = "iPhone"
             else:
                 self.DeviceType = "Netbook"
+            #END IF
+
+            #This is for the rare case when the Device ID was not recorded in the test for some reason
+            if not self.DeviceID:
+                self.DeviceID = "NA"
+
+            #Determining which Tester used the device that conducted this test
+            self.Tester = "NA"
+            if self.DeviceID != "NA":
+                #First we much check wether or not the device is on iOS
+                # iOS devices use a different tester scheme than android
+                if self.DeviceType == "iPhone":
+                    self.Tester = self.parseiPhoneTester(self.DeviceID)
+                #This converts the multiline string into a 2-D list, where the first
+                # element is the device ID, and the second is the tester number
+                else:
+                    dttable = [elem.split(",") for elem in table.strip().split("\n")]
+                    for pair in dttable:
+                        if self.DeviceID in pair[0]:
+                            self.Tester = pair[1].strip()
+                            break
+                #END FOR
             #END IF
 
             #Getting all of the Latitude and Longitude pairs from the file, and
@@ -366,6 +371,24 @@ class FieldTest_File(File):
             #END FOR
         #END IF
     #END DEF
+
+    def parseiPhoneTester(self, id):
+        """
+        iPhones use a different device id system than Android.
+        This function parses out the Tester number from device id.
+        """
+        tester = ""
+        for x in id:
+            if x.isdigit():
+                tester = tester + x
+        bool = True
+        while bool:
+            if tester[0] == "0":
+                tester = tester[1:]
+            else:
+                bool = False
+        tester = "Tester " + tester
+        return tester
 
 
 
