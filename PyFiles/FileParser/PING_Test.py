@@ -3,7 +3,7 @@
 PING_TEST.PY
 
 AUTHOR(S):    Peter Walker    pwalker@csumb.edu
-                Evan Schwander  eschwander@csumb.edu
+            Evan Schwander    eschwander@csumb.edu
 PURPOSE-  This class will hold an individual Ping test. This class keeps track of the RTT values for each
             ping, and the final ping statistics.
 ------------------------------------------------------------------------

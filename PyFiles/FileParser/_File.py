@@ -26,6 +26,7 @@ from __Base import (Formatting, ErrorHandling)
 from TCP_Test import TCP_Test
 from UDP_Test import UDP_Test
 from PING_Test import PING_Test
+from VideoMetrics import VideoMetrics
 #from TCRT_Test import TCRT_Test
 #END IMPORTS
 
@@ -70,7 +71,7 @@ class File(Formatting, ErrorHandling):
         self.Tests = { "TCP":[],
                        "UDP":[],
                        "PING":[],
-                       "TCRT":[] }
+                       "TCRT":[]}
         self.TestsByNum = {}
         self.FilePath = os.path.abspath(filePath)
         self.EastWestSrvrIPs = eastWestIP

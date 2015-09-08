@@ -4,6 +4,7 @@
 _CSV HEADERS.PY
 
 AUTHOR(S):     Peter Walker    pwalker@csumb.edu
+                Evan Schwander  eschwander@csumb.edu
 
 PURPOSE-  This file holds a number of variables that will be used
             by the csvDataExtractor ad csvGenerator
@@ -87,9 +88,10 @@ CURRENT FUNCTIONS:
 FieldTestHeaders = {}
 FieldTestHeaders["csv Default Headers"] = \
         ["Tester", "LocationID", "Date", "Time", "Provider", "Operator",
-         "Network", "Latitude", "Longitude", "DeviceID", "DeviceType"]
+         "Network", "Latitude", "Longitude", "DeviceID", "DeviceType",
+         "wVideo", "eVideo", "wConference", "eConference"]
 FieldTestHeaders["csv Extra Headers"] = \
-        ["Census2010", "R5Coverage", "NormalLAT", "NormalLONG" ]
+        ["Census2010", "R5Coverage", "NormalLAT", "NormalLONG"]
 FieldTestHeaders["csv PING Headers"] = \
         ["eRttMin", "eRttMax", "eRttAvg", "eRttLoss",
          "wRttMin", "wRttMax", "wRttAvg", "wRttLoss" ]

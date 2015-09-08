@@ -117,6 +117,10 @@ class csvDataExtractor(object):
         VALUES.append( OBJECT.Longitude )
         VALUES.append( OBJECT.DeviceID )
         VALUES.append( OBJECT.DeviceType )
+        VALUES.append( OBJECT.VideoMetrics[0] )
+        VALUES.append( OBJECT.VideoMetrics[1] )
+        VALUES.append( OBJECT.VideoMetrics[2] )
+        VALUES.append( OBJECT.VideoMetrics[3] )
         return VALUES
     #END DEF
 

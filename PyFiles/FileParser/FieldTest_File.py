@@ -3,10 +3,12 @@
 FIELDTEST_FILE.PY
 
 AUTHOR(S):    Peter Walker    pwalker@csumb.edu
+            Evan Schwander    eschwander@csumb.edu
 
 PURPOSE-  This object will hold a raw data file's header information (see list of variables)
             and then parses individual tests from the remaining text, storing them as a series of
-            objects in the Tests variable
+            objects in the Tests variable.
+          In Addition, Video Metrics are calculated here.
 ------------------------------------------------------------------------
 """
 if __name__=="__main__":
@@ -69,7 +71,7 @@ class FieldTest_File(File):
         NetworkOperator     String, the name of the network operator (generally same as Provider)
         NetworkCarrier      String, the normalized name of the carrier used during this test
         ConnectionType      String, technology used in connection
-        LocationID      String, the source of location data (GPS or Network)
+        LocationID          String, the source of location data (GPS or Network)
         Latitude            Float, Latitude of device during testing
         Longitude           Float, Longitude of device during testing
         AllCoordPairs       List of Tuples
@@ -131,10 +133,6 @@ class FieldTest_File(File):
         #Actually parsing the tests in the file
         self.findAndParseTCPTests()
         self.findAndParsePINGTests()
-        ''' Used for debugging
-        with open("testfile.txt", 'wt') as f:
-            f.writelines(self.Filename + '\n')
-        '''
         self.findAndParseUDPTests()
         #self.findAndParseTCRTTests()
         #This is one final check, to make sure that we have all 14 tests. If not, then
@@ -150,6 +148,14 @@ class FieldTest_File(File):
                               " tests missing.")
             self._ErrorHandling__setErrorCode(404, specialMessage)
         #END IF
+
+        #Video Metric Stuff
+        try:
+            tempObject = VideoMetrics(self)
+            self.VideoMetrics = tempObject.getValues()
+        except:
+            self.VideoMetrics = ['Error','Error','Error','Error']
+
     #END INIT
 
 
@@ -390,8 +396,6 @@ class FieldTest_File(File):
         tester = "Tester " + tester
         return tester
 
-
-
 # STRING PRINTOUT --------------------------------------------------------------
 
     # DESC: Returns a string representation of the object
@@ -481,3 +485,89 @@ class FieldTest_File(File):
     #END DEF
     '''
 #END CLASS
+
+
+class VideoMetrics:
+
+    def __init__(self, object):
+        #East and West MOS calculation
+        eMOS = object.Tests['PING'][0].calc_rValMOS()
+        eMOS = eMOS[1]
+        wMOS = object.Tests['PING'][1].calc_rValMOS()
+        wMOS = wMOS[1]
+
+        #These lists are used to hold speed information from TCP tests
+        upSum = []
+        dnSum = []
+        for i in range(0,4):
+            upSum.append([])
+            dnSum.append([])
+
+        #These loops interate through all the speed measurements in a TCP test and put them into lists
+        for i in range(0,4):
+            for updown in ['UP','DOWN']:
+                for thread in object.Tests['TCP'][i].Threads[updown]:
+                    intervalCount = 0
+                    for interval in thread.Measurements:
+                        try:
+                            if updown == 'UP':
+                                upSum[i][intervalCount] += interval.Speed
+                            else:
+                                dnSum[i][intervalCount] += interval.Speed
+                        except:
+                            if updown == 'UP':
+                                upSum[i].append(interval.Speed)
+                            else:
+                                dnSum[i].append(interval.Speed)
+                        intervalCount+=1
+
+        # Putting the west down measurments into one list
+        dnSum[0].extend(dnSum[2])
+        westDn = dnSum[0]
+        # Putting the east down measurments into one list
+        dnSum[1].extend(dnSum[3])
+        eastDn = dnSum[1]
+
+        # Putting the west up measurments into one list
+        upSum[0].extend(upSum[2])
+        westUp = upSum[0]
+        # Putting the east up measurments into one list
+        upSum[1].extend(upSum[3])
+        eastUp = upSum[1]
+
+        self.wVideo = self.streamQuality(westDn)
+        self.eVideo = self.streamQuality(eastDn)
+        self.wConference = self.conferenceQuality(self.streamQuality(westUp), self.streamQuality(westDn), wMOS)
+        self.eConference = self.conferenceQuality(self.streamQuality(eastUp), self.streamQuality(eastDn), eMOS)
+
+    def streamQuality(self, test):
+        #Returns HD, SD, or NS depending on the quality of a connection.
+        quality = {'HD':0,'SD':0,'NS':0}
+        for x in test:
+            if x >= 2500.0:
+                quality['HD'] += 1
+            elif x >= 700.0:
+                quality['SD'] += 1
+            else:
+                quality['NS'] += 1
+        if quality['HD'] / len(test) >= 0.95:
+            return 'HD'
+        elif (quality['SD'] + quality['HD']) / len(test) >= 0.95:
+            return 'SD'
+        else:
+            return 'NS'
+
+    def conferenceQuality(self, up, dn, mos):
+        if mos < 4:
+            return 'NS'
+        else:
+            if up == 'NS' or dn == 'NS':
+                return 'NS'
+            elif up == 'SD' or dn == 'SD':
+                return 'SD'
+            else:
+                return 'HD'
+
+    def getValues(self):
+        values = [self.wVideo, self.eVideo, self.wConference, self.eConference]
+        return values
