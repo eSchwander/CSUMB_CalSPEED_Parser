@@ -520,6 +520,9 @@ class VideoMetrics:
                             else:
                                 dnSum[i].append(interval.Speed)
                         intervalCount+=1
+                        if intervalCount == 10: #we only want the first 10 measurements
+                            break
+
 
         # Putting the west down measurments into one list
         dnSum[0].extend(dnSum[2])
