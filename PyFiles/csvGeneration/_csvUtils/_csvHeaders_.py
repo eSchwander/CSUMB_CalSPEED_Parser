@@ -89,6 +89,10 @@ FieldTestHeaders = {}
 FieldTestHeaders["csv Default Headers"] = \
         ["Tester", "LocationID", "Date", "Time", "Provider", "Operator",
          "Network", "Latitude", "Longitude", "DeviceID", "DeviceType",
+         "wDownNS", "wDownSD", "wDownHD",
+         "wUpNS", "wUpSD", "wUpHD",
+         "eDownNS", "eDownSD", "eDownHD",
+         "eUpNS", "eUpSD", "eUpHD",
          "wVideo", "eVideo", "wConference", "eConference"]
 FieldTestHeaders["csv Extra Headers"] = \
         ["Census2010", "R5Coverage", "NormalLAT", "NormalLONG"]

@@ -151,10 +151,9 @@ class FieldTest_File(File):
 
         #Video Metric Stuff
         try:
-            tempObject = VideoMetrics(self)
-            self.VideoMetrics = tempObject.getValues()
+            self.VideoMetrics = VideoMetrics(self).getValues()
         except:
-            self.VideoMetrics = ['Error','Error','Error','Error']
+            self.VideoMetrics = []
 
     #END INIT
 
@@ -538,27 +537,44 @@ class VideoMetrics:
         upSum[1].extend(upSum[3])
         eastUp = upSum[1]
 
+        # The following variables are put into the csv
         self.wVideo = self.streamQuality(westDn)
         self.eVideo = self.streamQuality(eastDn)
         self.wConference = self.conferenceQuality(self.streamQuality(westUp), self.streamQuality(westDn), wMOS)
         self.eConference = self.conferenceQuality(self.streamQuality(eastUp), self.streamQuality(eastDn), eMOS)
+        self.wDn = self.streamQuality(westDn, 'quantity')
+        self.wUp = self.streamQuality(westUp, 'quantity')
+        self.eDn = self.streamQuality(eastDn, 'quantity')
+        self.eUp = self.streamQuality(eastUp, 'quantity')
 
-    def streamQuality(self, test):
-        #Returns HD, SD, or NS depending on the quality of a connection.
-        quality = {'HD':0,'SD':0,'NS':0}
-        for x in test:
+    def streamQuality(self, connection, toReturn = 'quality'):
+        '''
+        This function calculates the amount of each quality in a given connection.
+        It then returns the overall quality of the connection or the quantity of each quality type in the connection.
+        
+        If toReturn equals 'quality' the function returns the overall quality. This is the default.
+        or
+        If toReturn equals 'quantity' the function returns the quantity of each quality type. 
+        '''
+        qualities = {'HD':0,'SD':0,'NS':0}
+        for x in connection:
             if x >= 2500.0:
-                quality['HD'] += 1
+                qualities['HD'] += 1
             elif x >= 700.0:
-                quality['SD'] += 1
+                qualities['SD'] += 1
             else:
-                quality['NS'] += 1
-        if quality['HD'] / len(test) >= 0.95:
-            return 'HD'
-        elif (quality['SD'] + quality['HD']) / len(test) >= 0.95:
-            return 'SD'
-        else:
-            return 'NS'
+                qualities['NS'] += 1
+
+        if toReturn == 'quality':
+            if qualities['HD'] / len(connection) >= 0.95:
+                return 'HD'
+            elif (qualities['SD'] + qualities['HD']) / len(connection) >= 0.95:
+                return 'SD'
+            else:
+                return 'NS'
+        
+        if toReturn == 'quantity':
+            return qualities
 
     def conferenceQuality(self, up, dn, mos):
         if mos < 4:
@@ -572,5 +588,12 @@ class VideoMetrics:
                 return 'HD'
 
     def getValues(self):
-        values = [self.wVideo, self.eVideo, self.wConference, self.eConference]
+        '''
+        getValues returns all the values stored in the VideoMetrics class.
+        '''
+        values = []
+        for connection in (self.wDn, self.wUp, self.eDn, self.eUp):
+            for type in ('NS','SD','HD'):
+                values.append(connection[type])
+        values.extend([self.wVideo, self.eVideo, self.wConference, self.eConference])
         return values
