@@ -117,12 +117,11 @@ class csvDataExtractor(object):
         VALUES.append( OBJECT.Longitude )
         VALUES.append( OBJECT.DeviceID )
         VALUES.append( OBJECT.DeviceType )
-        # appending video metric values
-        try:
+        if len(OBJECT.VideoMetrics) == 18:
             for values in OBJECT.VideoMetrics:
                 VALUES.append(values)
-        except:
-            for _ in range(0,16):
+        else:
+            for _ in range(0,18):
                 VALUES.append( 'Error' )
         return VALUES
     #END DEF

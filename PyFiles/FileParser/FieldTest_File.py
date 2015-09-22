@@ -538,8 +538,10 @@ class VideoMetrics:
         eastUp = upSum[1]
 
         # The following variables are put into the csv
-        self.wVideo = self.streamQuality(westDn)
-        self.eVideo = self.streamQuality(eastDn)
+        self.wDnVideo = self.streamQuality(westDn)
+        self.eDnVideo = self.streamQuality(eastDn)
+        self.wUpVideo = self.streamQuality(westUp)
+        self.eUpVideo = self.streamQuality(eastUp)
         self.wConference = self.conferenceQuality(self.streamQuality(westUp), self.streamQuality(westDn), wMOS)
         self.eConference = self.conferenceQuality(self.streamQuality(eastUp), self.streamQuality(eastDn), eMOS)
         self.wDn = self.streamQuality(westDn, 'quantity')
@@ -592,8 +594,22 @@ class VideoMetrics:
         getValues returns all the values stored in the VideoMetrics class.
         '''
         values = []
-        for connection in (self.wDn, self.wUp, self.eDn, self.eUp):
-            for type in ('NS','SD','HD'):
-                values.append(connection[type])
-        values.extend([self.wVideo, self.eVideo, self.wConference, self.eConference])
+        values.append(self.wDn['NS'])
+        values.append(self.wDn['SD'])
+        values.append(self.wDn['HD'])
+        values.append(self.wDnVideo)
+        values.append(self.wUp['NS'])
+        values.append(self.wUp['SD'])
+        values.append(self.wUp['HD'])
+        values.append(self.wUpVideo)
+        values.append(self.wConference)
+        values.append(self.eDn['NS'])
+        values.append(self.eDn['SD'])
+        values.append(self.eDn['HD'])
+        values.append(self.eDnVideo)
+        values.append(self.eUp['NS'])
+        values.append(self.eUp['SD'])
+        values.append(self.eUp['HD'])
+        values.append(self.eUpVideo)
+        values.append(self.eConference)
         return values
