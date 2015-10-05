@@ -1,4 +1,4 @@
-"""
+﻿"""
 ------------------------------------------------------------------------
 CROWDSOURCE_FILE.PY
 
@@ -203,11 +203,18 @@ class CrowdSource_File(File):
                     self.Devicetype = "Phone"
                 elif "Desktop" in temp[0]:
                     self.Devicetype = "Desktop"
+                elif "iOS" in temp[0]:
+                    self.Devicetype = "iOS"
+                elif "Tablet" in temp[0]:
+                    self.Devicetype = "Tablet"
                 else:
                     self.Devicetype = "UNKNOWN"
                 #END IF/ELIF/ELSE
-                version = temp[0].split("v")[1].strip()
-                self.AppVersion = "v"+version
+                for x in temp[0].split(" "):
+                    if "." in x:
+                        self.AppVersion = x
+                #version = temp[0].split("v")[1].strip()
+                #self.AppVersion = "v"+version
             else:
                 raise RuntimeError("This file is not a Crowd Source CPUC file.")
             #END IF/ELSE
@@ -216,7 +223,9 @@ class CrowdSource_File(File):
             if self.Devicetype == "Phone":
                 self.__loadPhoneInfo(fs)
             elif self.Devicetype == "Desktop":
-                self.__loadDesktopInfo(fs)
+                self.__loadDesktopInfo(fs) 
+            elif self.Devicetype == "iOS":
+                self.__loadPhoneInfo(fs)
             elif self.Devicetype == "UNKNOWN":
                 emptiesToSet = ["Devicetype","AppVersion","OSName","OSArchitecture",
                                 "OSVersion","JavaVersion","JavaVendor","Server","Host",
@@ -243,14 +252,25 @@ class CrowdSource_File(File):
             self.parseLineAndSetAttr(fileStream=fs, delimiter=[": Version =", "Vendor ="],
                                      attribute=["JavaVersion", "JavaVendor"],
                                      hasParts=True)
-            #Read in many other values
-            for pair in [("Server:","Server"),("Host:","Host"),("NetworkProvider:","NetworkProvider"),
-                         ("NetworkOperator:","NetworkOperator"),("NetworkType:","NetworkType"),
-                         ("ConnectionType:","ConnectionType"),("This device was","Environment"),
-                         ("Phone Model:","PhoneModel"),("Phone Manufacturer:","PhoneManufac"),
-                         ("API Version:","PhoneAPIVer"),("SDK Version:","PhoneSDKVer"),
-                         ("WiFi BSSID:","WiFiBSSID"),("WiFi SSID:","WiFiSSID")]:
-                self.parseLineAndSetAttr(fileStream=fs, delimiter=pair[0], attribute=pair[1])
+            #Read in many other values.
+            if self.Devicetype == "iOS":
+                #self.PhoneManufac = "Apple"
+                for pair in [("Server:","Server"),("Host:","Host"),("NetworkProvider:","NetworkProvider"),
+                             ("NetworkOperator:","NetworkOperator"),("NetworkType:","NetworkType"),
+                             ("ConnectionType:","ConnectionType"),("This device was","Environment"),
+                             ("Device Name:","PhoneModel"),
+                             ("WiFi BSSID:","WiFiBSSID"),("WiFi SSID:","WiFiSSID")]:
+                    self.parseLineAndSetAttr(fileStream=fs, delimiter=pair[0], attribute=pair[1])
+                emptiesToSet = ["PhoneAPIVer","PhoneSDKVer","PhoneManufac"]
+                self.setEmptysToDefault(attributes=emptiesToSet)
+            else:
+                for pair in [("Server:","Server"),("Host:","Host"),("NetworkProvider:","NetworkProvider"),
+                             ("NetworkOperator:","NetworkOperator"),("NetworkType:","NetworkType"),
+                             ("ConnectionType:","ConnectionType"),("This device was","Environment"),
+                             ("Phone Model:","PhoneModel"),("Phone Manufacturer:","PhoneManufac"),
+                             ("API Version:","PhoneAPIVer"),("SDK Version:","PhoneSDKVer"),
+                             ("WiFi BSSID:","WiFiBSSID"),("WiFi SSID:","WiFiSSID")]:
+                    self.parseLineAndSetAttr(fileStream=fs, delimiter=pair[0], attribute=pair[1])
 
             #Determining if the device was Roaming or not.
             line = getLinesWith(fs, "Network is Roaming.")
@@ -338,10 +358,14 @@ class CrowdSource_File(File):
             else:
                 self.__dict__[attr] = (0,0)
         #Loop to call the function for GPS and Network
-        for args_ in [(("GPSLastKnownLat:","GPSLastKnownLong:"), "GPSLastKnownCoord"),
-                      (("NetworkLastKnownLat:","NetworkLastKnownLong:"), "NetworkLastKnownCoord")]:
-            _getLastKnown(fs, args_[0], args_[1])
-        #END FOR
+        if self.Devicetype == "iOS":
+            for args_ in [(("LastKnownLat:","LastKnownLong:"), "GPSLastKnownCoord")]:
+                _getLastKnown(fs, args_[0], args_[1])
+        else:
+            for args_ in [(("GPSLastKnownLat:","GPSLastKnownLong:"), "GPSLastKnownCoord"),
+                          (("NetworkLastKnownLat:","NetworkLastKnownLong:"), "NetworkLastKnownCoord")]:
+                _getLastKnown(fs, args_[0], args_[1])
+            #END FOR
 
         if not self.LocationSource:
             if all( [elem!=0 for elem in self.GPSLastKnownCoord] ):

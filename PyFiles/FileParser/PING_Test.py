@@ -215,7 +215,10 @@ class PING_Test(Test):
             self.PacketsSent = int(packetsLine[0].split(" ")[0])
             self.PacketsReceived = int(packetsLine[1].strip().split(" ")[0])
             self.PacketsLost = int(self.PacketsSent - self.PacketsReceived)
-            self.LossPercent = int(float(packetsLine[2].split("%")[0]))
+            try:
+                self.LossPercent = int(float(packetsLine[2].split("%")[0])) #Keep an eye on this line!!
+            except:
+                self.LossPercent = int(self.PacketsLost / self.PacketsSent * 100)
             if self.LossPercent == 100:
                 self._ErrorHandling__setErrorCode(101)
             #This try/except block is needed, as sometimes the min/avg/max numbers

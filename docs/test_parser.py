@@ -1,4 +1,4 @@
-#!/usr/local/bin/python3
+﻿#!/usr/local/bin/python3
 """
 ----------------------------------------------------------------
 This file is for testing batches of file, to see if the parser is
@@ -47,7 +47,7 @@ def main():
     print("Using files in : {}\n".format(fullPath))
 
     #Parsing all of the files, and putting them into an array
-    parsedFiles = {"FieldTest":   []
+    parsedFiles = {"FieldTest":   [],
                    "CrowdSource": [] }
     for file in os.listdir(fullPath):
         truePath = os.path.join(fullPath, file)
