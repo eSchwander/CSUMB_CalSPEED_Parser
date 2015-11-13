@@ -220,7 +220,7 @@ class CrowdSource_File(File):
             #END IF/ELSE
             self.Roaming = False
             #If the device was a phone, then we will parse accordingly
-            if self.Devicetype == "Phone":
+            if self.Devicetype == "Phone" or self.Devicetype == "Tablet":
                 self.__loadPhoneInfo(fs)
             elif self.Devicetype == "Desktop":
                 self.__loadDesktopInfo(fs) 

@@ -216,7 +216,7 @@ class PING_Test(Test):
             self.PacketsReceived = int(packetsLine[1].strip().split(" ")[0])
             self.PacketsLost = int(self.PacketsSent - self.PacketsReceived)
             try:
-                self.LossPercent = int(float(packetsLine[2].split("%")[0])) #Keep an eye on this line!!
+                self.LossPercent = int(float(packetsLine[2].split("%")[0])) #Keep an eye on this line!!(Seems to work)
             except:
                 self.LossPercent = int(self.PacketsLost / self.PacketsSent * 100)
             if self.LossPercent == 100:
@@ -227,8 +227,8 @@ class PING_Test(Test):
                 RTTLine = dataString[2]
                 RTTNums = RTTLine.split("=")[1].strip().split("/")
                 self.RTTMin = float(RTTNums[0])
-                self.RTTAverage = float(RTTNums[1])
-                #Added a try/except block in case there was no mdev given -EMS
+                self.RTTAverage = float(RTTNums[1]) 
+                #Added a try/except block in case there was no mdev given
                 try:
                     self.RTTMax = float(RTTNums[2])
                 except:
@@ -245,6 +245,7 @@ class PING_Test(Test):
             self.PacketsSent = int(packetsLine[0].split("=")[1].strip())
             self.PacketsReceived = int(packetsLine[1].split("=")[1].strip())
             self.PacketsLost = int(packetsLine[2].split("=")[1].strip().split(" ")[0])
+            self.LossPercent = int(self.PacketsSent / self.PacketsReceived * 100)
             #This try/except block is needed, as sometimes the min/avg/max numbers
             # are not printed out by iPerf. This happens in the case of 100% packet loss
             try:
