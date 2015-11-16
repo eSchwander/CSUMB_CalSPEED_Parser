@@ -1,4 +1,4 @@
-#!/usr/local/bin/python3
+﻿#!/usr/local/bin/python3
 """
 ------------------------------------------------------------------------
 SORT_AND_EXTRACT.PY
@@ -166,14 +166,16 @@ def main(**kwargs):
             CSV_GEN.setOpts("1 2 3 4 5 6 7 8 10")
             _makeBaseCSVs(CSV_DIR, CSV_GEN)
             #_makeDateCSVs(CSV_DIR, CSV_GEN)
-            shutil.rmtree(TMP_DIR)
+            #shutil.rmtree(TMP_DIR)
         else:
             print("No files could be processed.")
-            shutil.rmtree(TMP_DIR)
+            #shutil.rmtree(TMP_DIR)
     else:
         print("No files found to process.")
-        shutil.rmtree(TMP_DIR)
+        #shutil.rmtree(TMP_DIR)
     #END IF/ELSE
+
+    shutil.rmtree(TMP_DIR)
 
     print("Operations completed. Now exitting...")
 #END MAIN
