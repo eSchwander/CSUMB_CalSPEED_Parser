@@ -1,4 +1,4 @@
-#!/usr/local/bin/python3
+﻿#!/usr/local/bin/python3
 """
 ------------------------------------------------------------------------
 _CSV HEADERS.PY
@@ -338,7 +338,7 @@ CrowdSourceHeaders["csv RvMos Headers"] = \
 CrowdSourceHeaders["csv UDP Headers"] = \
         ["wUDPJit", "wUDPLoss", "wUDPTime", "eUDPJit", "eUDPLoss", "eUDPTime" ]
 CrowdSourceHeaders["csv TCP Headers"] = \
-        ["wTCPUp", "wTCPDown", "eTCPUp", "eTCPDown" ]
+        ["wTCPUp", "wTCPDown", "eTCPUp", "eTCPDown", "ewTCPUpMean", "ewTCPDnMean" ]
 CrowdSourceHeaders["csv Stat Headers"] = \
         ["wUpStdDev", "wUpMedian", "wDnStdDev", "wDnMedian",
          "eUpStdDev", "eUpMedian", "eDnStdDev", "eDnMedian" ]

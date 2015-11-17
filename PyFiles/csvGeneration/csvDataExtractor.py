@@ -452,6 +452,7 @@ class csvDataExtractor(object):
         #This list addition is because of the order of values above versus what is
         # the expected order based on the csv Headers
         tcpVals = tcpVals[0:2] + tcpVals[4:6] + tcpVals[2:4] + tcpVals[6:8]
+        tcpVals.extend(tcpVals)
         return tcpVals
     #END DEF
 
@@ -469,6 +470,14 @@ class csvDataExtractor(object):
                 tcpVals.extend( [OBJECT.ErrorType]*2 )
             #END IF/ELSE
         #END FOR
+        ewUpTCP = (tcpVals[0] + tcpVals[2]) / 2
+        ewDnTCP = (tcpVals[1] + tcpVals[3]) / 2
+        try:
+            tcpVals.append(ewUpTCP)
+            tcpVals.append(ewDnTCP)
+        except:
+            tcpVals.extend(ewUpTCP)
+            tcpVals.extend(ewDnTCP)
         return tcpVals
     #END DEF
 
