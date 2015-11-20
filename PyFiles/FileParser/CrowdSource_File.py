@@ -258,10 +258,10 @@ class CrowdSource_File(File):
                 for pair in [("Server:","Server"),("Host:","Host"),("NetworkProvider:","NetworkProvider"),
                              ("NetworkOperator:","NetworkOperator"),("NetworkType:","NetworkType"),
                              ("ConnectionType:","ConnectionType"),("This device was","Environment"),
-                             ("Device Name:","PhoneModel"),
+                             ("Device Name:","PhoneModel"),("Version =","PhoneAPIVer"),
                              ("WiFi BSSID:","WiFiBSSID"),("WiFi SSID:","WiFiSSID")]:
                     self.parseLineAndSetAttr(fileStream=fs, delimiter=pair[0], attribute=pair[1])
-                emptiesToSet = ["PhoneAPIVer","PhoneSDKVer","PhoneManufac"]
+                emptiesToSet = ["PhoneSDKVer","PhoneManufac"]
                 self.setEmptysToDefault(attributes=emptiesToSet)
             else:
                 for pair in [("Server:","Server"),("Host:","Host"),("NetworkProvider:","NetworkProvider"),
