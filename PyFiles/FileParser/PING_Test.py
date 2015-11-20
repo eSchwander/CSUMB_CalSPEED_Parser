@@ -1,4 +1,4 @@
-"""
+﻿"""
 ------------------------------------------------------------------------
 PING_TEST.PY
 
@@ -136,7 +136,7 @@ class PING_Test(Test):
         #A quick check that we do not have weird formatting of our PING test.
         # Sometimes, there are cases where there are two newline characters between
         # each line of data.
-        if "\n\n\n" in dataString:
+        if "\n\n\n" in dataString and "statistics" not in dataString:
             self._ErrorHandling__setErrorCode(101)
         #Now we parse out the Pings from the test
         if not self.ContainsErrors:
@@ -173,12 +173,37 @@ class PING_Test(Test):
         RETURNS:
             None
         """
+        
+        dataLines = dataString.splitlines()
+        pingList = []
+        statString = ''
+        record = 0
+        #This loop will place all ping lines in pingList 
+        # and make a string containing the ping statistics
+        for line in dataLines:
+            if 'icmp' in line: #icmp makes an appearance in all pings
+                pingList.append(line)
+            elif 'statistics' in line.lower(): #statString will contain this line and the following 2
+                record = 2
+                statString += line + '\n'
+            elif record > 0:
+                statString += line + '\n'
+                record -= 1
+
+        #Now we can parse the information we want
+        self.__parseStats(statString)
+        self.__parseIndividualPings(pingList)
+
+
+        
+
+        '''
         #We start our function be splitting the data string into individual chunks,
         # which we will then parse individually
         dataChunks = [elem.strip() for elem in dataString.split("\n\n") if elem]
-        statsText = "ping statistics" if self.is_outputType1 else "Ping statistics"
+        statsText = "ping statistics"
         for chunk in dataChunks:
-            if statsText in chunk:
+            if statsText in chunk.lower():
                 self.__parseStats(chunk)
             #If the string 'bytes of data' is in the chunk, then we are looking
             # at the chunk holding all of the ping packet results
@@ -188,20 +213,19 @@ class PING_Test(Test):
                 self.__parseIndividualPings(chunk, "data bytes")
         #END FOR
     #END DEF
+        '''
 
-    def __parseIndividualPings(self, dataString, splitter):
-        #As we know that we are looking at the chunk of data that is the ping
-        # packet RTTs, we want to first get some basic information. All that
-        # we can really glean is the packet size in bytes
-        allData = dataString.split(splitter)[-1].split("\n")
-        #This list comprehension removes all strings that are only a few characters.
-        # Each packet should have caused a message longer than 5 characters to be printed
-        allData = [elem for elem in allData if len(elem)>5]
-        #Now we want to remove any strings that are a redirect message
-        allData = [elem for elem in allData if "redirect host" not in elem.lower()]
-        for packet in allData:
-            self.Times.append(PING_Packet(packet, self.is_outputType1))
-    #END DEF
+    def __parseIndividualPings(self, pings):
+        '''
+        This function will parse the RTTs of all the pings in a ping test
+        '''
+        for ping in pings:
+            tempSplit = ping.split('=')
+            for i in range(0, len(tempSplit)):
+                if 'time' in tempSplit[i]:
+                    self.Times.append(PING_Packet(tempSplit[i+1].split(' ')[0], self.is_outputType1))
+                    break
+        
 
     def __parseStats(self, dataString):
         #Depending on whether our ouput was of one type or another, we will follow
@@ -216,7 +240,7 @@ class PING_Test(Test):
             self.PacketsReceived = int(packetsLine[1].strip().split(" ")[0])
             self.PacketsLost = int(self.PacketsSent - self.PacketsReceived)
             try:
-                self.LossPercent = int(float(packetsLine[2].split("%")[0])) #Keep an eye on this line!!(Seems to work)
+                self.LossPercent = int(float(packetsLine[2].split("%")[0]))
             except:
                 self.LossPercent = int(self.PacketsLost / self.PacketsSent * 100)
             if self.LossPercent == 100:
