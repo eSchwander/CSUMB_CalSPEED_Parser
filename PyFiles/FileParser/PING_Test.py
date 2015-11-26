@@ -56,10 +56,11 @@ class PING_Packet(Formatting):
                                                .split("ms")[0]
                                                .strip()
                              )
-            self.TTL = float(dataString.lower().split("ttl=")[-1]
-                                               .split(" ")[0]
-                                               .strip()
-                             )
+            #Not sure why we would want to know the ttl
+            #self.TTL = float(dataString.lower().split("ttl=")[-1]
+            #                                   .split(" ")[0]
+            #                                   .strip()
+            #                 )
         #END IF/ELSE
     #END DEF
 
@@ -176,19 +177,23 @@ class PING_Test(Test):
         
         dataLines = dataString.splitlines()
         pingList = []
-        statString = ''
-        record = 0
+        statList = []
+        recordStats = False
         #This loop will place all ping lines in pingList 
         # and make a string containing the ping statistics
         for line in dataLines:
-            if 'icmp' in line: #icmp makes an appearance in all pings
+            if len(statList) > 0 and recordStats == True:
+                if (statList[-1] == '\n' and line == '\n') or 'latitude' in line.lower():
+                    recordStats = False
+            if 'ttl' in line.lower(): #ttl makes an appearance in all pings
                 pingList.append(line)
-            elif 'statistics' in line.lower(): #statString will contain this line and the following 2
-                record = 2
-                statString += line + '\n'
-            elif record > 0:
-                statString += line + '\n'
-                record -= 1
+            elif 'statistics' in line.lower() or recordStats == True: #statsList holds ping statstics. Later converted into a string.
+                recordStats = True
+                statList.append(line + '\n')
+
+        statString = ''.join(statList)
+
+
 
         #Now we can parse the information we want
         self.__parseStats(statString)
@@ -269,7 +274,7 @@ class PING_Test(Test):
             self.PacketsSent = int(packetsLine[0].split("=")[1].strip())
             self.PacketsReceived = int(packetsLine[1].split("=")[1].strip())
             self.PacketsLost = int(packetsLine[2].split("=")[1].strip().split(" ")[0])
-            self.LossPercent = int(self.PacketsSent / self.PacketsReceived * 100)
+            self.LossPercent = int((self.PacketsSent - self.PacketsReceived) / self.PacketsReceived * 100)
             #This try/except block is needed, as sometimes the min/avg/max numbers
             # are not printed out by iPerf. This happens in the case of 100% packet loss
             try:
