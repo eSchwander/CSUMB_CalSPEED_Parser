@@ -1,4 +1,4 @@
-"""
+﻿"""
 ------------------------------------------------------------------------
 TCP_TEST.PY
 
@@ -147,7 +147,11 @@ class TCP_Test(Test):
                 #This gets the thread number from within the square brackets, checks
                 # if it is a key in tempThreads, and then adds the line to correct
                 # list in tempThreads (each key is a thread number)
-                newKey = int(line.split("]")[0][1:].strip())
+                try:
+                    newKey = int(line.split("]")[0][1:].strip())
+                except:
+                    self._ErrorHandling__setErrorCode(404, "Something went wrong with TCP test")
+                    break
                 if newKey not in tempThreads.keys():
                     tempThreads[newKey] = []
                 #END IF

@@ -368,7 +368,7 @@ class CrowdSource_File(File):
             #END FOR
 
         if not self.LocationSource:
-            if all( [elem!=0 for elem in self.GPSLastKnownCoord] ):
+            if all( [elem!=0 for elem in self.GPSLastKnownCoord] ) or self.Devicetype == 'iOS':
                 self.Latitude = self.GPSLastKnownCoord[0]
                 self.Longitude = self.GPSLastKnownCoord[1]
                 self.LocationSource = "GPS"
