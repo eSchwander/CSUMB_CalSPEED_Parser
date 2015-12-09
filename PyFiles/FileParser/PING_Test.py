@@ -227,9 +227,9 @@ class PING_Test(Test):
         for ping in pings:
             tempSplit = ping.split('=')
             for i in range(0, len(tempSplit)):
-                if 'time' in tempSplit[i]:
+                if 'time' in tempSplit[i]: #RTT will be in the next index
                     self.Times.append(PING_Packet(tempSplit[i+1].split(' ')[0], self.is_outputType1))
-                    break
+                    break #Time to move to the next line
         
 
     def __parseStats(self, dataString):
