@@ -117,6 +117,8 @@ class csvDataExtractor(object):
         VALUES.append( OBJECT.Longitude )
         VALUES.append( OBJECT.DeviceID )
         VALUES.append( OBJECT.DeviceType )
+        #Video Metrics Values are placed here
+        #This should be a temporary solution
         if len(OBJECT.VideoMetrics) == 18:
             for values in OBJECT.VideoMetrics:
                 VALUES.append(values)

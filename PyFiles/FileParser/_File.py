@@ -187,7 +187,10 @@ class File(Formatting, ErrorHandling):
                         timestamp_str = line.strip()
                         break
                 #END FOR
-                self._datetime_ = dt.datetime.strptime(timestamp_str, "%m/%d/%Y %H:%M:%S %Z")
+                try:
+                    self._datetime_ = dt.datetime.strptime(timestamp_str, "%m/%d/%Y %H:%M:%S %Z")
+                except:
+                    self._datetime_ = dt.datetime.strptime(timestamp_str, "%m/%d/%Y %H:%M:%S")
             #END IF/ELSE
 
             self.Date = self._datetime_.strftime("%m/%d/%Y")
