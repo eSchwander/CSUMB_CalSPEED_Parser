@@ -369,7 +369,7 @@ class File(Formatting, ErrorHandling):
             with open(self.FilePath) as fs:
                 allText = fs.read()
             #END WITH FILE
-            if "Connectivity Test Failed" in allText and "Starting Test" not in allText:
+            if "Failed Connectivity Test" in allText and "Starting Test" not in allText:
                 self._ErrorHandling__setErrorCode(311)
                 return
             #First splitting the contents into sections. These sections are all of the areas
