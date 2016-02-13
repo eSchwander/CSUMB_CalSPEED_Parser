@@ -56,10 +56,11 @@ class PING_Packet(Formatting):
                                                .split("ms")[0]
                                                .strip()
                              )
-            self.TTL = float(dataString.lower().split("ttl=")[-1]
-                                               .split(" ")[0]
-                                               .strip()
-                             )
+            #Not sure why we would want to know the ttl
+            #self.TTL = float(dataString.lower().split("ttl=")[-1]
+            #                                   .split(" ")[0]
+            #                                   .strip()
+            #                 )
         #END IF/ELSE
     #END DEF
 
@@ -136,7 +137,7 @@ class PING_Test(Test):
         #A quick check that we do not have weird formatting of our PING test.
         # Sometimes, there are cases where there are two newline characters between
         # each line of data.
-        if "\n\n\n" in dataString:
+        if "\n\n\n" in dataString and "statistics" not in dataString:
             self._ErrorHandling__setErrorCode(101)
         #Now we parse out the Pings from the test
         if not self.ContainsErrors:
@@ -173,12 +174,41 @@ class PING_Test(Test):
         RETURNS:
             None
         """
+        
+        dataLines = dataString.splitlines()
+        pingList = []
+        statList = []
+        recordStats = False
+        #This loop will place all ping lines in pingList 
+        # and make a string containing the ping statistics
+        for line in dataLines:
+            if len(statList) > 0 and recordStats == True:
+                if (statList[-1] == '\n' and line == '\n') or 'latitude' in line.lower():
+                    recordStats = False
+            if 'ttl' in line.lower(): #ttl makes an appearance in all pings
+                pingList.append(line)
+            elif 'statistics' in line.lower() or recordStats == True: #statsList holds ping statstics. Later converted into a string.
+                recordStats = True
+                statList.append(line + '\n')
+
+        statString = ''.join(statList)
+
+
+
+        #Now we can parse the information we want
+        self.__parseStats(statString)
+        self.__parseIndividualPings(pingList)
+
+
+        
+
+        '''
         #We start our function be splitting the data string into individual chunks,
         # which we will then parse individually
         dataChunks = [elem.strip() for elem in dataString.split("\n\n") if elem]
-        statsText = "ping statistics" if self.is_outputType1 else "Ping statistics"
+        statsText = "ping statistics"
         for chunk in dataChunks:
-            if statsText in chunk:
+            if statsText in chunk.lower():
                 self.__parseStats(chunk)
             #If the string 'bytes of data' is in the chunk, then we are looking
             # at the chunk holding all of the ping packet results
@@ -188,20 +218,19 @@ class PING_Test(Test):
                 self.__parseIndividualPings(chunk, "data bytes")
         #END FOR
     #END DEF
+        '''
 
-    def __parseIndividualPings(self, dataString, splitter):
-        #As we know that we are looking at the chunk of data that is the ping
-        # packet RTTs, we want to first get some basic information. All that
-        # we can really glean is the packet size in bytes
-        allData = dataString.split(splitter)[-1].split("\n")
-        #This list comprehension removes all strings that are only a few characters.
-        # Each packet should have caused a message longer than 5 characters to be printed
-        allData = [elem for elem in allData if len(elem)>5]
-        #Now we want to remove any strings that are a redirect message
-        allData = [elem for elem in allData if "redirect host" not in elem.lower()]
-        for packet in allData:
-            self.Times.append(PING_Packet(packet, self.is_outputType1))
-    #END DEF
+    def __parseIndividualPings(self, pings):
+        '''
+        This function will parse the RTTs of all the pings in a ping test
+        '''
+        for ping in pings:
+            tempSplit = ping.split('=')
+            for i in range(0, len(tempSplit)):
+                if 'time' in tempSplit[i]: #RTT will be in the next index
+                    self.Times.append(PING_Packet(tempSplit[i+1].split(' ')[0], self.is_outputType1))
+                    break #Time to move to the next line
+        
 
     def __parseStats(self, dataString):
         #Depending on whether our ouput was of one type or another, we will follow
@@ -215,7 +244,10 @@ class PING_Test(Test):
             self.PacketsSent = int(packetsLine[0].split(" ")[0])
             self.PacketsReceived = int(packetsLine[1].strip().split(" ")[0])
             self.PacketsLost = int(self.PacketsSent - self.PacketsReceived)
-            self.LossPercent = int(float(packetsLine[2].split("%")[0]))
+            try:
+                self.LossPercent = int(float(packetsLine[2].split("%")[0]))
+            except:
+                self.LossPercent = int(self.PacketsLost / self.PacketsSent * 100)
             if self.LossPercent == 100:
                 self._ErrorHandling__setErrorCode(101)
             #This try/except block is needed, as sometimes the min/avg/max numbers
@@ -224,8 +256,8 @@ class PING_Test(Test):
                 RTTLine = dataString[2]
                 RTTNums = RTTLine.split("=")[1].strip().split("/")
                 self.RTTMin = float(RTTNums[0])
-                self.RTTAverage = float(RTTNums[1])
-                #Added a try/except block in case there was no mdev given -EMS
+                self.RTTAverage = float(RTTNums[1]) 
+                #Added a try/except block in case there was no mdev given
                 try:
                     self.RTTMax = float(RTTNums[2])
                 except:
@@ -242,7 +274,7 @@ class PING_Test(Test):
             self.PacketsSent = int(packetsLine[0].split("=")[1].strip())
             self.PacketsReceived = int(packetsLine[1].split("=")[1].strip())
             self.PacketsLost = int(packetsLine[2].split("=")[1].strip().split(" ")[0])
-            self.LossPercent = int(self.PacketsLost / self.PacketsSent)
+            self.LossPercent = int(self.PacketsLost / self.PacketsSent * 100)
             #This try/except block is needed, as sometimes the min/avg/max numbers
             # are not printed out by iPerf. This happens in the case of 100% packet loss
             try:

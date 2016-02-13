@@ -1,4 +1,4 @@
-#!/usr/local/bin/python3
+﻿#!/usr/local/bin/python3
 """
 ------------------------------------------------------------------------
 _DECORATORS.PY
@@ -39,7 +39,7 @@ if "NO EMAILS" in sys.argv:
 def __debug(logFileLoc, emailAddress, fullDebug=False, funcName=""):
     """A Wrapper that will call the function and pipe output to a log."""
     logFile = os.path.abspath(os.path.join(logFileLoc, "_ERRORLOG.txt"))
-    if len(sys.argv):
+    if len(sys.argv) >= 2:
         serverName = "{} Server".format(sys.argv[1].upper())
     else:
         serverName = "A Server"

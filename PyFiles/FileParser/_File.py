@@ -1,4 +1,4 @@
-"""
+﻿"""
 ------------------------------------------------------------------------
 _FILE.PY
 
@@ -187,7 +187,10 @@ class File(Formatting, ErrorHandling):
                         timestamp_str = line.strip()
                         break
                 #END FOR
-                self._datetime_ = dt.datetime.strptime(timestamp_str, "%m/%d/%Y %H:%M:%S %Z")
+                try:
+                    self._datetime_ = dt.datetime.strptime(timestamp_str, "%m/%d/%Y %H:%M:%S %Z")
+                except:
+                    self._datetime_ = dt.datetime.strptime(timestamp_str, "%m/%d/%Y %H:%M:%S")
             #END IF/ELSE
 
             self.Date = self._datetime_.strftime("%m/%d/%Y")
@@ -366,7 +369,7 @@ class File(Formatting, ErrorHandling):
             with open(self.FilePath) as fs:
                 allText = fs.read()
             #END WITH FILE
-            if "Connectivity Test Failed" in allText and "Starting Test" not in allText:
+            if "Failed Connectivity Test" in allText and "Starting Test" not in allText:
                 self._ErrorHandling__setErrorCode(311)
                 return
             #First splitting the contents into sections. These sections are all of the areas

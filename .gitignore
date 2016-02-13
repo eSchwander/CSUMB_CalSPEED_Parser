@@ -1,6 +1,15 @@
 # Sensitive information that should not be on github
 PyFiles/FileParser/_sensitiveInfo/*.py
 ServerScripts/_sensitiveInfo/*.py
+csvResults/
+_sensitiveInfo/
+ProcessedData/
+ExceptionFiles/
+*.pyproj
+*.sln
+*.suo
+/BACKUPS/
+UploadData/
 
 # package distribution help
 *_help.txt
