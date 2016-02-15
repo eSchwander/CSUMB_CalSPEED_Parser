@@ -211,8 +211,19 @@ class csvDataExtractor(object):
             return []
     #END DEF
 
+# VIDEO METRICS VALUES EXTRACTORS ------------------------------------------------------
 
-
+    @__POST_returnChecker(FieldTestHeaders, "csv Video Metrics Headers")
+    def __extractFT_VideoMetrics(self, OBJECT):
+        VALUES = []
+        if len(OBJECT.VideoMetrics) == 18:
+            for values in OBJECT.VideoMetrics:
+                VALUES.append(values)
+        else:
+            for _ in range(0,18):
+                VALUES.append( 'Error' )
+        return VALUES
+    #END DEF
 
 ##### PING VALUES ##############################################################
 
