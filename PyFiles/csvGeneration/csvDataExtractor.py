@@ -204,7 +204,7 @@ class csvDataExtractor(object):
     #END DEF
 
 # VIDEO METRICS VALUES EXTRACTORS ------------------------------------------------------
-
+    '''
     @__POST_returnChecker(FieldTestHeaders, "csv Video Metrics Headers")
     def __extractFT_VideoMetrics(self, OBJECT):
         VALUES = []
@@ -226,7 +226,7 @@ class csvDataExtractor(object):
             return self.__extractFT_VideoMetrics(OBJECT)
         else:
             return []
-
+    '''
 ##### PING VALUES ##############################################################
 
 # PING VALUES EXTRACTORS -------------------------------------------------------
