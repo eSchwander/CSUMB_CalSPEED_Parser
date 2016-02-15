@@ -89,8 +89,9 @@ CURRENT FUNCTIONS:
 FieldTestHeaders = {}
 FieldTestHeaders["csv Default Headers"] = \
         ["Tester", "LocationID", "Date", "Time", "Provider", "Operator",
-         "Network", "Latitude", "Longitude", "DeviceID", "DeviceType",
-         "wDownNS", "wDownSD", "wDownHD", "wDownVideo",
+         "Network", "Latitude", "Longitude", "DeviceID", "DeviceType"]
+FieldTestHeaders["csv Video Metrics Headers"] = \
+        ["wDownNS", "wDownSD", "wDownHD", "wDownVideo",
          "wUpNS", "wUpSD", "wUpHD", "wUpVideo",
          "wConference",
          "eDownNS", "eDownSD", "eDownHD", "eDownVideo",

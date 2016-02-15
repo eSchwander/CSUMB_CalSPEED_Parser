@@ -117,14 +117,6 @@ class csvDataExtractor(object):
         VALUES.append( OBJECT.Longitude )
         VALUES.append( OBJECT.DeviceID )
         VALUES.append( OBJECT.DeviceType )
-        #Video Metrics Values are placed here
-        #This should be a temporary solution
-        if len(OBJECT.VideoMetrics) == 18:
-            for values in OBJECT.VideoMetrics:
-                VALUES.append(values)
-        else:
-            for _ in range(0,18):
-                VALUES.append( 'Error' )
         return VALUES
     #END DEF
 
@@ -223,7 +215,17 @@ class csvDataExtractor(object):
             for _ in range(0,18):
                 VALUES.append( 'Error' )
         return VALUES
-    #END DEF
+    
+    @__PRE_objectChecker
+    def extractVMVals(self, OBJECT, **kwargs):
+        """
+        Based on the object's fileType attribute, calls the correct
+         Video Metric value extractor on the given file object
+        """
+        if self.fileType == self.FILETYPES[0]:
+            return self.__extractFT_VideoMetrics(OBJECT)
+        else:
+            return []
 
 ##### PING VALUES ##############################################################
 
