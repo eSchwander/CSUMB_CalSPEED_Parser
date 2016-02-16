@@ -598,21 +598,25 @@ class csvDataExtractor(object):
             upMean = mean(UP)
             upStDev = pstdev(UP)
             upMean_1 = upMean-upStDev
+            upMean_2 = upMean_1-upStDev
         else:
             upMean = "bad_output"
             upStDev = "bad_output"
             upMean_1 = "bad_output"
+            upMean_2 = "bad_output"
         if DN:
             dnMean = mean(DN)
             dnStDev = pstdev(DN)
             dnMean_1 = dnMean-dnStDev
+            dnMean_2 = dnMean_1-dnStDev
         else:
             dnMean = "bad_output"
             dnStDev = "bad_output"
             dnMean_1 = "bad_output"
+            dnMean_2 = "bad_output"
         #END IF/ELSEs
-        return [upMean, upStDev, upMean_1,
-                dnMean, dnStDev, dnMean_1]
+        return [upMean, upStDev, upMean_1, upMean_2,
+                dnMean, dnStDev, dnMean_1, dnMean_2]
     #END DEF
 
     def __extract_TCPStatSVals(self, OBJECT):

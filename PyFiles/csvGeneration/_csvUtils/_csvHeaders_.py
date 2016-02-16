@@ -31,7 +31,6 @@ Headers for the CSV file creation
 '''
 FTcsvHeadersOrder = ["csv Default Headers",
                      "csv Extra Headers",
-                     "csv Video Metrics Headers",
                      "csv PING Headers",
                      "csv RvMos Headers",
                      "csv UDP Headers",
@@ -40,17 +39,17 @@ FTcsvHeadersOrder = ["csv Default Headers",
                      "csv Stat-S Headers",
                      "csv Stat-A Headers",
                      "csv Qual Headers" ]
-
-CScsvHeadersOrder = ["csv Default Headers",
-                     "csv Extra Headers",
-                     "csv PING Headers",
-                     "csv RvMos Headers",
-                     "csv UDP Headers",
-                     "csv TCP Headers",
-                     "csv Stat Headers",
-                     "csv Stat-S Headers",
-                     "csv Stat-A Headers",
-                     "csv Qual Headers" ]
+CScsvHeadersOrder = FTcsvHeadersOrder[:]
+# CScsvHeadersOrder = ["csv Default Headers",
+#                      "csv Extra Headers",
+#                      "csv PING Headers",
+#                      "csv RvMos Headers",
+#                      "csv UDP Headers",
+#                      "csv TCP Headers",
+#                      "csv Stat Headers",
+#                      "csv Stat-S Headers",
+#                      "csv Stat-A Headers",
+#                      "csv Qual Headers" ]
 
 """
 Adding new types of analyses requires modifying three files.
@@ -128,8 +127,8 @@ FieldTestHeaders["csv Stat-A Headers"] = \
 # This overrides the headers in Stat-S, as we are going to, in general, use the
 # algorithm specified in the corresponding function in csvDataExtractor
 FieldTestHeaders["csv Stat-S Headers"] = \
-        ["cUpMean", "cUpStdDev", "cUpMean_1",
-         "cDnMean", "cDnStdDev", "cDnMean_1" ]
+        ["cUpMean", "cUpStdDev", "cUpMean_1", "cUpMean_2",
+         "cDnMean", "cDnStdDev", "cDnMean_1", "cDnMean_2" ]
 #
 
 FieldTestHeaders["csv Qual Headers"] = \
@@ -137,6 +136,7 @@ FieldTestHeaders["csv Qual Headers"] = \
          "eTCPUpPR1", "eTCPUpPct1", "eTCPDnPR1", "eTCPDnPct1",
          "wTCPUpPR2", "wTCPUpPct2", "wTCPDnPR2", "wTCPDnPct2",
          "eTCPUpPR2", "eTCPUpPct2", "eTCPDnPR2", "eTCPDnPct2" ]
+
 
 '''
 #-------------- The Better Column Order --------------#
