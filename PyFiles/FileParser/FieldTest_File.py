@@ -151,10 +151,13 @@ class FieldTest_File(File):
 
         #Video Metric Stuff
         try:
-            self.WestVideoMetrics = VideoMetrics(self, west).getValues()
-            self.EastVideoMetrics = VideoMetrics(self, east).getValues()
+            self.WestVideoMetrics = VideoMetrics(self, 'west').getValues()
         except:
-            self.VideoMetrics = []
+            self.WestVideoMetrics = []
+        try:
+            self.EastVideoMetrics = VideoMetrics(self, 'east').getValues()
+        except:
+            self.EastVideoMetrics = []
 
     #END INIT
 
@@ -496,11 +499,11 @@ class VideoMetrics:
         if eastwest == 'west':
             MOS = object.Tests['PING'][1].calc_rValMOS()
             MOS = wMOS[1]
-            testnums = ['0','2']
+            testnums = [0,2]
         elif eastwest == 'east':
             eMOS = object.Tests['PING'][0].calc_rValMOS()
             eMOS = eMOS[1]
-            testnums = ['1','3']
+            testnums = [1,3]
         else:
             print('Need east or west as an input')
         
