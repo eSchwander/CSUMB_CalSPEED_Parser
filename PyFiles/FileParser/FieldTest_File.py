@@ -151,7 +151,8 @@ class FieldTest_File(File):
 
         #Video Metric Stuff
         try:
-            self.VideoMetrics = VideoMetrics(self).getValues()
+            self.WestVideoMetrics = VideoMetrics(self, west).getValues()
+            self.EastVideoMetrics = VideoMetrics(self, east).getValues()
         except:
             self.VideoMetrics = []
 
@@ -487,13 +488,22 @@ class FieldTest_File(File):
 
 
 class VideoMetrics:
-
-    def __init__(self, object):
-        #East and West MOS calculation
-        eMOS = object.Tests['PING'][0].calc_rValMOS()
-        eMOS = eMOS[1]
-        wMOS = object.Tests['PING'][1].calc_rValMOS()
-        wMOS = wMOS[1]
+    """
+    This class calculates and stores video metric information.
+    """
+    def __init__(self, object, eastwest):
+        #East or West MOS calculation
+        if eastwest == 'west':
+            MOS = object.Tests['PING'][1].calc_rValMOS()
+            MOS = wMOS[1]
+            testnums = ['0','2']
+        elif eastwest == 'east':
+            eMOS = object.Tests['PING'][0].calc_rValMOS()
+            eMOS = eMOS[1]
+            testnums = ['1','3']
+        else:
+            print('Need east or west as an input')
+        
 
         #These lists are used to hold speed information from TCP tests
         upSum = []
@@ -503,7 +513,7 @@ class VideoMetrics:
             dnSum.append([])
 
         #These loops interate through all the speed measurements in a TCP test and put them into lists
-        for thread in range(0,4):
+        for thread in testnums:
             for updown in ['UP','DOWN']:
                 for thread in object.Tests['TCP'][i].Threads[updown]:
                     intervalCount = 0
@@ -521,33 +531,21 @@ class VideoMetrics:
                         intervalCount+=1
                         if intervalCount == 10: #we only want the first 10 measurements
                             break
+        
+        # Putting down measurements into one list
+        dnTotal = []
+        upTotal = []
+        for x in testnums:
+            dnTotal.extend(dnSum[x])
+            upTotal.extend(upSum[x])
 
-
-        # Putting the west down measurments into one list
-        dnSum[0].extend(dnSum[2])
-        westDn = dnSum[0]
-        # Putting the east down measurments into one list
-        dnSum[1].extend(dnSum[3])
-        eastDn = dnSum[1]
-
-        # Putting the west up measurments into one list
-        upSum[0].extend(upSum[2])
-        westUp = upSum[0]
-        # Putting the east up measurments into one list
-        upSum[1].extend(upSum[3])
-        eastUp = upSum[1]
 
         # The following variables are put into the csv
-        self.wDnVideo = self.streamQuality(westDn)
-        self.eDnVideo = self.streamQuality(eastDn)
-        self.wUpVideo = self.streamQuality(westUp)
-        self.eUpVideo = self.streamQuality(eastUp)
-        self.wConference = self.conferenceQuality(self.streamQuality(westUp), self.streamQuality(westDn), wMOS)
-        self.eConference = self.conferenceQuality(self.streamQuality(eastUp), self.streamQuality(eastDn), eMOS)
-        self.wDn = self.streamQuality(westDn, 'quantity')
-        self.wUp = self.streamQuality(westUp, 'quantity')
-        self.eDn = self.streamQuality(eastDn, 'quantity')
-        self.eUp = self.streamQuality(eastUp, 'quantity')
+        self.DnVideo = self.streamQuality(dnTotal)
+        self.UpVideo = self.streamQuality(upTotal)
+        self.Conference = self.conferenceQuality(self.streamQuality(upTotal), self.streamQuality(dnTotal), MOS)
+        self.Dn = self.streamQuality(dnTotal, 'quantity')
+        self.Up = self.streamQuality(upTotal, 'quantity')
 
     def streamQuality(self, connection, toReturn = 'quality'):
         '''
@@ -594,22 +592,13 @@ class VideoMetrics:
         getValues returns all the values stored in the VideoMetrics class.
         '''
         values = []
-        values.append(self.wDn['NS'])
-        values.append(self.wDn['SD'])
-        values.append(self.wDn['HD'])
-        values.append(self.wDnVideo)
-        values.append(self.wUp['NS'])
-        values.append(self.wUp['SD'])
-        values.append(self.wUp['HD'])
-        values.append(self.wUpVideo)
-        values.append(self.wConference)
-        values.append(self.eDn['NS'])
-        values.append(self.eDn['SD'])
-        values.append(self.eDn['HD'])
-        values.append(self.eDnVideo)
-        values.append(self.eUp['NS'])
-        values.append(self.eUp['SD'])
-        values.append(self.eUp['HD'])
-        values.append(self.eUpVideo)
-        values.append(self.eConference)
+        values.append(self.Dn['NS'])
+        values.append(self.Dn['SD'])
+        values.append(self.Dn['HD'])
+        values.append(self.DnVideo)
+        values.append(self.Up['NS'])
+        values.append(self.Up['SD'])
+        values.append(self.Up['HD'])
+        values.append(self.UpVideo)
+        values.append(self.Conference)
         return values

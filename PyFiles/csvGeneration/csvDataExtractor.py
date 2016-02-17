@@ -786,11 +786,17 @@ class csvDataExtractor(object):
                 tcpVals.extend( [OBJECT.ErrorType]*8)
             #END IF/ELSE
         #END FOR
-        if len(OBJECT.VideoMetrics) == 18:
-            for values in OBJECT.VideoMetrics:
+        if len(OBJECT.WestVideoMetrics) == 9:
+            for values in OBJECT.WestVideoMetrics:
                 tcpVals.append(values)
         else:
-            for _ in range(0,18):
+            for _ in range(9):
+                tcpVals.append( 'Error' )
+        if len(OBJECT.EastVideoMetrics) == 9:
+            for values in OBJECT.EastVideoMetrics:
+                tcpVals.append(values)
+        else:
+            for _ in range(9):
                 tcpVals.append( 'Error' )
         return tcpVals
         #This is necessary to correctly align values with their headers. In the
