@@ -38,7 +38,7 @@ FTcsvHeadersOrder = ["csv Default Headers",
                      "csv Stat Headers",
                      "csv Stat-S Headers",
                      "csv Stat-A Headers",
-                     "csv Qual Headers" ]
+                     "csv Qual Headers"]
 CScsvHeadersOrder = FTcsvHeadersOrder[:]
 # CScsvHeadersOrder = ["csv Default Headers",
 #                      "csv Extra Headers",
@@ -135,7 +135,13 @@ FieldTestHeaders["csv Qual Headers"] = \
         ["wTCPUpPR1", "wTCPUpPct1", "wTCPDnPR1", "wTCPDnPct1",
          "eTCPUpPR1", "eTCPUpPct1", "eTCPDnPR1", "eTCPDnPct1",
          "wTCPUpPR2", "wTCPUpPct2", "wTCPDnPR2", "wTCPDnPct2",
-         "eTCPUpPR2", "eTCPUpPct2", "eTCPDnPR2", "eTCPDnPct2" ]
+         "eTCPUpPR2", "eTCPUpPct2", "eTCPDnPR2", "eTCPDnPct2",
+         "wDownNS", "wDownSD", "wDownHD", "wDownVideo",
+         "wUpNS", "wUpSD", "wUpHD", "wUpVideo",
+         "wConference",
+         "eDownNS", "eDownSD", "eDownHD", "eDownVideo",
+         "eUpNS", "eUpSD", "eUpHD", "eUpVideo",
+         "eConference" ]
 
 
 '''

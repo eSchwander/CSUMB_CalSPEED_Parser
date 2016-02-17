@@ -786,6 +786,12 @@ class csvDataExtractor(object):
                 tcpVals.extend( [OBJECT.ErrorType]*8)
             #END IF/ELSE
         #END FOR
+        if len(OBJECT.VideoMetrics) == 18:
+            for values in OBJECT.VideoMetrics:
+                tcpVals.append(values)
+        else:
+            for _ in range(0,18):
+                tcpVals.append( 'Error' )
         return tcpVals
         #This is necessary to correctly align values with their headers. In the
         # Field Test CSV, we print the first West test, then the first East test

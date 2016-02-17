@@ -1,4 +1,4 @@
-"""
+﻿"""
 ------------------------------------------------------------------------
 FIELDTEST_FILE.PY
 
@@ -503,21 +503,21 @@ class VideoMetrics:
             dnSum.append([])
 
         #These loops interate through all the speed measurements in a TCP test and put them into lists
-        for i in range(0,4):
+        for thread in range(0,4):
             for updown in ['UP','DOWN']:
                 for thread in object.Tests['TCP'][i].Threads[updown]:
                     intervalCount = 0
                     for interval in thread.Measurements:
                         try:
                             if updown == 'UP':
-                                upSum[i][intervalCount] += interval.Speed
+                                upSum[thread][intervalCount] += interval.Speed
                             else:
-                                dnSum[i][intervalCount] += interval.Speed
+                                dnSum[thread][intervalCount] += interval.Speed
                         except:
                             if updown == 'UP':
-                                upSum[i].append(interval.Speed)
+                                upSum[thread].append(interval.Speed)
                             else:
-                                dnSum[i].append(interval.Speed)
+                                dnSum[thread].append(interval.Speed)
                         intervalCount+=1
                         if intervalCount == 10: #we only want the first 10 measurements
                             break
