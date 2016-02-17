@@ -158,6 +158,7 @@ class FieldTest_File(File):
             self.EastVideoMetrics = VideoMetrics(self, 'east').getValues()
         except:
             self.EastVideoMetrics = []
+        #self.EastVideoMetrics = VideoMetrics(self, 'east').getValues()
 
     #END INIT
 
@@ -498,11 +499,11 @@ class VideoMetrics:
         #East or West MOS calculation
         if eastwest == 'west':
             MOS = object.Tests['PING'][1].calc_rValMOS()
-            MOS = wMOS[1]
+            MOS = MOS[1]
             testnums = [0,2]
         elif eastwest == 'east':
-            eMOS = object.Tests['PING'][0].calc_rValMOS()
-            eMOS = eMOS[1]
+            MOS = object.Tests['PING'][0].calc_rValMOS()
+            MOS = MOS[1]
             testnums = [1,3]
         else:
             print('Need east or west as an input')
@@ -516,21 +517,21 @@ class VideoMetrics:
             dnSum.append([])
 
         #These loops interate through all the speed measurements in a TCP test and put them into lists
-        for thread in testnums:
+        for test in testnums:
             for updown in ['UP','DOWN']:
-                for thread in object.Tests['TCP'][i].Threads[updown]:
+                for thread in object.Tests['TCP'][test].Threads[updown]:
                     intervalCount = 0
                     for interval in thread.Measurements:
                         try:
                             if updown == 'UP':
-                                upSum[thread][intervalCount] += interval.Speed
+                                upSum[test][intervalCount] += interval.Speed
                             else:
-                                dnSum[thread][intervalCount] += interval.Speed
+                                dnSum[test][intervalCount] += interval.Speed
                         except:
                             if updown == 'UP':
-                                upSum[thread].append(interval.Speed)
+                                upSum[test].append(interval.Speed)
                             else:
-                                dnSum[thread].append(interval.Speed)
+                                dnSum[test].append(interval.Speed)
                         intervalCount+=1
                         if intervalCount == 10: #we only want the first 10 measurements
                             break
