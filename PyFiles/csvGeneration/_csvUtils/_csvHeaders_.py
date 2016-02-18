@@ -117,9 +117,9 @@ FieldTestHeaders["csv Stat Headers"] = \
          "eUpStdDev1", "eUpMedian1", "eDnStdDev1", "eDnMedian1",
          "wUpStdDev2", "wUpMedian2", "wDnStdDev2", "wDnMedian2",
          "eUpStdDev2", "eUpMedian2", "eDnStdDev2", "eDnMedian2" ]
-FieldTestHeaders["csv Stat-S Headers"] = \
-        ["sUpMean", "sUpStdDev", "sUpMean_1",
-         "sDnMean", "sDnStdDev", "sDnMean_1" ]
+#FieldTestHeaders["csv Stat-S Headers"] = \
+#        ["sUpMean", "sUpStdDev", "sUpMean_1",
+#         "sDnMean", "sDnStdDev", "sDnMean_1" ]
 FieldTestHeaders["csv Stat-A Headers"] = \
         ["aUpMean", "aUpStdDev", "aUpMean_1",
          "aDnMean", "aDnStdDev", "aDnMean_1" ]

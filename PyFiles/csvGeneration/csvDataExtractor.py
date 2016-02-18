@@ -633,7 +633,7 @@ class csvDataExtractor(object):
                     dnMsrments.extend(test.get_ThreadSumValues(direction="DOWN"))
             return self.__calcTCPStatVals(upMsrments, dnMsrments)
         else:
-            return [OBJECT.ErrorType]*6
+            return [OBJECT.ErrorType]*8
     #END DEF
 
     @__POST_returnChecker(FieldTestHeaders, "csv Stat-S Headers")
