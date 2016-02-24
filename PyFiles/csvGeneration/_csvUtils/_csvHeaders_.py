@@ -90,11 +90,11 @@ FieldTestHeaders["csv Default Headers"] = \
         ["Tester", "LocationID", "Date", "Time", "Provider", "Operator",
          "Network", "Latitude", "Longitude", "DeviceID", "DeviceType"]
 FieldTestHeaders["csv Video Metrics Headers"] = \
-        ["wDownNS", "wDownSD", "wDownHD", "wDownVideo",
-         "wUpNS", "wUpSD", "wUpHD", "wUpVideo",
+        ["wDownLS", "wDownSD", "wDownHD", "wDownVideo",
+         "wUpLS", "wUpSD", "wUpHD", "wUpVideo",
          "wConference",
-         "eDownNS", "eDownSD", "eDownHD", "eDownVideo",
-         "eUpNS", "eUpSD", "eUpHD", "eUpVideo",
+         "eDownLS", "eDownSD", "eDownHD", "eDownVideo",
+         "eUpLS", "eUpSD", "eUpHD", "eUpVideo",
          "eConference"]
 FieldTestHeaders["csv Extra Headers"] = \
         ["Census2010", "R5Coverage", "NormalLAT", "NormalLONG"]
@@ -136,11 +136,11 @@ FieldTestHeaders["csv Qual Headers"] = \
          "eTCPUpPR1", "eTCPUpPct1", "eTCPDnPR1", "eTCPDnPct1",
          "wTCPUpPR2", "wTCPUpPct2", "wTCPDnPR2", "wTCPDnPct2",
          "eTCPUpPR2", "eTCPUpPct2", "eTCPDnPR2", "eTCPDnPct2",
-         "wDownNS", "wDownSD", "wDownHD", "wDownVideo",
-         "wUpNS", "wUpSD", "wUpHD", "wUpVideo",
+         "wDownLS", "wDownSD", "wDownHD", "wDownVideo",
+         "wUpLS", "wUpSD", "wUpHD", "wUpVideo",
          "wConference",
-         "eDownNS", "eDownSD", "eDownHD", "eDownVideo",
-         "eUpNS", "eUpSD", "eUpHD", "eUpVideo",
+         "eDownLS", "eDownSD", "eDownHD", "eDownVideo",
+         "eUpLS", "eUpSD", "eUpHD", "eUpVideo",
          "eConference" ]
 
 

@@ -560,14 +560,14 @@ class VideoMetrics:
         or
         If toReturn equals 'quantity' the function returns the quantity of each quality type. 
         '''
-        qualities = {'HD':0,'SD':0,'NS':0}
+        qualities = {'HD':0,'SD':0,'LS':0}
         for x in connection:
             if x >= 2500.0:
                 qualities['HD'] += 1
             elif x >= 700.0:
                 qualities['SD'] += 1
             else:
-                qualities['NS'] += 1
+                qualities['LS'] += 1
 
         if toReturn == 'quality':
             if qualities['HD'] / len(connection) >= 0.95:
@@ -575,17 +575,17 @@ class VideoMetrics:
             elif (qualities['SD'] + qualities['HD']) / len(connection) >= 0.95:
                 return 'SD'
             else:
-                return 'NS'
+                return 'LS'
         
         if toReturn == 'quantity':
             return qualities
 
     def conferenceQuality(self, up, dn, mos):
         if mos < 4:
-            return 'NS'
+            return 'LS'
         else:
-            if up == 'NS' or dn == 'NS':
-                return 'NS'
+            if up == 'LS' or dn == 'LS':
+                return 'LS'
             elif up == 'SD' or dn == 'SD':
                 return 'SD'
             else:
@@ -596,11 +596,11 @@ class VideoMetrics:
         getValues returns all the values stored in the VideoMetrics class.
         '''
         values = []
-        values.append(self.Dn['NS'])
+        values.append(self.Dn['LS'])
         values.append(self.Dn['SD'])
         values.append(self.Dn['HD'])
         values.append(self.DnVideo)
-        values.append(self.Up['NS'])
+        values.append(self.Up['LS'])
         values.append(self.Up['SD'])
         values.append(self.Up['HD'])
         values.append(self.UpVideo)
