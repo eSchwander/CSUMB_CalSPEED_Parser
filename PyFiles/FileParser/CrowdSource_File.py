@@ -179,6 +179,23 @@ class CrowdSource_File(File):
                               " tests missing.")
             self._ErrorHandling__setErrorCode(404, specialMessage)
         #END IF
+
+        """ Implement this once we get the proper algorithm
+        #Video Metric Stuff
+        try:
+            self.WestVideoMetrics = VideoMetrics(self, 'west').getValues()
+        except:
+            self.WestVideoMetrics = []
+        try:
+            self.EastVideoMetrics = VideoMetrics(self, 'east').getValues()
+        except:
+            self.EastVideoMetrics = []
+        """
+        #The following is temporary
+        #Change the 'NA' to 'Error' once you implement the real thing
+        self.WestVideoMetrics = []
+        self.EastVideoMetrics = []
+
     #END INIT
 
 

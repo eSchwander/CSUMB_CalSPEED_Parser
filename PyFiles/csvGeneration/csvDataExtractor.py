@@ -798,7 +798,7 @@ class csvDataExtractor(object):
         else:
             for _ in range(9):
                 tcpVals.append( 'Error' )
-        return tcpVals
+        return tcpVals # The placement of this return might be a huge issue
         #This is necessary to correctly align values with their headers. In the
         # Field Test CSV, we print the first West test, then the first East test
         # (and this pattern repeats for the second test for each direction). This
@@ -821,6 +821,18 @@ class csvDataExtractor(object):
                 tcpVals.extend( [OBJECT.ErrorType]*4 )
             #END IF/ELSE
         #END FOR
+        if len(OBJECT.WestVideoMetrics) == 9:
+            for values in OBJECT.WestVideoMetrics:
+                tcpVals.append(values)
+        else:
+            for _ in range(9):
+                tcpVals.append( 'NA' )
+        if len(OBJECT.EastVideoMetrics) == 9:
+            for values in OBJECT.EastVideoMetrics:
+                tcpVals.append(values)
+        else:
+            for _ in range(9):
+                tcpVals.append( 'NA' )
         return tcpVals
     #END DEF
 

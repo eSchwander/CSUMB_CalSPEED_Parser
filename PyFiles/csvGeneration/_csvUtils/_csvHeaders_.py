@@ -206,6 +206,13 @@ CrowdSourceHeaders["csv Default Headers"] = \
          "Wifi_SSID", "LocSource", "Latitude", "Longitude",
          "MovingDist", "DeviceType"]
 CrowdSourceHeaders["csv Extra Headers"] = []
+CrowdSourceHeaders["csv Video Metrics Headers"] = \
+        ["wDownLS", "wDownSD", "wDownHD", "wDownVideo",
+         "wUpLS", "wUpSD", "wUpHD", "wUpVideo",
+         "wConference",
+         "eDownLS", "eDownSD", "eDownHD", "eDownVideo",
+         "eUpLS", "eUpSD", "eUpHD", "eUpVideo",
+         "eConference"]
 CrowdSourceHeaders["csv PING Headers"] = \
         ["wRttMin", "wRttMax", "wRttAvg", "wRttLoss",
          "eRttMin", "eRttMax", "eRttAvg", "eRttLoss" ]
@@ -226,4 +233,10 @@ CrowdSourceHeaders["csv Stat-A Headers"] = \
          "aDnMean", "aDnStdDev", "aDnMean_1" ]
 CrowdSourceHeaders["csv Qual Headers"] = \
         ["wTCPUpPR", "wTCPUpPct", "wTCPDnPR", "wTCPDnPct",
-         "eTCPUpPR", "eTCPUpPct", "eTCPDnPR", "eTCPDnPct" ]
+         "eTCPUpPR", "eTCPUpPct", "eTCPDnPR", "eTCPDnPct",
+         "wDownLS", "wDownSD", "wDownHD", "wDownVideo",
+         "wUpLS", "wUpSD", "wUpHD", "wUpVideo",
+         "wConference",
+         "eDownLS", "eDownSD", "eDownHD", "eDownVideo",
+         "eUpLS", "eUpSD", "eUpHD", "eUpVideo",
+         "eConference"]
