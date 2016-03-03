@@ -219,8 +219,8 @@ CrowdSourceHeaders["csv Stat Headers"] = \
         ["wUpStdDev", "wUpMedian", "wDnStdDev", "wDnMedian",
          "eUpStdDev", "eUpMedian", "eDnStdDev", "eDnMedian" ]
 CrowdSourceHeaders["csv Stat-S Headers"] = \
-        ["cUpMean", "cUpStdDev", "cUpMean_1",
-         "cDnMean", "cDnStdDev", "cDnMean_1" ]
+        ["cUpMean", "cUpStdDev", "cUpMean_1", "cUpMean_2",
+         "cDnMean", "cDnStdDev", "cDnMean_1", "cDnMean_2" ]
 CrowdSourceHeaders["csv Stat-A Headers"] = \
         ["aUpMean", "aUpStdDev", "aUpMean_1",
          "aDnMean", "aDnStdDev", "aDnMean_1" ]
