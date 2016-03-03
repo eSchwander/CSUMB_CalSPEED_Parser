@@ -222,7 +222,7 @@ CrowdSourceHeaders["csv Stat-S Headers"] = \
         ["cUpMean", "cUpStdDev", "cUpMean_1", "cUpMean_2",
          "cDnMean", "cDnStdDev", "cDnMean_1", "cDnMean_2" ]
 CrowdSourceHeaders["csv Stat-A Headers"] = \
-        ["aUpMean", "aUpStdDev", "aUpMean_1", "some change",
+        ["aUpMean", "aUpStdDev", "aUpMean_1",
          "aDnMean", "aDnStdDev", "aDnMean_1" ]
 CrowdSourceHeaders["csv Qual Headers"] = \
         ["wTCPUpPR", "wTCPUpPct", "wTCPDnPR", "wTCPDnPct",
