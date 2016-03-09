@@ -291,7 +291,7 @@ class csvDataExtractor(object):
         """Get the R-Value and MOS for West and East"""
         rValMOSVals = []
         for connLoc in ['West', 'East']:
-            if OBJECT.RValue[connLoc] == 'NA':
+            if OBJECT.RValue[connLoc] == 'NA' or OBJECT.RValue[connLoc] == '':
                 rValMOSVals.extend( [OBJECT.ErrorType]*2 )
             else:
                 rValMOSVals.append(OBJECT.RValue[connLoc])
