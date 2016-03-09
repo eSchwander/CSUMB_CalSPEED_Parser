@@ -163,10 +163,15 @@ class CrowdSource_File(File):
         File.__init__(self, filePath=filePath, eastWestIP=eastAndWestServerIP)
         self.loadCrowdSourceInfo()
 
-        #Actually parsing the tests in this file
+        #Actually parsing the tests in the file
         self.findAndParseTCPTests()
         self.findAndParsePINGTests()
         self.findAndParseUDPTests()
+
+        for eastwest in ['East','West']:
+            self.RValue[eastwest] = self.calcRval(eastwest)
+            self.MOS[eastwest] = self.calcMOS(eastwest)   
+
         #This is one final check, to make sure that we have all 6 tests. If not, then
         # there was an unknown test of some kind, and we set our ContainsErrors to True
         #The 6 Tests are:

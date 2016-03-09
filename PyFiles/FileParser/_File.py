@@ -3,7 +3,7 @@
 _FILE.PY
 
 AUTHOR(S):    Peter Walker    pwalker@csumb.edu
-                Evan Schwander    eschwander@csumb.edu
+              Evan Schwander    eschwander@csumb.edu
 
 PURPOSE-  This object will hold a raw data file's header information (see list of variables)
             and then parses individual tests from the remaining text, storing them as a series of
@@ -72,6 +72,8 @@ class File(Formatting, ErrorHandling):
                        "UDP":[],
                        "PING":[],
                        "TCRT":[]}
+        self.RValue = {}
+        self.MOS = {}
         self.TestsByNum = {}
         self.FilePath = os.path.abspath(filePath)
         self.EastWestSrvrIPs = eastWestIP
@@ -290,6 +292,28 @@ class File(Formatting, ErrorHandling):
 
 # TEST PARSER FUNCTION --------------------------------------------------------------------------
 
+    def parseTests(self):
+        '''
+        Calls parser for all tests
+        '''
+        tests = ['TCP', 'PING', 'UDP']
+        for test in tests:
+            self.__findAndParseTests(test)
+
+    def parseRValMos(self):
+        '''
+        Calls appropriate methods used to calculate R-Value and MOS
+        '''
+        for eastwest in ['East','West']:
+            try:
+                self.RValue[eastwest] = self.calcRval(eastwest)
+            except:
+                self.RValue[eastwest] = 'NA'
+            try:
+                self.MOS[eastwest] = self.calcMOS(eastwest)
+            except:
+                self.MOS[eastwest] = 'NA'
+
     def __findAndParseTests(self, type_):
         """
         This takes the contents of the file being parsed, splits the content by "Staring Test"
@@ -334,6 +358,82 @@ class File(Formatting, ErrorHandling):
             #END FOR
         #END IF
     #END DEF
+
+    def calcMeanJitter(self, location):
+        '''
+        Returns the mean jitter for all the UDP tests for the passed in location.
+        '''
+        jitters = []
+        for udpTest in self.Tests['UDP']:
+            if udpTest.ConnectionLoc == location:
+                jitters.append(udpTest.Threads[0].ServerReport.Jitter)
+                
+        length = len(jitters)
+        if length == 0:
+            return 'NA'
+        return sum(jitters)/float(length)
+
+    def calcMeanLoss(self, location):
+        '''
+        Returns the mean loss percentage for all the UDP tests for the passed in location.
+        '''
+        losses = []
+        for udpTest in self.Tests['UDP']:
+            if udpTest.ConnectionLoc == location:
+                losses.append(udpTest.Threads[0].ServerReport.Dtgrams_Perc)
+        length = len(losses)
+        if length == 0:
+            return 'NA'
+        return sum(losses)/float(length)
+
+    def calcMeanLatency(self, location):
+        '''
+        Returns the average RTT for Ping test based on location 
+        '''
+        avgs = []
+        for pingTest in self.Tests['PING']:
+            if pingTest.ConnectionLoc == location:
+                avgs.append(pingTest.RTTAverage)
+        length = len(avgs)
+        if length == 0:
+            return 'NA'
+        return sum(avgs)/float(length)
+
+    def calcEffectiveLatency(self, location):
+        '''
+        Returns effective latency based on location.
+        '''
+        meanLatency = self.calcMeanLatency(location)
+        meanJitter = self.calcMeanJitter(location)
+        if meanLatency == 'NA' or meanJitter == 'NA':
+            return 'NA'
+        return meanLatency + meanJitter * 2 + 10
+
+    def calcRval(self, location):
+        '''
+        Returns R-value based on location.
+        '''
+        effectiveLatency = self.calcEffectiveLatency(location)
+        meanLoss = self.calcMeanLoss(location)
+        if effectiveLatency == 'NA' or meanLoss == 'NA':
+            return 'NA'
+        if effectiveLatency < 160:
+            return 93.2 - (effectiveLatency / 40.0) - 2.5 * meanLoss
+        else:
+            return 93.2 - (effectiveLatency - 120.0) / 10.0 - 2.5 * meanLoss
+
+    def calcMOS(self, location):
+        '''
+        Returns Mean Opinion Score (MOS) based on location
+        '''
+        Rval = self.RValue[location]
+        if Rval == 'NA':
+            return 'NA'
+        if Rval > 100 or Rval < 0:
+            MOS = 1
+        else:
+            MOS = 1 + 0.035 * Rval + 0.000007 * Rval * (Rval - 60) * (100 - Rval)
+        return round(MOS, 1)
 
     def findAndParseTCPTests(self):
         """Calls a private function to find and parse all TCP tests"""

@@ -288,18 +288,15 @@ class csvDataExtractor(object):
 # RVALUE/MOS VALUES EXTRACTORS -------------------------------------------------
 
     def __extract_RValMOSVals(self, OBJECT):
-        """Get the R-Value and MOS for each Ping Test"""
+        """Get the R-Value and MOS for West and East"""
         rValMOSVals = []
-        #This will get all of the West values, and then the East values
-        for connLoc in ["West", "East"]:
-            pingTest = OBJECT.getTest("PING", ConnectionLoc=connLoc)
-            if pingTest:
-                rValMOSVals.extend( pingTest[0].calc_rValMOS() )
-            else:
+        for connLoc in ['West', 'East']:
+            if OBJECT.RValue[connLoc] == 'NA':
                 rValMOSVals.extend( [OBJECT.ErrorType]*2 )
-        #END FOR
+            else:
+                rValMOSVals.append(OBJECT.RValue[connLoc])
+                rValMOSVals.append(OBJECT.MOS[connLoc])
         return rValMOSVals
-    #END DEF
 
     @__POST_returnChecker(FieldTestHeaders, "csv RvMos Headers")
     def __extractFT_RValMOSVals(self, OBJECT):

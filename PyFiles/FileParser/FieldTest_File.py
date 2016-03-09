@@ -3,7 +3,7 @@
 FIELDTEST_FILE.PY
 
 AUTHOR(S):    Peter Walker    pwalker@csumb.edu
-            Evan Schwander    eschwander@csumb.edu
+              Evan Schwander  eschwander@csumb.edu
 
 PURPOSE-  This object will hold a raw data file's header information (see list of variables)
             and then parses individual tests from the remaining text, storing them as a series of
@@ -134,7 +134,11 @@ class FieldTest_File(File):
         self.findAndParseTCPTests()
         self.findAndParsePINGTests()
         self.findAndParseUDPTests()
-        #self.findAndParseTCRTTests()
+
+        for eastwest in ['East','West']:
+            self.RValue[eastwest] = self.calcRval(eastwest)
+            self.MOS[eastwest] = self.calcMOS(eastwest)   
+
         #This is one final check, to make sure that we have all 14 tests. If not, then
         # there was an unknown test of some kind, and we set our _contains_Errors to True
         #The 14 Tests are:
