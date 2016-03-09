@@ -504,10 +504,7 @@ class VideoMetrics:
     This class calculates and stores video metric information.
     """
     def __init__(self, object, eastwest):
-        #East or West MOS calculation
         MOS = object.MOS[eastwest]
-        
-
         #These lists are used to hold speed information from TCP tests
         upSum = []
         dnSum = []
