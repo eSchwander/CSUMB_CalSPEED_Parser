@@ -169,8 +169,12 @@ class CrowdSource_File(File):
         self.findAndParseUDPTests()
 
         for eastwest in ['East','West']:
-            self.RValue[eastwest] = self.calcRval(eastwest)
-            self.MOS[eastwest] = self.calcMOS(eastwest)   
+            try:
+                self.RValue[eastwest] = self.calcRval(eastwest)
+                self.MOS[eastwest] = self.calcMOS(eastwest)
+            except:
+                self.RValue[eastwest] = 'NA'
+                self.MOS[eastwest] = 'NA'   
 
         #This is one final check, to make sure that we have all 6 tests. If not, then
         # there was an unknown test of some kind, and we set our ContainsErrors to True
