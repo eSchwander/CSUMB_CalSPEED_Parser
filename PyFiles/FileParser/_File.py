@@ -359,6 +359,7 @@ class File(Formatting, ErrorHandling):
         #END IF
     #END DEF
 
+    """
     def calcMeanJitter(self, location):
         '''
         Returns the mean jitter for all the UDP tests for the passed in location.
@@ -366,8 +367,10 @@ class File(Formatting, ErrorHandling):
         jitters = []
         for udpTest in self.Tests['UDP']:
             if udpTest.ConnectionLoc == location:
-                jitters.append(udpTest.Threads[0].ServerReport.Jitter)
-                
+                try:
+                    jitters.append(udpTest.Threads[0].ServerReport.Jitter)
+                except:
+                    return 'NA'        
         length = len(jitters)
         if length == 0:
             return 'NA'
@@ -398,13 +401,41 @@ class File(Formatting, ErrorHandling):
         if length == 0:
             return 'NA'
         return sum(avgs)/float(length)
+    """
+
+    def calcMeanX(self, location, metric):
+        '''
+        Returns the average of a given metric based on location 
+        '''
+        avgs = []
+        if metric == 'latency':
+            testType = 'PING'
+        else:
+            testType = 'UDP'
+        try:
+            for test in self.Tests[testType]:
+                if metric == 'latency':
+                    if pingTest.ConnectionLoc == location:
+                        avgs.append(pingTest.RTTAverage)
+                elif metric == 'loss':
+                    if udpTest.ConnectionLoc == location:
+                        avgs.append(udpTest.Threads[0].ServerReport.Dtgrams_Perc)
+                elif metric == 'jitter':
+                    if udpTest.ConnectionLoc == location:
+                        jitters.append(udpTest.Threads[0].ServerReport.Jitter)
+        except:
+            return 'NA'
+        length = len(avgs)
+        if length == 0:
+            return 'NA'
+        return sum(avgs)/float(length)
 
     def calcEffectiveLatency(self, location):
         '''
         Returns effective latency based on location.
         '''
-        meanLatency = self.calcMeanLatency(location)
-        meanJitter = self.calcMeanJitter(location)
+        meanLatency = self.calcMeanX(location, 'latency')
+        meanJitter = self.calcMeanX(location, 'jitter')
         if meanLatency == 'NA' or meanJitter == 'NA':
             return 'NA'
         return meanLatency + meanJitter * 2 + 10
@@ -414,7 +445,7 @@ class File(Formatting, ErrorHandling):
         Returns R-value based on location.
         '''
         effectiveLatency = self.calcEffectiveLatency(location)
-        meanLoss = self.calcMeanLoss(location)
+        meanLoss = self.calcMeanX(location, 'loss')
         if effectiveLatency == 'NA' or meanLoss == 'NA':
             return 'NA'
         if effectiveLatency < 160:
