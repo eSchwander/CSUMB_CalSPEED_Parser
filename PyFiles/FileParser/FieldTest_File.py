@@ -159,11 +159,11 @@ class FieldTest_File(File):
 
         #Video Metric Stuff
         try:
-            self.WestVideoMetrics = VideoMetrics(self, 'west').getValues()
+            self.WestVideoMetrics = VideoMetrics(self, 'West').getValues()
         except:
             self.WestVideoMetrics = []
         try:
-            self.EastVideoMetrics = VideoMetrics(self, 'east').getValues()
+            self.EastVideoMetrics = VideoMetrics(self, 'East').getValues()
         except:
             self.EastVideoMetrics = []
         #self.EastVideoMetrics = VideoMetrics(self, 'east').getValues()
@@ -505,16 +505,7 @@ class VideoMetrics:
     """
     def __init__(self, object, eastwest):
         #East or West MOS calculation
-        if eastwest == 'west':
-            MOS = object.Tests['PING'][1].calc_rValMOS()
-            MOS = MOS[1]
-            testnums = [0,2]
-        elif eastwest == 'east':
-            MOS = object.Tests['PING'][0].calc_rValMOS()
-            MOS = MOS[1]
-            testnums = [1,3]
-        else:
-            print('Need east or west as an input')
+        MOS = object.MOS[eastwest]
         
 
         #These lists are used to hold speed information from TCP tests
