@@ -291,12 +291,23 @@ class csvDataExtractor(object):
         """Get the R-Value and MOS for West and East"""
         rValMOSVals = []
         for connLoc in ['West', 'East']:
-            if OBJECT.RValue[connLoc] == 'NA' or OBJECT.RValue[connLoc] == '':
-                rValMOSVals.extend( [OBJECT.ErrorType]*2 )
+            # Check for any errors in. If there are any, use the appropriate error message
+            if OBJECT.RValue[connLoc] == 'NA' or OBJECT.RValue[connLoc] == '': 
+                rValMOSVals.extend(self.findErrors(OBJECT))
             else:
                 rValMOSVals.append(OBJECT.RValue[connLoc])
                 rValMOSVals.append(OBJECT.MOS[connLoc])
         return rValMOSVals
+
+    def findErrors(self, OBJECT):
+        #if not [OBJECT.ErrorType] == '':          
+        #    return [OBJECT.ErrorType]*2 
+        #else:
+        for tests in [OBJECT.Tests['PING'],OBJECT.Tests['UDP']]:
+            for test in tests:
+                if test.ContainsErrors:
+                    return [test.ErrorType]*2 
+        
 
     @__POST_returnChecker(FieldTestHeaders, "csv RvMos Headers")
     def __extractFT_RValMOSVals(self, OBJECT):
