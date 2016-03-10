@@ -293,7 +293,10 @@ class csvDataExtractor(object):
         for connLoc in ['West', 'East']:
             # Check for any errors in. If there are any, use the appropriate error message
             if OBJECT.RValue[connLoc] == 'NA' or OBJECT.RValue[connLoc] == '': 
-                rValMOSVals.extend(self.findErrors(OBJECT))
+                try:
+                    rValMOSVals.extend(self.findErrors(OBJECT))
+                except:
+                    rValMOSVals.extend([OBJECT.ErrorType]*2)
             else:
                 rValMOSVals.append(OBJECT.RValue[connLoc])
                 rValMOSVals.append(OBJECT.MOS[connLoc])
