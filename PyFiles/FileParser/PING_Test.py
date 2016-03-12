@@ -295,6 +295,9 @@ class PING_Test(Test):
 
     def calc_rValMOS(self, delayThreshold=150):
         """
+
+        ---------------- NO LONGER USED. NEW CALCULATION IN _File.py ----------------
+
         Calculates the R-Value and MOS score for this connection based on the RTT
          values recorded in the test.
         ARGS:

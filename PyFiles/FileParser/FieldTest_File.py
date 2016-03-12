@@ -160,7 +160,8 @@ class FieldTest_File(File):
         #Video Metric Stuff
         try:
             self.WestVideoMetrics = VideoMetrics(self, 'West').getValues()
-        except:
+        except Exception as e:
+            print(e)
             self.WestVideoMetrics = []
         try:
             self.EastVideoMetrics = VideoMetrics(self, 'East').getValues()
@@ -504,14 +505,22 @@ class VideoMetrics:
     This class calculates and stores video metric information.
     """
     def __init__(self, object, eastwest):
+        #East or West MOS calculation
         MOS = object.MOS[eastwest]
+        if eastwest == 'West':
+            testnums = [0,2]
+        elif eastwest == 'East':
+            testnums = [1,3]
+        else:
+            print('Need east or west as an input')          
+  
         #These lists are used to hold speed information from TCP tests
         upSum = []
         dnSum = []
         for i in range(0,4):
             upSum.append([])
             dnSum.append([])
-
+ 
         #These loops interate through all the speed measurements in a TCP test and put them into lists
         for test in testnums:
             for updown in ['UP','DOWN']:
@@ -531,14 +540,13 @@ class VideoMetrics:
                         intervalCount+=1
                         if intervalCount == 10: #we only want the first 10 measurements
                             break
-        
+         
         # Putting down measurements into one list
         dnTotal = []
         upTotal = []
         for x in testnums:
             dnTotal.extend(dnSum[x])
             upTotal.extend(upSum[x])
-
 
         # The following variables are put into the csv
         self.DnVideo = self.streamQuality(dnTotal)
