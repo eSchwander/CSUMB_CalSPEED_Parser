@@ -306,7 +306,7 @@ class csvDataExtractor(object):
         #if not [OBJECT.ErrorType] == '':          
         #    return [OBJECT.ErrorType]*2 
         #else:
-        for tests in [OBJECT.Tests['PING'],OBJECT.Tests['UDP']]:
+        for tests in [OBJECT.Tests['PING'],OBJECT.Tests['UDP'], OBJECT.Tests['TCP']]:
             for test in tests:
                 if test.ContainsErrors:
                     return [test.ErrorType]*2 
