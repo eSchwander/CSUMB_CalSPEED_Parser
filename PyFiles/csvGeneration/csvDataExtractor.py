@@ -291,10 +291,11 @@ class csvDataExtractor(object):
         """Get the R-Value and MOS for West and East"""
         rValMOSVals = []
         for connLoc in ['West', 'East']:
+            errorsInTests = self.findErrors(OBJECT)
             # Check for any errors in. If there are any, use the appropriate error message
-            if OBJECT.RValue[connLoc] == 'NA' or OBJECT.RValue[connLoc] == '': 
+            if errorsInTests: 
                 try:
-                    rValMOSVals.extend(self.findErrors(OBJECT))
+                    rValMOSVals.extend(errorsInTests)
                 except:
                     rValMOSVals.extend([OBJECT.ErrorType]*2)
             else:

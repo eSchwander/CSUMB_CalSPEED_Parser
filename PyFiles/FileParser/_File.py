@@ -430,7 +430,7 @@ class File(Formatting, ErrorHandling):
         if Rval == 'NA':
             return 'NA'
         if Rval > 100 or Rval < 0:
-            MOS = 1
+            MOS = 0
         else:
             MOS = 1 + 0.035 * Rval + 0.000007 * Rval * (Rval - 60) * (100 - Rval)
         return round(MOS, 1)
