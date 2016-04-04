@@ -1,4 +1,4 @@
-"""
+﻿"""
 ------------------------------------------------------------------------
 __BASE.PY
 
@@ -90,7 +90,7 @@ class ErrorHandling(object):
             201: "Quit by User",
             202: "Wrong Connection Made",
             210: "Test Not Performed",
-            310: "No Tests Performed",
+            310: "no effective service",
             311: "Connectivity Test Failed",
             404: "Unknown Error"
     }

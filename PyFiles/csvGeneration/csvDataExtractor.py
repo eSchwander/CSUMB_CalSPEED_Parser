@@ -291,7 +291,7 @@ class csvDataExtractor(object):
         """Get the R-Value and MOS for West and East"""
         rValMOSVals = []
         for connLoc in ['West', 'East']:
-            errorsInTests = self.findErrors(OBJECT)
+            errorsInTests = self.findErrors(OBJECT, connLoc)
             # Check for any errors in. If there are any, use the appropriate error message
             if errorsInTests: 
                 try:
@@ -303,13 +303,13 @@ class csvDataExtractor(object):
                 rValMOSVals.append(OBJECT.MOS[connLoc])
         return rValMOSVals
 
-    def findErrors(self, OBJECT):
+    def findErrors(self, OBJECT, location):
         #if not [OBJECT.ErrorType] == '':          
         #    return [OBJECT.ErrorType]*2 
         #else:
-        for tests in [OBJECT.Tests['PING'],OBJECT.Tests['UDP'], OBJECT.Tests['TCP']]:
+        for tests in [OBJECT.Tests['PING'],OBJECT.Tests['UDP']]:
             for test in tests:
-                if test.ContainsErrors:
+                if test.ContainsErrors and test.ConnectionLoc == location:
                     return [test.ErrorType]*2 
         
 
